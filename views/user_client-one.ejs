@@ -1,0 +1,33 @@
+    <div class="container content">
+        <div class="row">
+                <div class="panel panel-default full-width" >
+                    <ol class="breadcrumb panel-heading">
+                              <li><a href='/user_client'>商家账户</a></li>
+                                <li>账户编辑</li>
+                            </ol>  
+                    <div class="panel-body">
+                        <form id="form" name="form" action="/user_client/<%=result.id%>" method="post">                
+                        <div class="form-group">
+                        <label>用户名 <span class="mandatory">*</span></label>
+                        <input type="text" name="username" class="form-control" value="<%=result.username%>">
+                        </div>
+                        <div class="form-group">
+                        <label>密码 </label>
+                        <input type="text" name="password" class="form-control" value=""><label>更改密码</label>
+                        <input type="checkbox" name="changePassword" value="change">
+                        </div>
+                        <div class="form-group">
+                        <label>电子邮箱 <span class="mandatory">*</span></label>
+                        <input type="text" name="email" class="form-control" value="<%=result.email%>">
+                        </div>
+                        <input type="button" class="btn btn-default" value="更新" onClick="javascript:document.form.submit();"/>
+                  <input type="button" class="btn btn-default" onClick="javascript:window.history.back()" value="取消"/>  
+                        </form>
+                    </div>
+                </div>              
+        </div>
+        
+    </div>
+    <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+

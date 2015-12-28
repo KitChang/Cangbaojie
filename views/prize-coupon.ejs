@@ -1,0 +1,75 @@
+
+    
+      <div class="container content">
+        <div class="row">
+            <div class="panel panel-default full-width">
+                <ol class="breadcrumb panel-heading">
+                  <li>广告管理</li>
+                  <li>奖劵</li>
+                </ol>  
+                
+                <div class="panel-body">
+
+                <form name="form">
+                <table class="table table-striped" id="table">
+                    <thead>
+                    <tr><th>手机用户</th><th>广告</th><th>奖项</th><th>失效期</th></tr>
+                    </thead>
+                    <tbody>
+                <%
+                var row;
+                while (resultArr.length) {
+                  row = resultArr.pop();
+                %>
+                    <tr><td>
+                    <%
+                        var authenType = row.app_user.authen_type;
+                        var username = "";
+                        if(authenType=='wechat')
+                            username = row.app_user.nickname;
+                        else
+                            username = row.app_user.username;
+                    %>
+                        <%=username%>
+                        </td>
+                        <td>
+                        <%=row.advertisement.title%>
+                        </td>
+                        <td>
+                        <%=row.prize%>
+                        </td>
+                        <td>
+                        <%=row.coupon_expiredDate%>
+                        </td></tr>
+                <%
+                }
+                %>
+                    </tbody>
+                </table>
+                </form>
+                </div>
+
+            </div>
+        </div>
+        
+      </div>
+    
+
+
+    <script>
+        function destroy(rowId){
+            document.form.action = "/user_client/destroy/"+rowId;
+            document.form.method = "delete";
+            document.form.submit();
+        }
+    </script>
+      
+    <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+    <script>
+        $("#table").DataTable({"language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.10/i18n/Chinese.json"
+            }});
+    </script>
+

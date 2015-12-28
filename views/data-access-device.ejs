@@ -1,0 +1,166 @@
+
+    
+      <div class="container content">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading"><a href="http://<%=req.host%>:<%=req.port%>/data/access/">广告点击量</a></div>             
+                    
+                <div class="panel-body">
+                    
+                    <form class="form-inline" method="get" action="/data/access-region">
+                    <div class="form-group">
+                        <select class="form-control" id="state" name="state">
+                            <option value="">所有省</option>
+                            <option value="广西">广西</option>
+                            <option value="广东">广东</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" id="city" name="city">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" id="region" name="region">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" id="street" name="street">
+                        </select>
+                    </div>
+                    
+                    <button class="btn btn-default">统计</button>
+                    </form>
+                    <p class="where text-right">
+                         <mark>
+                        <% 
+                        if(req.param('locationType')!=undefined&&req.param('locationType')!=null){
+                        %>
+                        <%=req.param("locationType")%>
+                        <% 
+                        }
+                        %>
+                        <% 
+                        if(req.param('state')!=undefined&&req.param('state')!=null){
+                        %>
+                        <%=req.param("state")%>
+                        <% 
+                        }
+                        %>
+                        <% 
+                        if(req.param('city')!=undefined&&req.param('city')!=null){
+                        %>
+                        <%=req.param("city")%>
+                        <% 
+                        }
+                        %>
+                        <%
+                        if(req.param('region')!=undefined&&req.param('region')!=null){
+                        %>
+                        <%=req.param("region")%>
+                        <% 
+                        }
+                        %>
+                        <%
+                        if(req.param('street')!=undefined&&req.param('street')!=null){
+                        %>
+                        <%=req.param("street")%>
+                        <% 
+                        }
+                        %>
+                        <%=resultArr.length%>
+                       </mark>
+                    </p>
+                    
+                </div>
+                <table class="table table-stript">
+                    <tr><th>省份</th><th>城市</th><th>地区</th><th>街道</th><th>分发量</th></tr>
+                    
+                    <%
+                        var quant = [0, 0, 0, 0, 0, 0, 7, 0];
+                        i = 0;
+                        if(resultArr!=null)
+                        while(resultArr.length){
+                            i++;
+                            var row = resultArr.pop();
+                    %>
+                    <tr><td><%=row.state%></td><td><%=row.city%></td><td><%=row.region%></td><td><%=row.street%></td><td><%=quant[i]%></td></tr>
+                    <%
+                        }
+                    %>
+                
+                
+                
+                </table>
+                
+            </div>
+        </div>
+        
+      </div>
+    <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="../../js/series.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+    <script>
+    $("#state").change(function(){
+        var selectedState = $("#state option:selected").text();
+        $("#city").empty();
+        $("#region").empty();
+        $.ajax({
+        url: "/geo/city/"+selectedState
+        }).done(function(data){
+          $("#city").empty();
+          $("#city").append("<option value=''>所有城市</option>");
+          html = "";
+          while (data.length) {
+            var city = data.pop();
+            option = "<option value='"+city+"'>"+city+"</option>";
+            html = html + option;
+            //code
+          }
+          $("#city").append(html);
+          });
+    });
+    
+    $("#city").change(function(){
+        var selectedCity = $("#city option:selected").text();
+        $("#region").empty();
+        $.ajax({
+        url: "/geo/region/"+selectedCity,
+        }).done(function(data){
+          //alert(data);
+          $("#region").empty();
+          $("#region").append("<option value=''>所有地区</option>");
+          html = "";
+          while (data.length) {
+            var region = data.pop();
+            option = "<option value='"+region+"'>"+region+"</option>";
+            html = html + option;
+            //code
+          }
+          $("#region").append(html);
+        });
+    })  
+    $("#region").change(function(){
+        var selectedRegion = $("#region option:selected").text();
+        $("#street").empty();
+        $.ajax({
+        url: "/geo/street/"+selectedRegion,
+        }).done(function(data){
+          //alert(data);
+          $("#street").empty();
+          $("#street").append("<option value=''>所有地区</option>");
+          html = "";
+          while (data.length) {
+            var street = data.pop();
+            option = "<option value='"+street+"'>"+street+"</option>";
+            html = html + option;
+            //code
+          }
+          $("#street").append(html);
+        });
+    })
+       
+      
+    </script>
+

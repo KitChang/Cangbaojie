@@ -1,0 +1,193 @@
+      <div class="container content">
+        <div class="row">
+            <div class="panel panel-default full-width">
+                <ol class="breadcrumb panel-heading">
+                  <li><a href="/advertisement">广告</a></li>
+                  <li class="active">广告发送-请选设备</li>
+                </ol>
+                <div class="panel-body">
+                    <form class="form-inline" action="/advertisement/<%=req.param('id')%>/device/search" name="search-form" method="get">
+                    <div class="form-group">
+                        <select class="form-control" id="type" name="locationType">
+                            <option value="">所有位置类</option>
+                            <option value="公交站">公交站</option>
+                            <option value="公交车">公交车</option>
+                            <option value="电梯">电梯</option>
+                            <option value="路名牌">路名牌</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" id="state" name="state">
+                            <option value="">所有省</option>
+                            <option value="广西省">广西省</option>
+                            <option value="广东省">广东省</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" id="city" name="city">
+                            <option value="">所有城市</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" id="region" name="region">
+                            <option value="">所有地区</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" id="street" name="street">
+                            <option value="">所有街道</option>
+                        </select>
+                    </div>
+                    <button onClick="document.forms['search-form'].submit();" class="btn btn-default ">搜</button>         
+                    </form>
+                    <p class="where text-right">
+                         <mark>
+                        <% 
+                        if(req.param('locationType')!=undefined&&req.param('locationType')!=null){
+                        %>
+                        <%=req.param("locationType")%>
+                        <% 
+                        }
+                        %>
+                        <% 
+                        if(req.param('state')!=undefined&&req.param('state')!=null){
+                        %>
+                        <%=req.param("state")%>
+                        <% 
+                        }
+                        %>
+                        <% 
+                        if(req.param('city')!=undefined&&req.param('city')!=null){
+                        %>
+                        <%=req.param("city")%>
+                        <% 
+                        }
+                        %>
+                        <%
+                        if(req.param('region')!=undefined&&req.param('region')!=null){
+                        %>
+                        <%=req.param("region")%>
+                        <% 
+                        }
+                        %>
+                        <%
+                        if(req.param('street')!=undefined&&req.param('street')!=null){
+                        %>
+                        <%=req.param("street")%>
+                        <% 
+                        }
+                        %>
+                             <%=resultArr.length%>
+                       </mark>
+                    </p>
+                </div>
+                <div class="panel-body">
+                <form name="add-device-form" action="/advertisement/<%=req.param('id')%>/device" method="post">
+                <table class="table table-striped" id="table">
+                    <thead>
+                    <tr><th>名</th><th>位置类型</th><th>省</th><th>城市</th><th>地区</th><th>街道</th><th><button class="btn btn-default" id="add-device" onClick="javascript: document.forms['add-device-form'].submit();">发送</button> 全选 <input id="check-all" type="checkbox"/></th></tr>
+                    </thead>
+                    <tbody>
+                <%
+                var row;
+                while (resultArr.length) {
+                  row = resultArr.pop();
+                %>
+                    <tr><td><a href="/device/<%=row.id%>"><%=row.name%></a></td><td><%=row.locationType%></td><td><%=row.state%></td><td><%=row.city%></td><td><%=row.region%></td>
+                    <td><%=row.street%></td>
+                    <td><input name="device[]" type="checkbox" value="<%=row.id%>"/></td>
+                    </tr>
+                <%
+                }
+                %>
+                    </tbody>
+                </table>
+                </form>
+                </div>
+                
+            </div>
+        </div>
+      </div>
+<script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
+<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+<script>
+    $("#table").DataTable({"language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.10/i18n/Chinese.json"
+        }});
+</script>
+    <script>
+    $('#check-all').change(function () {
+    $("input:checkbox").prop('checked', $(this).prop("checked"));
+    });
+    
+    $("#state").change(function(){
+        var selectedState = $("#state option:selected").text();
+        $("#city").empty();
+        $("#region").empty();
+        $("#street").empty();
+        $.ajax({
+        url: "/geo/city?state="+selectedState
+        }).done(function(data){
+          $("#city").empty();
+          $("#city").append("<option value=''>所有城市</option>");
+          html = "";
+          while (data.length) {
+            var city = data.pop();
+            option = "<option value='"+city+"'>"+city+"</option>";
+            html = html + option;
+            //code
+          }
+          $("#city").append(html);
+          });
+      });
+    
+    $("#city").change(function(){
+        var selectedState = $("#state option:selected").text();
+        var selectedCity = $("#city option:selected").text();
+        $("#region").empty();
+        $("#street").empty();
+        
+        $.ajax({
+        url: "/geo/region?state="+selectedState+"&city="+selectedCity,
+        }).done(function(data){
+          //alert(data);
+          $("#region").empty();
+          $("#region").append("<option value=''>所有地区</option>");
+          html = "";
+          while (data.length) {
+            var region = data.pop();
+            option = "<option value='"+region+"'>"+region+"</option>";
+            html = html + option;
+            //code
+          }
+          $("#region").append(html);
+        });
+      })
+    $("#region").change(function(){
+        var selectedState = $("#state option:selected").text();
+        var selectedCity = $("#city option:selected").text();
+        var selectedRegion = $("#region option:selected").text();
+        $("#street").empty();
+        
+        $.ajax({
+        url: "/geo/street?state="+selectedState+"&city="+selectedCity+"&region="+selectedRegion,
+        }).done(function(data){
+          //alert(data);
+          $("#street").empty();
+          $("#street").append("<option value=''>所有街道</option>");
+          html = "";
+          while (data.length) {
+            var street = data.pop();
+            option = "<option value='"+street+"'>"+street+"</option>";
+            html = html + option;
+            //code
+          }
+          $("#street").append(html);
+        });
+      })
+    
+    
+    </script>
+      
+    

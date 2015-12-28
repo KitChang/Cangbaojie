@@ -1,0 +1,98 @@
+        <div class="container content">
+            <div class="row">
+                        <div class="panel panel-default full-width">
+                            
+                            <ol class="breadcrumb panel-heading">
+                              <li><a href="/advertisement">广告管理</a></li>
+                              <li><a href="/advertisement/<%=req.param('advertisement')%>">广告</a></li>
+                              <li><a href="/OrderDraw?advertisement=<%=req.param('advertisement')%>">排序抽奖</a></li>
+                              <li class="active">创建法则</li>
+                            </ol>  
+                            
+                            <div class="panel-body">
+                                <form name="form" id="form" action="/OrderDraw?advertisement=<%=req.param('advertisement')%>" method="post">
+                                <div class="form-group">
+                                <label>访问数下限 <span class="mandatory">*</span></label>
+                                <input type="text" name="drawCountLowerBound" id="drawCountLowerBound" class="form-control" value="0">
+                                </div>
+                                <div class="form-group">
+                                <label>访问数上限 <span class="mandatory">*</span></label>
+                                <input type="text" name="drawCountUpperBound" id="drawCountUpperBound" class="form-control" value="0">
+                                </div>
+                                <div class="form-group">
+                                <label>一等奖数量</label>
+                                <input type="text" name="firstPrizeRange" id="firstPrizeRange" class="form-control" value="0">
+                                </div>
+                                <div class="form-group">
+                                <label>二等奖数量</label>
+                                <input type="text" name="secondPrizeRange" id="secondPrizeRange" class="form-control" value="0">
+                                </div>
+                                <div class="form-group">
+                                <label>三等奖数量</label>
+                                <input type="text" name="thirdPrizeRange" id="thirdPrizeRange" class="form-control" value="0">
+                                </div>
+                                <div class="form-group">
+                                <label>四等奖数量</label>
+                                <input type="text" name="fourthPrizeRange" id="fourthPrizeRange" class="form-control" value="0">
+                                </div>
+                                <div class="form-group">
+                                <label>五等奖数量</label>
+                                <input type="text" name="fifthPrizeRange" id="fifthPrizeRange" class="form-control" value="0">
+                                </div>
+                               </form>
+                                <button type="button" id="submit" class="btn btn-default">创建</button>
+                  <button type="button" class="btn btn-default" onClick="javascript:window.history.back()" value=""/> 取消 </button>
+                                
+                            </div>
+                                
+                        </div>              
+                </div>
+            
+            
+    </div>
+    <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#submit").click(function(){
+                var errMsg = [];
+                if(isNaN($("#drawCountLowerBound").val()))
+                    errMsg.push("访问数下限为数字");
+                if(isNaN($("#drawCountUpperBound").val()))
+                    errMsg.push("访问数上限为数字");
+                if(isNaN($("#firstPrizeRange").val()))
+                    errMsg.push("一等奖数值范围为数字");
+                if(isNaN($("#secondPrizeRange").val()))
+                    errMsg.push("二等奖数值范围为数字");
+                if(isNaN($("#thirdPrizeRange").val()))
+                    errMsg.push("三等奖数值范围为数字");
+                if(isNaN($("#fourthPrizeRange").val()))
+                    errMsg.push("四等奖数值范围为数字");
+                if(isNaN($("#fifthPrizeRange").val()))
+                    errMsg.push("五等奖数值范围为数字");
+                if($("#drawCountLowerBound").val().trim()=="")
+                    $("#drawCountLowerBound").val("0");
+                if($("#drawCountUpperBound").val().trim()=="")
+                    $("#drawCountUpperBound").val("0")
+                if($("#firstPrizeRange").val().trim()=="")
+                    $("#firstPrizeRange").val("0");
+                if($("#secondPrizeRange").val().trim()=="")
+                    $("#secondPrizeRange").val("0");
+                if($("#thirdPrizeRange").val().trim()=="")
+                    $("#thirdPrizeRange").val("0");
+                if($("#fourthPrizeRange").val().trim()=="")
+                    $("#fourthPrizeRange").val("0");
+                if($("#fifthPrizeRange").val().trim()=="")
+                    $("#fifthPrizeRange").val("0");
+                    
+                if(errMsg.length > 0){
+                    alert(errMsg.join('\n'));
+                    return;
+                }
+                $("#form").submit();
+            })
+        })
+
+        
+    </script>
+

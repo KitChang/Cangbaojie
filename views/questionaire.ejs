@@ -1,0 +1,122 @@
+
+        
+        <div class="container content">
+            <div class="row">
+                <div class="col-md-12">
+                    
+                    <div class="panel panel-default full-width">
+                        <div class="panel-heading">问卷抽奖</div>
+                        <div class="panel-body">
+                            <form id="question-form" action="../../advertisement/<%=req.param('id')%>/questionaire" method="post">
+                            <div class="panel-elem">
+                            <button type="button" id="add-question" class="btn btn-default">加问答题</button>
+                            <button type="button" id="remove-question" class="btn btn-default">删问答题</button>
+                            <button type="submit" id="remove-question" class="btn btn-default">提交</button>
+                            
+                            </div>
+                            </form>
+                        
+                        </div>
+                        
+                    </div>
+                    
+                        
+                    
+                </div>
+            </div>
+           
+    </div>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+    
+    $(function(){
+        var select = {
+            0: "A",1: "B", 2: "C", 3: "D", 4: "E"
+        }
+        function addQuestion(option){
+            if(option==null){
+                option = {};
+                option['question'] = "";
+                option['questionAnswer'] = "";
+            }   
+            var questionHtml = [];
+            questionHtml.push("<div class='question'>")
+            questionHtml.push("<div class='form-group form-inline panel-elem'>");
+            qIndex = $(".question").size();
+            qNumber = qIndex + 1
+            questionHtml.push("<label> 问答题 "+qNumber+" </label> ");
+            questionHtml.push("<input type='text' name='question[]' class='form-control' value='"+option['question']+"'>");
+            questionHtml.push(" <button type='button' id='add-option_"+qIndex+"' class='btn btn-default'>加选项</button>");
+            questionHtml.push(" <button type='button' id='remove-option_"+qIndex+"' class='btn btn-default'>删选项</button>");
+            questionHtml.push("</div>")
+            
+            questionHtml.push("</div>");
+            questionHtmlCon = "";
+            for(var i=0; i<questionHtml.length; i++){
+                questionHtmlCon += questionHtml[i];
+            }
+            $("#question-form").append(questionHtmlCon);
+            $("#add-option_"+qIndex).click(function(){
+                id = $(this).attr("id");
+                var q = id.split('_')[1];
+                addOption(q, null);
+            })
+            $("#remove-option_"+qIndex).click(function(){
+                $(this).parent().parent().find(".question-option:last").remove();
+            })
+                
+        }
+        function addOption(qIndex, option){
+            var optionHtml = [];
+            if(option==null){
+                option = "";
+            }
+            ;
+            var oIndex = $("#add-option_"+qIndex).parent().parent().find(".question-option").size();
+            if(oIndex>4)
+                return;
+            optionHtml.push("<div class='form-group form-inline panel-elem question-option'>");
+            optionHtml.push(" <label> "+select[oIndex] +" </label> ");
+            optionHtml.push(" <input type='text' name='questionOption_"+oIndex+"[]' class='form-control' value='"+option+"'>");
+            optionHtml.push("</div>");
+            optionHtmlCon = "";
+            for(var i=0; i<optionHtml.length; i++){
+                optionHtmlCon += optionHtml[i];
+            }
+            $("#add-option_"+qIndex).parent().parent().append(optionHtmlCon);
+        }
+        
+        function removeQuestion(){
+            $(".question:last").remove();
+        }
+        //saddQuestion();
+        $("#add-question").on("click", function(){
+            addQuestion();
+        })
+        $("#remove-question").on("click", function(){
+            removeQuestion();
+        });
+        <%
+        if(questionaire instanceof Array)
+        for (var i=0; i<questionaire.length; i++){
+            var option = {};
+            var qOptionArr = questionaire[i].questionOption;
+        %>
+            addQuestion({question:"<%=questionaire[i].question%>"});
+        <%
+            if(qOptionArr instanceof Array)
+            for (var j=0; j<qOptionArr.length; j++){
+        %>
+            addOption(<%=i%>, "<%=qOptionArr[j]%>");               
+        <%
+            }
+        %>  
+        <%
+        }
+        %>
+    });
+        
+    </script>
+    
+    

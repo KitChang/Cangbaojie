@@ -1,0 +1,57 @@
+
+    
+      <div class="container content">
+        <div class="row">
+            <div class="panel panel-default full-width">
+                <ol class="breadcrumb panel-heading">
+                  <li>用户管理</li>
+                  <li>员工账户</li>
+                </ol>  
+                <div class="panel-body">
+                    <button onClick="href=window.location.href='/user/new'" class="btn btn-default right">创建</button>
+                    
+                </div>
+                <div class="panel-body">
+                <form name="form">
+                <table class="table table-striped" id="table">
+                    <thead>
+                    <tr><th>员工用户帐户</th><th>删除</th></tr>
+                    </thead>
+                    <tbody>
+                <%
+                var row;
+                while (resultArr.length) {
+                  row = resultArr.pop();
+                %>
+                    <tr><td><a href="/user/<%=row.id%>"><%=row.username%></a></td><td><a class="btn  btn-danger" onClick="javascript: destroy('<%=row.id%>');">删除</a></td></tr>
+                <%
+                }
+                %>
+                    </tbody>
+                </table>
+                </form>
+                </div>
+
+            </div>
+        </div>
+        
+      </div>
+    
+
+
+    <script>
+        function destroy(rowId){
+            document.form.action = "/user/destroy/"+rowId;
+            document.form.method = "delete";
+            document.form.submit();
+        }
+    </script>
+      
+    <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+    <script>
+        $("#table").DataTable({"language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.10/i18n/Chinese.json"
+            }});
+    </script>

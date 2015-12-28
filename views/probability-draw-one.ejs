@@ -1,0 +1,112 @@
+        <div class="container content">
+            <div class="row">
+                        <div class="panel panel-default full-width">
+                            <ol class="breadcrumb panel-heading">
+                              <li><a href="/advertisement">广告管理</a></li>
+                              <li><a href="/advertisement/<%=req.param('advertisement')%>">广告</a></li>
+                                
+                              <li class="active">创建法则</li>
+                            </ol>  
+                            <div class="panel-body">
+                                <form id="form" name="form" action="/ProbabilityDraw/<%=req.param('probabilityDraw')%>?advertisement=<%=req.param('advertisement')%>" method="post">                
+                                
+                                <div class="form-group">
+                                <label>一等奖机率 (0~100%)</label>
+                                <input type="text" name="firstPrizeProbability" id="firstPrizeProbability" class="form-control" value="<%=result.firstPrizeProbability%>">
+                                </div>
+                                <div class="form-group">
+                                <label>二等奖机率 (0~100%)</label>
+                                <input type="text" name="secondPrizeProbability" id="secondPrizeProbability" class="form-control" value="<%=result.secondPrizeProbability%>">
+                                </div>
+                                <div class="form-group">
+                                <label>三等奖机率 (0~100%)</label>
+                                <input type="text" name="thirdPrizeProbability" id="thirdPrizeProbability" class="form-control" value="<%=result.thirdPrizeProbability%>">
+                                </div>
+                                <div class="form-group">
+                                <label>四等奖机率 (0~100%)</label>
+                                <input type="text" name="fourthPrizeProbability" id="fourthPrizeProbability" class="form-control" value="<%=result.fourthPrizeProbability%>">
+                                </div>
+                                <div class="form-group">
+                                <label>五等奖机率 (0~100%)</label>
+                                <input type="text" name="fifthPrizeProbability" id="fifthPrizeProbability" class="form-control" value="<%=result.fifthPrizeProbability%>">
+                                </div>
+                                <input type="hidden" name="advertisement" class="form-control" value="<%=req.param('advertisement')%>">
+                                </form>
+                                <button type="button" id="submit" class="btn btn-default">创建</button>
+                                <button type="button" class="btn btn-default" onClick="javascript:window.history.back()">取消</button>
+                            </div>
+                        </div>              
+                </div>
+    </div>
+    <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function(){
+                if("<%=numberOfPrize%>"=="0"){
+                    $("#firstPrizeProbability").prop('disabled', true);
+                    $("#firstPrizeProbability").val("");
+                    $("#secondPrizeProbability").prop('disabled', true);
+                    $("#secondPrizeProbability").val("");
+                    $("#thirdPrizeProbability").prop('disabled', true);
+                    $("#thirdPrizeProbability").val("");
+                    $("#fourthPrizeProbability").prop('disabled', true);
+                    $("#fourthPrizeProbability").val("");
+                    $("#fifthPrizeProbability").prop('disabled', true);
+                    $("#fifthPrizeProbability").val("");
+                }
+                if("<%=numberOfPrize%>"=="1"){
+                    $("#secondPrizeProbability").prop('disabled', true);
+                    $("#secondPrizeProbability").val("");
+                    $("#thirdPrizeProbability").prop('disabled', true);
+                    $("#thirdPrizeProbability").val("");
+                    $("#fourthPrizeProbability").prop('disabled', true);
+                    $("#fourthPrizeProbability").val("");
+                    $("#fifthPrizeProbability").prop('disabled', true);
+                    $("#fifthPrizeProbability").val("");
+                }
+                if("<%=numberOfPrize%>"=="2"){
+                    $("#thirdPrizeProbability").prop('disabled', true);
+                    $("#thirdPrizeProbability").val("");
+                    $("#fourthPrizeProbability").prop('disabled', true);
+                    $("#fourthPrizeProbability").val("");
+                    $("#fifthPrizeProbability").prop('disabled', true);
+                    $("#fifthPrizeProbability").val("");
+                }
+                if("<%=numberOfPrize%>"=="3"){
+                    $("#fourthPrizeProbability").prop('disabled', true);
+                    $("#fourthPrizeProbability").val("");
+                    $("#fifthPrizeProbability").prop('disabled', true);
+                    $("#fifthPrizeProbability").val("");
+        
+                }
+                if("<%=numberOfPrize%>"=="4"){
+                    $("#fifthPrizeProbability").prop('disabled', true);
+                    $("#fifthPrizeProbability").val("");
+                }
+            
+            $("#submit").click(function(){
+                
+                var errMsg = [];
+                var inputNames = ['firstPrizeProbability', 'secondPrizeProbability', 'thirdPrizeProbability', 'fourthPrizeProbability', 'fifthPrizeProbability'];
+                var err = false;
+                $.each(inputNames, function(i, inputName){
+                    var prob;
+                    prob = $("#"+inputName).val();
+                    if(prob!=""){
+                        if(isNaN(prob) || parseFloat(prob) < 0 || parseFloat(prob) > 100 )
+                            err = true;
+                       
+                    }
+                });
+                
+                if(err)
+                    errMsg.push("机率0至100");
+                
+                if(errMsg.length > 0){
+                    alert(errMsg.join('\n'));
+                    return;
+                }
+                $("#form").submit();
+            })
+        })
+    </script>

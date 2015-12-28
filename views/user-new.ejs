@@ -1,0 +1,38 @@
+
+        
+        <div class="container content">
+            <div class="row">
+                        <div class="panel panel-default full-width" >
+                            <ol class="breadcrumb panel-heading">
+                              <li><a href='/user'>员工账户</a></li>
+                                <li>账户创建</li>
+                            </ol>  
+                            <div class="panel-body">
+                                <form id="form" name="form" action="/user/" method="post">                
+                                <div class="form-group">
+                                <label>用户名 <span class="mandatory">*</span></label>
+                                <input type="text" name="username" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                <label>密码 <span class="mandatory">*</span></label>
+                                <input type="text" name="password" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                <label>角色 <span class="mandatory">*</span></label>
+                                <select name="role" class="form-control">
+                                    <option value="admin">管理员</option>
+                                    <option value="user">普通用户</option>
+                                </select>
+                                </div>
+                                    <input type="button" class="btn btn-default" value="创建" onClick="javascript:document.form.submit();"/>
+                  <input type="button" class="btn btn-default" onClick="javascript:window.history.back()" value="取消"/>  
+                                </form>
+                            </div>
+                        </div>              
+                </div>
+            
+            
+    </div>
+    <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+

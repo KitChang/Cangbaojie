@@ -1,0 +1,44 @@
+var cloudinary = require('cloudinary');
+cloudinary.config({ 
+  cloud_name: 'fermithinks', 
+  api_key: '452722775969558', 
+  api_secret: 'mosgZVIvKB1jt1mw9WaO2vaSS3s' 
+});
+
+
+req.file('photo').upload(function (err, files) {
+                if (err)
+                    console.log("err");
+                if (files.length == 0) {
+                    user_client.create({name: user_client_name, call_number: call_number, desc: desc, national: national, desc: desc, active: 'Y', leave: 'N'}).exec(function(err, worker2){
+                    if(err){
+                        res.view('500', {message: 'Sorry, user_client not created!'});
+                        return;
+                        }
+                    var message = "Staff create success";
+                    res.redirect('user_client-view');
+                    return;                
+                    });
+                    return;
+                }
+                image_path = files[0].fd;            
+                console.log(files);
+                var imageVersion = null;
+                var imagePublicId = null;
+                var imageFormat = null;
+                if (image_path != null){        
+                cloudinary.uploader.upload(image_path,
+                function(result) {
+                    imageVersion=result.version;
+                    imagePublicId = result.public_id;
+                    imageFormat = result.format;
+                    user_client.create({name: user_client_name, call_number: call_number, desc: desc, national: national, desc: desc, active: 'Y', leave: 'N', imageVersion: imageVersion, imagePublicId: imagePublicId, imageFormat: imageFormat}).exec(function(err, user_client2){
+                    if(err){
+                        res.view('500', {message: 'Staff not created'});
+                        return;
+                    }
+                    var message = "Staff create success";
+                    console.log(message);
+                    res.redirect('user_client-view');                    
+                    });
+                });

@@ -1,0 +1,58 @@
+
+      <div class="container content">
+        <div class="row">
+            <div class="panel panel-default full-width">
+                <ol class="breadcrumb panel-heading">
+                  <li>资料管理</li>
+                  <li><a href="/data/prize-winner">获奖人－请选广告</a></li>
+                  <li>获奖人</li>
+                </ol>  
+
+                <div class="panel-body">
+                <table class="table table-strip" id="table">
+                    <thead>
+                    <tr><th>日期</th><th>用户名</th><th>用户联系</th><th>奖项</th><th>领奖</th><th>截止日期</th><th>有效</th></tr>
+                    </thead>
+                    <tbody>
+                    <%
+                    if(resultArr!=null)
+                    while(resultArr.length){
+                        var row = resultArr.pop();
+                        var date = row.createdAt;
+                        var date2 = moment(date).startOf('day').format("YYYY-MM-DD");
+                        var pickStatus = row.pick_status;
+                        if(pickStatus)
+                            pickStatus = "已领";
+                        else
+                            pickStatus = "未领";
+                        var expiredDate = row.coupon_expiredDate;
+                        expiredDate = moment(expiredDate).add(8, 'hours').utc().format("YYYY-MM-DD HH:mm:ss");
+                        var expired = !moment().isBefore(expiredDate);
+                        if(expired)
+                            expired = "过期";
+                        else
+                            expired = "未过期";
+                    %>
+                    <tr><td><%=date2%></td><td><%=row.app_user.username%></td><td><%=row.app_user.phone%></td><td><%=row.prize%></td><td><%=pickStatus%></td><td><%=expiredDate%></td><td><%=expired%></td></tr>
+                    <%
+                    }
+                    %>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </div>
+        
+      </div>
+    
+
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+    <script>
+        $("#table").DataTable({"language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.10/i18n/Chinese.json"
+            }});
+    </script>

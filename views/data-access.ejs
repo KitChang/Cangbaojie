@@ -1,0 +1,259 @@
+
+    
+      <div class="container content">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading"><a href="http://<%=req.host%>:<%=req.port%>/data/access/<%=req.param('id')%>">广告点击量</a></div>             
+                    
+                <div class="panel-body">
+                    <div class="panel-elem">
+                        <mark><%=advertisement.title%></mark>
+                    </div>
+                    <form class="form-inline panel-elem" method="get" action="/data/access/<%=req.param('id')%>">
+                    <div class="form-group">
+                        <label>年份</label>
+                        <select class="form-control" id="year" name="year">
+                            <option value="2015">2015</option>
+                            <option value="2016">2016</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>月份</label>
+                        <select class="form-control" id="month" name="month">
+                            
+                        </select>
+                    </div>
+                    <a class="btn btn-default" id="access-month">月统计</a>
+                    <div class="form-group">
+                        <label>日</label>
+                        <select class="form-control" id="day" name="day">
+                            
+                        </select>
+                    </div>
+                    <a class="btn btn-default" id="access-day">日统计</a>
+                    </form>
+                    <div class="panel-elem">
+                        <mark>月统计点击量</mark>
+                </div>
+                <canvas id="access-month-ctx" width="900" height="400"></canvas>
+                <div class="panel-elem">
+                        <mark>日统计点击量</mark>
+                </div>
+                <canvas id="access-day-ctx" width="900" height="400"></canvas>
+                    
+                </div>
+                
+                
+            </div>
+        </div>
+        
+      </div>
+    
+
+    <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="../../js/series.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+    
+    <script>
+        
+        var formats = {
+            a: function(i) {
+            return ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"][i];
+            },
+            b: function(i) {
+            return ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"][i];
+            },
+            e: function(i) {
+            return ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][i];
+            }
+        }
+
+        $(document).ready(function(){
+            var today = new Date();
+            alert(today.getDate());
+            $("#month").append(function(){
+                var _html, html;
+                for (var i=0; i<12; i++){
+                    
+                    if(today.getMonth()==i){
+                        _html = "<option value='"+formats.e(i)+"' selected>"+(i+1)+"</option>";
+                    }else{
+                        _html = "<option value='"+formats.e(i)+"'>"+(i+1)+"</option>";
+                    }
+                    
+                    html += _html;
+                }
+                return html;
+            }());
+            $("#day").append(function(){
+                var day_i, day;
+                //alert(today.getDay());
+                for(var i=1; i<=31; i++){
+                    if((today.getDate())==(i)){
+                        day_i = "<option value='"+i+"' selected>"+i+"</option>";
+                    }else{
+                        day_i = "<option value='"+i+"' >"+i+"</option>";
+                    }
+                    day += day_i;
+                }
+                return day;
+            }());
+            
+            s = new Series().y(function(d){return d.sum});
+        <%
+            while(resultArr.length){
+                result = resultArr.pop();
+                item = {};
+                var createdAt = result.createdAt;
+                var time = createdAt.toString().split(" ");
+                item.time = result.createdAt;
+                item.sum = 1;
+        %>
+            s.put({time: "<%=item.time%>", sum: <%=item.sum%>});
+        <%
+            }
+        
+        %>
+            var data2;
+            $('#access-month').click(function(){
+                var year = $("#year").val();
+                var month = $("#month").val();
+                var aggreData = [];
+                if(s.length!=0){
+                    aggreData = Series.y(function(d){ return d.sum; })
+                    .aggregation(Series.sum)
+                    .key(function(d){ 
+                      var createdAt = d.time;
+                      var timeArr = createdAt.split(" ");
+                      var key = timeArr[3]+timeArr[1]+timeArr[2]+"";
+                      return key })(s);
+                }
+                
+                data = Series.range(1, 32).map(function(d){
+                    var v;
+                    if(d<10)
+                        d = "0"+d;
+                    for(var i=0; i<aggreData.length; i++) {   
+                        
+                    if(aggreData[i].t==(year+month+d)){
+                       v = aggreData[i].y;
+                       break;
+                    }
+                    else
+                       v = 0;
+                    }
+                    return {
+                    v: v,
+                    t: d
+                    }
+                    })
+                
+                var y = [], t = [];
+                data.forEach(function(d){
+                y.push(d.v);t.push(d.t);});
+                data2 = {
+                    labels: t,
+                    datasets: [
+                        {
+                            label: "My First dataset",
+                            fillColor: "rgba(220,220,220,0.2)",
+                            strokeColor: "rgba(220,220,220,1)",
+                            pointColor: "rgba(220,220,220,1)",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "rgba(220,220,220,1)",
+                            data: y
+                        }
+                    ]
+                };
+                var myLineChart;
+            var ctx = document.getElementById("access-month-ctx").getContext("2d");
+                myLineChart = new Chart(ctx).Line(data2, {
+                bezierCurve: false
+            });
+                
+            });
+            $("#access-month").trigger("click");
+            
+            $('#access-day').click(function(){
+                var year = $("#year").val();
+                var month = $("#month").val();
+                var day = $("#day").val();
+                if(parseInt(day)<10){
+                    day = "0"+day;
+                }
+                var aggreData = [];
+                if(s.length!=0){
+                    aggreData = Series.y(function(d){ return d.sum; })
+                    .aggregation(Series.sum)
+                    .key(function(d){ 
+                    var createdAt = d.time;
+                    var timeArr = createdAt.split(" ");
+                    var hour = timeArr[4].split(":")[0];
+                    //alert(hour);
+                    var key = timeArr[3]+timeArr[1]+timeArr[2]+hour+"";
+                        //alert(key);
+                    return key })(s);
+                }
+                
+                data = Series.range(0, 25).map(function(d){
+                    var v;
+                    if(d<10)
+                        d = "0"+d;
+                    for(var i=0; i<aggreData.length; i++) {   
+                        
+                    if(aggreData[i].t==(year+month+day+d)){
+                       v = aggreData[i].y;
+                       break;
+                    }
+                    else
+                       v = 0;
+                    }
+                    return {
+                    v: v,
+                    t: d
+                    }
+                    })
+                var y = [], t = [];
+                data.forEach(function(d){
+                y.push(d.v);t.push(d.t);});
+                
+                data2 = {
+                    labels: t,
+                    datasets: [
+                        {
+                            label: "My First dataset",
+                            fillColor: "rgba(220,220,220,0.2)",
+                            strokeColor: "rgba(220,220,220,1)",
+                            pointColor: "rgba(220,220,220,1)",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "rgba(220,220,220,1)",
+                            data: y
+                        }
+                    ]
+                };
+                var myLineChart;
+            var ctx = document.getElementById("access-day-ctx").getContext("2d");
+                myLineChart = new Chart(ctx).Line(data2, {
+                bezierCurve: false
+            });
+                
+            });
+            
+            $("#access-day").trigger("click");
+
+            
+        });
+        
+    </script>
+      
+      
+    
+    
+    
+    
+  </body>
+</html>

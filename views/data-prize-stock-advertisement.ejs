@@ -1,0 +1,30 @@
+
+      <div class="container content">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading"><a href="http://<%=req.host%>:<%=req.port%>/data/access">奖项</a>                      </div>   
+                <div class="panel-body">
+                    
+                </div>
+                <table class="table table-striped">
+                    <thead></thead>
+                    <tr><th>广告名</th><th>广告题目</th><th></th></tr>
+                <%
+                var row;
+                while (resultArr.length) {
+                  row = resultArr.pop();
+                %>
+                   <tr><td><%=row.name%></td><td><%=row.title%></td><td><a href="/data/prize-stock/<%=row.id%>" class="btn btn-default">奖项统计</a></td></tr>
+                <%
+                }
+                %>
+                </table>
+                
+            </div>
+        </div>
+        
+      </div>
+    
+    <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    

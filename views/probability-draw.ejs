@@ -1,0 +1,53 @@
+
+    
+      <div class="container content">
+        <div class="row">
+            <div class="panel panel-default full-width">
+                <ol class="breadcrumb panel-heading">
+                  <li><a href="/advertisement">广告管理</a></li>
+                  <li><a href="/advertisement/<%=req.param('advertisement')%>">广告</a></li>
+                  <li class="active">机率抽奖</li>
+                </ol>  
+                <div class="panel-body">
+                    <button onClick="href=window.location.href='/ProbabilityDraw/new?advertisement=<%=req.param('advertisement')%>'" class="btn btn-default right">加抽奖法则</button>
+                    
+                </div>
+                <div class="panel-body">
+                <form name="form">
+                <table class="table table-striped" id="table">
+                    <thead>
+                    <tr><th>奖项</th><th>机率</th><th></th></tr>
+                    </thead>
+                    <tbody>
+                <%
+                var row;
+                while (resultArr.length) {
+                  row = resultArr.pop();
+                %>
+                    <tr><td><%=row.prize%></td><td><%=row.probability%></td><td><a class="btn btn-default" onClick="javascript: destroy('<%=row.id%>');">删除</a></td></tr>
+                <%
+                }
+                %>
+                    </tbody>
+                </table>
+                </form>
+                </div>
+
+            </div>
+        </div>
+        
+      </div>
+    
+
+
+    <script>
+        function destroy(rowId){
+            document.form.action = "/ProbabilityDraw/destroy/"+rowId+"?advertisement=<%=req.param('advertisement')%>";
+            document.form.method = "post";
+            document.form.submit();
+        }
+    </script>
+      
+    <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    

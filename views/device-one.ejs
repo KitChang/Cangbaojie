@@ -1,0 +1,87 @@
+ <div class="container content">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel panel-default full-width">
+            <ol class="breadcrumb panel-heading">
+              <li><a href="/device">设备</a></li>
+              <li class="active">编辑</li>
+            </ol>
+            <div class="panel-body">
+              <form action="/device/<%=result.id%>" method="post" name="form" style="display: none;">
+              <div class="form-group">
+                <label>藏宝街标名</label>
+                  <% 
+                      var cbjTag = result.cbjTag;
+                  %>
+                <input type="text" name="cbjTag" class="form-control" value="<%=cbjTag%>">
+              </div>
+                  <input type="button" class="btn btn-default" value="更新" onClick="javascript:document.form.submit();"/>
+                  <input type="button" class="btn btn-default" onClick="javascript:window.history.back()" value="取消"/>
+              </form>
+            </div>
+            <div class="panel-body">
+            <table class="table table-striped" id="table">
+                <thead>
+                    <tr><th>设备编号</th><th>省</th><th>城市</th><th>地区</th><th>街道</th><th>详细位置</th><th>位置类型</th><th>状态</th><th>经纬度</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><%=result.name%></td>
+                        <td><%=result.state%></td><td><%=result.city%></td>
+                        <td><%=result.region%></td><td><%=result.street%></td>
+                        <td><%=result.location%></td>
+                        <td><%=result.location_type%></td>
+                        <td>正常</td>
+                        <td><%=result.coordinate%></td>
+                    </tr>
+
+                </tbody>
+                </table>
+            
+            </div>
+            <%
+              if(faultDeviceFound){
+            %>
+            <div class="panel-body">
+                <form name="form" id="form" action="/DeviceMonitor/deviceOK?redirect=device&device=<%=result.id%>" method="post">
+                    <div class="form-group">
+                    <label>设备故障</label>
+                    <input type="submit" class="btn btn-default" value="正常"/>
+                    </div>
+                </form>
+            </div>
+            
+            <%    
+              }
+            %>
+            <div class="panel-body">
+                <div class="row">
+                  
+                <%
+                while(ads.length){
+                    var ad = ads.pop();
+                    if(ad.advertisementImage!=null){
+                    var image = ad.advertisementImage;
+                %>
+                    <div class="col-xs-6 col-md-2" style="text-align: center;">
+                    <a href="/advertisement/<%=ad.id%>" class="thumbnail">
+                      <img src="http://res.cloudinary.com/djdts3tqq/image/upload/v<%=image.imageVersion%>/<%=image.imagePublicId%>.<%=image.imageFormat%>">
+                    </a>
+                    <span style="align: right;"><%=ad.title%></span>
+                    </div>
+                
+                <%
+                    }
+                }
+                %>
+                
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    
+    <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>

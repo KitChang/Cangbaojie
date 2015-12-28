@@ -1,0 +1,166 @@
+
+        
+        <div class="container content">
+            <div class="row">
+                <div class="col-md-12">
+                    
+
+                    
+                        <div class="panel panel-default full-width">
+                            
+                            <div class="panel-heading">奖劵</div>
+                            <div class="panel-body">
+                                <form id="form" name="form" action="/advertisement/<%=result.id%>/prize" method="post">   
+                                <div class="form-group" id="radio">
+                                <label>奖劵有效类型 <span class="mandatory">*</span></label>
+                                <br/>
+                                <label>奖劵有效天数</label>
+                                <input type="radio" id="prizeCouponExpiredDuration_radio" value="duration" name="prizeCouponExpiredType" class="form-control">
+                                <label>奖劵有效日期</label>
+                                 <input type="radio" id="prizeCouponExpiredDate_radio" value="date" name="prizeCouponExpiredType" class="form-control">
+                                </div>
+                                <div class="form-group" id="prizeCouponExpiredDuration_div">
+                                <label>奖劵有效天数</label>
+                                <input type="text" id="prizeCouponExpiredDuration" name="prizeCouponExpiredDuration" class="form-control">
+                                </div>
+                                <div class="form-group" id="prizeCouponExpiredDate_div">
+                                <label>奖劵有效日期</label>
+                                <input type="text" id="prizeCouponExpiredDate" name="prizeCouponExpiredDate" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                <label>领奖地点 <span class="mandatory">*</span></label>
+                                <input type="text" name="redeemLocation" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                <label>商家介绍 <span class="mandatory">*</span></label>
+                                <textarea style="min-width: 50%; min-height: 150px;" name="companyIntroduction" class="form-control">
+                                <%
+                                    if(!result.companyIntroduction){
+                                %>
+                                    <%=companyIntroduction%>
+                                <%
+                                    }else{
+                                %>
+                                    <%=result.companyIntroduction%>
+                                <%
+                                    }
+                                %>
+                
+                                    </textarea>
+                                </div>
+                                <div class="form-group">
+                                <label>高级领奖码 <span class="mandatory">*</span></label>
+                                <input type="text" name="highCode" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                <label>一般领奖码 <span class="mandatory">*</span></label>
+                                <input type="text" name="lowCode" class="form-control">
+                                </div>
+                                    <button type="submit" class="btn btn-default">提交</button>
+                                    <button type="button" class="btn btn-default" onClick="javascript: window.history.back();">取消</button>
+                                </form>
+                            </div>
+                        </div>              
+                </div>
+            </div>
+            
+    </div>
+
+    
+    <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha3840mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js">         </script>
+
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+
+
+    <script>
+        alert("sadfdsfds");
+        
+        $("#prizeCouponExpiredDuration_radio").click(function(){
+            $("#prizeCouponExpiredDate_div").css("display", "none");
+            $("#prizeCouponExpiredDuration_div").css("display", "block");
+        });
+        $("#prizeCouponExpiredDate_radio").click(function(){
+            $("#prizeCouponExpiredDate_div").css("display", "block");
+            $("#prizeCouponExpiredDuration_div").css("display", "none");
+        });
+        $("#prizeCouponExpiredDate_div").css("display", "none");
+        $("#prizeCouponExpiredDuration_div").css("display", "block");
+        $("#prizeCouponExpiredDuration_radio").trigger("click");
+        
+        <%
+        if(result.prizeCouponExpiredType=="duration"){
+        %>
+            //$("#radio").css("display", "none");
+            $("#prizeCouponExpiredDate_div").css("display", "none");
+            $("#prizeCouponExpiredDuration_div").css("display", "block");
+            $("#prizeCouponExpiredDuration_radio").trigger("click");
+        
+        <%
+        }
+        %>
+        <%
+        if(result.prizeCouponExpiredType=="date"){
+        %>
+            //$("#radio").css("display", "none");
+            $("#prizeCouponExpiredDate_div").css("display", "block");
+            $("#prizeCouponExpiredDuration_div").css("display", "none");
+            $("#prizeCouponExpiredDate_radio").trigger("click");
+        <%
+        }
+        %>
+        <%
+        if(result.prizeCouponExpiredDuration){
+            
+        %>
+        $("input[name='prizeCouponExpiredDuration']").val("<%=result.prizeCouponExpiredDuration%>");
+        <%
+        }
+        %>
+        
+        <%
+        if(result.prizeCouponExpiredDate){
+            
+        %>
+        $("input[name='prizeCouponExpiredDate']").val("<%=moment(result.prizeCouponExpiredDate).format("MM/DD/YYYY")%>");
+        <%
+        }
+        %>
+        <%                                         
+        if(!result.redeemLocation){
+                result.redeemLocation = redeemAddress;
+        %>                                            
+        $("input[name='redeemLocation']").val("<%=result.redeemLocation%>");
+        <%
+        }else{
+        %>
+        $("input[name='redeemLocation']").val("<%=result.redeemLocation%>");                                    
+        <%
+        }
+        %>
+        
+        <%
+        if(result.highCode!=null){
+            
+        %>
+        $("input[name='highCode']").val("<%=result.highCode%>");
+        <%
+        }
+        %>
+        <%
+        if(result.lowCode!=null){
+            
+        %>
+        $("input[name='lowCode']").val("<%=result.lowCode%>");
+        <%
+        }
+        %>
+                                                                                                       $("#prizeCouponExpiredDate").daterangepicker({singleDatePicker: true});
+        
+        
+    </script>
+   
+    
+    

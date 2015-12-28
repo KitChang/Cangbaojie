@@ -1,0 +1,70 @@
+
+    
+      <div class="container content">
+        <div class="row">
+            <div class="panel panel-default full-width">
+                <ol class="breadcrumb panel-heading">
+                              <li>广告管理</a></li>
+                              <li class="active">广告客户商家</li>
+                </ol>
+                <div class="panel-body">
+                    <button class="btn btn-default right" onClick="javascript: window.location.href='/client/new'">创建</button>
+                    <button type="button" class="btn btn-default right" onClick="javascript:window.history.back()" value=""/> 取消 </button>
+                </div>
+                <div class="panel-body">
+                <form name="form" action="/dfd/" method="post">
+                
+                <table class="table table-striped" id="table">
+                    <thead>
+                    <tr><th>广告客户商家</th><th>联系人</th>
+                        <th>电话</th><th>邮箱</th>
++                    <th>刪除</th></tr>
+
+                    </thead>
+                    <tbody>
+                <%
+                var row;
+                while (resultArr.length) {
+                  row = resultArr.pop();
+                %>
+                    <tr>
+                        <td><img src="images/default_logo.png" class="img-rounded" width="50" height="50" style="margin-right: 10px;"></img><a href="/client/<%=row.id%>"><%=row.name%></a></td>
+                        <td><%=row.contactPerson%></td>
+                        <td><%=row.mobilePhone%>,<%=row.phone%></td>
+                        <td><%=row.email%></td>
+                        <td><a class="btn btn-danger" onClick="javascript: destroy('<%=row.id%>');">删除</a></td>
+                    </tr>
+                <%
+                }
+                %>
+                    </tbody>
+                </table>
+                </form>
+                </div>
+
+            </div>
+        </div>
+        <footer class="footer">
+        <p>&copy; Company 2015</p>
+        </footer>
+      </div>
+    
+
+
+    <script>
+        function destroy(rowId){
+            document.form.action = "/client/destroy/"+rowId;
+            document.form.method = "post";
+            document.form.submit();
+        }
+    </script>
+      
+    <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+    <script>
+        $("#table").DataTable({"language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.10/i18n/Chinese.json"
+            }});
+    </script>
+

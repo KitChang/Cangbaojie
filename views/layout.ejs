@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+    <title>藏宝街</title>
+    <!-- Bootstrap core CSS -->
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/bootstrap/css/bootstrap-theme.css" rel="stylesheet">
+    <link href="/styles/custom.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+     <link rel="stylesheet" href="/jQuery-File-Upload-9.11.2/css/jquery.fileupload.css"/>
+    <link href="//cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css" rel="stylesheet">
+    </head>
+
+  <body>
+    
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">藏宝街</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+                    <li><a href="http://<%=req.host%>:<%=req.port%>/">首页</a></li>
+                    <li><a href="http://<%=req.host%>:<%=req.port%>/device">设备管理</a></li>
+                    <li class="dropdown">
+                      <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">广告管理 <span class="caret"></span></a>
+                      <ul class="dropdown-menu">
+                        <li><a href="http://<%=req.host%>:<%=req.port%>/advertisement">广告</a></li>
+                          <li><a href="http://<%=req.host%>:<%=req.port%>/client">广告客户商家</a></li>         <li><a href="http://<%=req.host%>:<%=req.port%>/PrizeCoupon/advertisement">奖劵</a></li>
+                      </ul>
+                    </li>
+                    <li class="dropdown">
+                      <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">数据管理 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                          <li><a href="http://<%=req.host%>:<%=req.port%>/data/advertisement">广告点击</a></li>
+                          <li><a href="http://<%=req.host%>:<%=req.port%>/data/access-region">广告点击 (地区)</a></li>
+                          <li><a href="http://<%=req.host%>:<%=req.port%>/data/access-street">广告点击 (街道)</a></li>
+                          <li><a href="http://<%=req.host%>:<%=req.port%>/data/prize-winner">获奖人</a></li>
+                          
+                        </ul>
+                    </li>
+              <li class="dropdown">
+                      <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">用户管理 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                          <li><a href="http://<%=req.host%>:<%=req.port%>/user">员工帐户</a></li>
+                          <li><a href="http://<%=req.host%>:<%=req.port%>/user_client">商家帐户</a></li>
+                         
+                        </ul>
+                    </li>
+          </ul>
+            <%
+                  var username = "";
+                  if(req.session.user)
+                      username = req.session.user.username;
+                  %>
+                  
+          <ul class="nav navbar-nav navbar-right">
+              <li></li>
+            <li><a href="/user/logout"><%=username%> 退出</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <%- body %>
+    <footer class="footer">
+        <p>&copy; 2015</p>
+    </footer>
+
+
+
+    
+  </body>
+</html>

@@ -1,0 +1,65 @@
+
+    
+      <div class="container content">
+        <div class="row">
+            <div class="panel panel-default full-width">
+                <ol class="breadcrumb panel-heading">
+                  <li><a href="/advertisement">广告管理</a></li>
+                  <li><a href="/advertisement/<%=req.param('advertisement')%>">广告</a></li>
+                  <li class="active">排序抽奖</li>
+                </ol>  
+                <div class="panel-body">
+                    <button onClick="href=window.location.href='/OrderDraw/new?advertisement=<%=req.param('advertisement')%>'" class="btn btn-default right">加抽奖法则</button>
+                </div>
+                <div class="panel-body">
+                    <dl class="dl-horizontal">
+                      <dt>当前访问数</dt>
+                      <dd><%=drawCount%></dd>
+                    </dl>
+                <form name="form">
+                <table class="table table-striped" id="table">
+                    <thead>
+                    <tr><th>访问数开始</th><th>访问数结束</th><th>一等奖数值范围</th><th>二等奖数值范围</th><th>三等奖数值范围</th><th>四等奖数值范围</th><th>五等奖数值范围</th><th></th></tr>
+                    </thead>
+                    <tbody>
+                <%
+                var row;
+                while (resultArr.length) {
+                  row = resultArr.pop();
+                %>
+                        <tr>
+                            <td><%=row.drawCountLowerBound%></td>
+                            <td><%=row.drawCountUpperBound%></td>
+                            <td><%=row.firstPrizeRange%></td>
+                            <td><%=row.secondPrizeRange%></td>
+                            <td><%=row.thirdPrizeRange%></td>
+                            <td><%=row.fourthPrizeRange%></td>
+                            <td><%=row.fifthPrizeRange%></td>
+                            <td><a class="btn btn-default" onClick="javascript: destroy('<%=row.id%>');">删除</a></td></tr>
+                <%
+                }
+                %>
+                    </tbody>
+                </table>
+                </form>
+                </div>
+
+            </div>
+        </div>
+        
+      </div>
+    
+
+
+    <script>
+        function destroy(rowId){
+            document.form.action = "/OrderDraw/destroy/"+rowId+"?advertisement=<%=req.param('advertisement')%>";
+            document.form.method = "post";
+            document.form.submit();
+        }
+    </script>
+      
+    <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    
+    

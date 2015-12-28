@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+    <title>藏宝街</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/bootstrap/css/bootstrap-theme.css" rel="stylesheet">
+    <link href="/styles/custom.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+    <div class="v4-tease">高尔传媒品牌智能推广管理系统</div>
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">藏宝街</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="http://<%=req.host%>:<%=req.port%>/">首页</a></li>
+            <li><a href="http://<%=req.host%>:<%=req.port%>/device">设备管理</a></li>
+            <li class="active"><a href="http://<%=req.host%>:<%=req.port%>/advertisement">广告管理</a></li>
+            <li><a href="#contact">数据管理</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="../navbar-static-top/">退出</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+      <div class="container">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading"><a href="http://<%=req.host%>:<%=req.port%>/device">设备</a></div>   
+                <div class="panel-body">
+                    
+                </div>
+                
+                <table class="table table-striped">
+                    <tr><th>名</th><th>省</th><th>城市</th><th>地区</th><th>位置</th></tr>
+                <%
+                var row;
+                while (resultArr.length) {
+                  row = resultArr.pop();
+                %>
+                    <tr><td><a href="/device/<%=row.id%>"><%=row.name%></a></td><td><%=row.state%></td><td><%=row.city%></td><td><%=row.region%></td>
+                    <td><%=row.location%></td></tr>
+                <%
+                }
+                %>
+                </table>
+
+            </div>
+        </div>
+        <footer class="footer">
+        <p>&copy; Company 2015</p>
+        </footer>
+      </div>
+    
+
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script>
+    </script>
+    
+    
+    
+    
+  </body>
+</html>

@@ -1,0 +1,169 @@
+
+    
+      <div class="container content">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">广告点击量 (街道)</div>             
+                    
+                <div class="panel-body">
+                    
+                    <form class="form-inline" method="get" action="/data/access-street">
+                    <div class="form-group">
+                        <select class="form-control" id="state" name="state">
+                            <option value="">请选省</option>
+                            <option value="广西省">广西省</option>
+                            <option value="广东省">广东省</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" id="city" name="city">
+                            
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" id="region" name="region">
+                        </select>
+                    </div>
+                    
+                    
+                    <button class="btn btn-default">统计</button>
+                    </form>
+                    <p class="where text-right">
+                         <mark>
+                        <% 
+                        if(req.param('locationType')!=undefined&&req.param('locationType')!=null){
+                        %>
+                        <%=req.param("locationType")%>
+                        <% 
+                        }
+                        %>
+                        <% 
+                        if(req.param('state')!=undefined&&req.param('state')!=null){
+                        %>
+                        <%=req.param("state")%>
+                        <% 
+                        }
+                        %>
+                        <% 
+                        if(req.param('city')!=undefined&&req.param('city')!=null){
+                        %>
+                        <%=req.param("city")%>
+                        <% 
+                        }
+                        %>
+                        <%
+                        if(req.param('region')!=undefined&&req.param('region')!=null){
+                        %>
+                        <%=req.param("region")%>
+                        <% 
+                        }
+                        %>
+                        
+                        <%=resultArr.length%>
+                       </mark>
+                    </p>
+                    
+                </div>
+                <canvas id="myChart" width="900" height="400"></canvas>
+                <div id="legend">
+                </div>
+                
+            </div>
+        </div>
+        
+      </div>
+    <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="../../js/series.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+    <script>
+    $("#state").change(function(){
+        var selectedState = $("#state option:selected").text();
+        $("#city").empty();
+        $("#region").empty();
+        $
+        $.ajax({
+        url: "/geo/city?state="+selectedState
+        }).done(function(data){
+          $("#city").empty();
+          $("#city").append("<option value=''>请选城市</option>");
+          html = "";
+          while (data.length) {
+            var city = data.pop();
+            option = "<option value='"+city+"'>"+city+"</option>";
+            html = html + option;
+            //code
+          }
+          $("#city").append(html);
+          });
+      });
+    
+    $("#city").change(function(){
+        var selectedState = $("#state option:selected").text();
+        var selectedCity = $("#city option:selected").text();
+        $.ajax({
+        url: "/geo/region?state="+selectedState+"&city="+selectedCity,
+        }).done(function(data){
+          //alert(data);
+          $("#region").empty();
+          $("#region").append("<option value=''>请选地区</option>");
+          html = "";
+          while (data.length) {
+            var region = data.pop();
+            option = "<option value='"+region+"'>"+region+"</option>";
+            html = html + option;
+            //code
+          }
+          $("#region").append(html);
+        });
+      })
+    $(document).ready(function(){
+        s = new Series().y(function(d){return d.sum});
+        <%
+        while(resultArr.length){
+            result = resultArr.pop();
+            item = {};
+            item.key = result.street;
+            item.sum = 1;
+        %>
+            //alert("<%=item.key%>");
+            s.put({key: "<%=item.key%>", sum: <%=item.sum%>});
+        <%
+        }
+        %>
+        var aggreData = Series.y(function(d){ return d.sum; })
+                .aggregation(Series.sum)
+                .key(function(d){ 
+                  var key = d.key;
+                  return key })(s);
+        color = [ "#46BFBD", "#FDB45C", "#212121", "#64af9c", "#6b1f3c", "#127690", "#a2798f", "#008b8b", "#99ccff", "#cc99ff", "#9feaae", "#40d65d", "#65ada2", "#5ee4bb", "#9ffff7", "#2412b4", "#34d491", "#da6665", "#f3d681", "#b9b9b9", "#b9b9b9", "#ffae1a", "#2137ff", "#d8941a", "#d8941a", "#ff2a1a", "#e6b3e6", "#e6b3e6", "#a8e4f0", "#6ef79c", "#5cf53d", "#d6d65c", "#adb87a", "#d6995c", "#f76e6e", "#f08a75", "#eb9947", "#ffdd33", "#cccc00", "#99eb47", "#75f075", "#85e0b3", "#33ffdd","#998cd9",];
+        
+        var sum = 0;
+        aggreData.forEach(function(d){
+            sum = sum + parseInt(d.y);
+        })
+        var i = 0;
+        aggreData.forEach(function(d){
+            d.value = d.y;
+            d.color = color[i];
+            d.label = d.t+" "+ (d.y/sum)*100+"% ";
+            d.highlight = "red"
+            i++;
+        });
+        var ctx = document.getElementById("myChart").getContext("2d");
+
+        var myPieChart = new Chart(ctx).Doughnut(aggreData);
+        legendHtml = "";
+        aggreData.forEach(function(d){
+            legendHtml_ = "<dt><span style='background-color:"+d.color+"'>&nbsp;&nbsp;&nbsp;&nbsp;</span></dt><dd>"+d.label+": "+d.value+"</dd>";
+            legendHtml += legendHtml_;
+        });
+        legendHtml = "<dl class='dl-horizontal'>"+legendHtml+"</dl>";
+        
+        $("#legend").append(legendHtml);
+    });
+      
+    </script>
+    
+

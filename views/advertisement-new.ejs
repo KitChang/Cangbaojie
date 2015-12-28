@@ -1,0 +1,332 @@
+        <div class="container content">
+            <div class="row">
+                <div class="col-md-12">
+                        <div class="panel panel-default" style="min-width:45%">
+                            <ol class="breadcrumb panel-heading">
+                              <li><a href="/advertisement">广告</a></li>
+                              <li class="active">创建</li>
+                            </ol>
+                            <div class="panel-body" >
+                                <form id="form" name="form" action="../advertisement?client=<%=req.param('client')%>" method="post">
+                                <div class="form-group">
+                                <label>广告标题 <span class="mandatory">*</span></label>
+                                <input type="text" name="title" id="title" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                <label>详细描述 <span class="mandatory">*</span></label>
+                                <textarea style="text-align:left"  name="description" id="description" class="form-control">
+                                </textarea>
+                                </div>
+                                <div class="form-group">
+                                <label>分类 <span class="mandatory">*</span> </label>
+                                <select class="form-control" name="category" id="category">
+                                    <option value=""></option>
+                                    <option value="宠物及园艺">宠物及园艺</option>
+                                    <option value="汽车用品">汽车用品</option>
+                                    <option value="银行">银行</option>
+                                    <option value="金融机构">金融机构</option>
+                                    <option value="地产中介">地产中介</option>
+                                    <option value="保险">保险</option>
+                                    <option value="餐饮业">餐饮业</option>
+                                    <option value="娱乐业">娱乐业</option>
+                                    <option value="电商">电商</option>
+                                    <option value="资讯科技">资讯科技</option>
+                                    <option value="照明工业">照明工业</option>
+                                    <option value="服装销售">服装销售</option>
+                                    <option value="服饰配件，饰品">服饰配件，饰品</option>
+                                    <option value="设计">设计</option>
+                                    <option value="影视">影视</option>
+                                    <option value="广告，传媒">广告，传媒</option>
+                                    <option value="安全，防护">安全，防护</option>
+                                    <option value="包装">包装</option>
+                                    <option value="纸业">纸业</option>
+                                    <option value="办公，文教">办公，文教</option>
+                                    <option value="数码，电脑">数码，电脑</option>
+                                    <option value="电工电气">电工电气</option>
+                                    <option value="眼镜及配件">眼镜及配件</option>
+                                    <option value="纺𥿗，皮革">纺𥿗，皮革</option>
+                                    <option value="箱包皮具">箱包皮具</option>
+                                    <option value="机械及行业设备">机械及行业设备</option>
+                                    <option value="五金，工具">五金，工具</option>
+                                    <option value="化工">化工</option>
+                                    <option value="精细化学品">精细化学品</option>
+                                    <option value="橡塑">橡塑</option>
+                                    <option value="环保">环保</option>
+                                    <option value="仪器仪表">仪器仪表</option>
+                                    <option value="日用百货">日用百货</option>
+                                    <option value="母婴用品">母婴用品</option>
+                                    <option value="家纺家饰">家纺家饰</option>
+                                    <option value="美妆日化">美妆日化</option>
+                                    <option value="家用电器">家用电器</option>
+                                    <option value="家装，建材">家装，建材</option>
+                                    <option value="交通运输">交通运输</option>
+                                    <option value="工艺品，礼品">工艺品，礼品</option>
+                                    <option value="能源">能源</option>
+                                    <option value="汽摩及配件">汽摩及配件</option>
+                                    <option value="农业">农业</option>
+                                    <option value="食品，饮料">食品，饮料</option>
+                                    <option value="通信产品">通信产品</option>
+                                    <option value="玩具">玩具</option>
+                                    <option value="冶金矿产">冶金矿产</option>
+                                    <option value="医药，保养">医药，保养</option>
+                                    <option value="印刷">印刷</option>
+                                    <option value="运动户外">运动户外</option>
+                                    <option value="机床">机床</option>
+                                    <option value="商务服务">商务服务</option>
+                                    <option value="项目合作">项目合作</option>
+                                    <option value="加工">加工</option>
+                                    <option value="代理">代理</option>
+                                    <option value="电子元器件">电子元器件</option>
+                                    <option value="其他">其他</option>
+                                </select>
+                                </div>
+                                <div class="form-group">
+                                <label>广告有效日期 <span class="mandatory">*</span></label>
+                                <input type="text" name="effectiveDate" id="effectiveDate" class="form-control" id="effective-date">
+                                </div>
+                                <div class="form-group">
+                                <label>广告失效日期 <span class="mandatory">*</span></label>
+                                <input type="text" name="expiredDate" class="form-control" id="expiredDate">
+                                </div>
+                                <div class="form-group">
+                                <div class="form-inline">
+                                    <label>抽奖劵保存时间 <span class="mandatory">*</span></label></br>
+                                <input type="number" name="drawCouponExpiredTime_day" id="drawCouponExpiredTime_day" class="form-control" value="0"> <label> 天</label>
+                                <input type="number" name="drawCouponExpiredTime_hour" id="drawCouponExpiredTime_hour" class="form-control" value="0"> <label> 小时</label>
+                                <input type="number" name="drawCouponExpiredTime_minute" id="drawCouponExpiredTime_minute" class="form-control" value="0" > <label> 分钟</label>
+                                <input type="number" name="drawCouponExpiredTime_second" id="drawCouponExpiredTime_second" class="form-control" value="0"> <label> 秒</label>
+                                </div>
+                                </div>
+                                <input type="hidden" name="drawCouponExpiredTime" id="drawCouponExpiredTime" class="form-control" >
+                                <div class="form-group">
+                                <div class="form-inline">
+                                    <label>抽奖间隔 <span class="mandatory">*</span></label></br>
+                                <input type="number" name="drawPerformInterval_day" id="drawPerformInterval_day" class="form-control" value="0"> <label> 天</label>
+                                <input type="number" name="drawPerformInterval_hour" id="drawPerformInterval_hour" class="form-control" value="0"> <label> 小时</label>
+                                <input type="number" name="drawPerformInterval_minute" id="drawPerformInterval_minute" class="form-control" value="0" > <label> 分钟</label>
+                                <input type="number" name="drawPerformInterval_second" id="drawPerformInterval_second" class="form-control" value="0"> <label> 秒</label>
+                                </div>
+                                </div>
+                                <input type="hidden" name="drawPerformInterval"  class="form-control" id="drawPerformInterval" readonly>
+                                <div class="form-group">
+                                <label>点击价格 <span class="mandatory">*</span></label>
+                                <input type="text" name="pricePerClick" id="pricePerClick" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                <select id="drawType" name="drawType" id="drawType" class="form-control">                           <option value="probability">机率抽奖</option>
+                                    <option value="order">排序抽奖</option>
+
+                                </select>
+                                    <label><span class="mandatory">*選定後不能更換</span></label>
+                                
+                                </div>
+                                <div class="form-group">
+                                <label>奖项数量 <span class="mandatory">*</span></label>
+                                <select id="numberOfPrize" name="numberOfPrize"  class="form-control">                           <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                                <label><span class="mandatory">*選定後不能更換</span></label>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="panel panel-default" style="min-width:50%" >
+                            <div class="panel-heading">幸运抽奖</div>
+                            <div class="panel-body">
+                                <div class="form-inline panel-elem">
+                                        <div class="form-group">
+                                        <label>一等奖 <span class="mandatory">*</span></label>
+                                        <input type="text" name="firstPrize" id="firstPrize" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                        <label>数量</label>
+                                        <input type="number" value="0" name="firstPrizeQuantity" id="firstPrizeQuantity" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-inline panel-elem">
+                                        <div class="form-group">
+                                        <label>二等奖</label>
+                                        <input type="text" name="secondPrize" class="form-control">                               </div>
+                                        <div class="form-group">
+                                        <label>数量</label>
+                                        <input type="number" name="secondPrizeQuantity" id="secondPrizeQuantity" value="0" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-inline panel-elem">
+                                        <div class="form-group">
+                                        <label>三等奖</label>
+                                        <input type="text" name="thirdPrize" class="form-control">                               </div>
+                                        <div class="form-group">
+                                        <label>数量</label>
+                                        <input type="number" name="thirdPrizeQuantity" id="thirdPrizeQuantity" class="form-control" value="0">
+                                        </div>
+                                    </div>
+                                    <div class="form-inline panel-elem">
+                                        <div class="form-group">
+                                        <label>四等奖</label>
+                                        <input type="text" name="fourthPrize" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                        <label>数量</label>
+                                        <input type="number" name="fourthPrizeQuantity" id="fourthPrizeQuantity" value="0" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-inline panel-elem">
+                                        <div class="form-group">
+                                        <label>五等奖</label>
+                                        <input type="text" name="fifthPrize" class="form-control">                               </div>
+                                        <div class="form-group">
+                                        <label>数量</label>
+                                        <input type="number" name="fifthPrizeQuantity" id="fifthPrizeQuantity" class="form-control" value="0">
+                                        </div>
+                                    </div>
+                            </div>
+                            </div>
+                            <div class="panel panel-default">
+                            <div class="panel-body">
+                                <button type="button" id="submit" class="btn btn-default">创建</button>                   
+                            </div>
+                            </div>
+                        </div>
+                        
+                </div>
+            </div>
+       
+    </div>
+    <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js">      </script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+      
+    <script>
+        
+        $(document).ready(function(){
+            $("#expiredDate").daterangepicker({singleDatePicker: true});
+            $("#effectiveDate").daterangepicker({singleDatePicker: true});
+            $("#submit").click(function(){
+                var errMsg = [];
+                if($("#title").val().trim()=="")
+                    errMsg.push("题目不为空");
+                if($("#description").val().trim()=="")
+                    errMsg.push("详细描述不为空");
+                if(isNaN($("#pricePerClick").val()))
+                    errMsg.push("点击价格为数字");
+                 if($("#category").val().trim()=="")
+                    errMsg.push("分类不为空");
+                if($("#effectiveDate").val().trim()=="")
+                    errMsg.push("有效日期不为空");
+                if($("#expiredDate").val().trim()=="")
+                    errMsg.push("失效日期不为空");
+                if(isNaN($("#pricePerClick").val())||$("#pricePerClick").val().trim()=="")
+                    errMsg.push("点击价格为数字");
+                if($("#drawType").val().trim()=="")
+                    errMsg.push("抽奖类型不为空");
+                if($("#firstPrize").val().trim()==""||$("#firstPrizeQuantity").val().trim()==""){
+                    errMsg.push("第一奖资料不为空")
+                }
+                var drawCouponExpiredTime_day;
+                drawCouponExpiredTime_day = $("#drawCouponExpiredTime_day").val();
+                if(isNaN(drawCouponExpiredTime_day)||parseInt(drawCouponExpiredTime_day)<0){
+                    errMsg.push("手机保存天数为数字且大于0");
+                }
+                var drawCouponExpiredTime_hour;
+                drawCouponExpiredTime_hour = $("#drawCouponExpiredTime_hour").val();
+                if(isNaN(drawCouponExpiredTime_hour)||parseInt(drawCouponExpiredTime_hour)<0 || parseInt(drawCouponExpiredTime_hour)>=24){
+                    errMsg.push("手机保存小时为数字且0至23");
+                }
+                var drawCouponExpiredTime_minute;
+                drawCouponExpiredTime_minute = $("#drawCouponExpiredTime_minute").val();
+                if(isNaN(drawCouponExpiredTime_minute)||parseInt(drawCouponExpiredTime_minute)<0 || parseInt(drawCouponExpiredTime_minute)>=60 ){
+                    errMsg.push("手机保存分钟为数字且0至59");
+                }
+                var drawCouponExpiredTime_second;
+                drawCouponExpiredTime_second = $("#drawCouponExpiredTime_second").val();
+                if(isNaN(drawCouponExpiredTime_second)||parseInt(drawCouponExpiredTime_second)<0 || parseInt(drawCouponExpiredTime_second)>=60 ){
+                    errMsg.push("手机保存秒数为数字且0至59");
+                }
+                
+                var drawPerformInterval_day;
+                drawPerformInterval_day = $("#drawPerformInterval_day").val();
+                if(isNaN(drawPerformInterval_day)||parseInt(drawPerformInterval_day)<0){
+                    errMsg.push("抽奖有效天数为数字且大于0");
+                }
+                var drawPerformInterval_hour;
+                drawPerformInterval_hour = $("#drawPerformInterval_hour").val();
+                if(isNaN(drawPerformInterval_hour)||parseInt(drawPerformInterval_hour)<0 || parseInt(drawPerformInterval_hour)>=24){
+                    errMsg.push("抽奖有效小时为数字且0至23");
+                }
+                var drawPerformInterval_minute;
+                drawPerformInterval_minute = $("#drawPerformInterval_minute").val();
+                if(isNaN(drawPerformInterval_minute)||parseInt(drawPerformInterval_minute)<0 || parseInt(drawPerformInterval_minute)>=60 ){
+                    errMsg.push("抽奖有效分钟为数字且0至59");
+                }
+                var drawPerformInterval_second;
+                drawPerformInterval_second = $("#drawPerformInterval_second").val();
+                if(isNaN(drawPerformInterval_second)||parseInt(drawPerformInterval_second)<0 || parseInt(drawPerformInterval_second)>=60 ){
+                    errMsg.push("抽奖有效秒数为数字且0至59");
+                }
+                var inputNames = ['firstPrizeQuantity', 'secondPrizeQuantity', 'thirdPrizeQuantity', 'fourthPrizeQuantity', 'fifthPrizeQuantity'];
+                
+                var err = false;
+                $.each(inputNames, function(i, inputName){
+                    var quant;
+                    quant = $("#"+inputName).val();
+                    if(quant!=""){
+                        if(isNaN(parseInt(quant)) || parseInt(quant) < 0)
+                            err = true;
+                        else{
+                            $("#"+inputName).val(parseInt(quant));
+                        }   
+                    }
+                });
+                if(err)
+                    errMsg.push("奖项数量大于0");
+
+                if(errMsg.length){
+                    alert(errMsg.join("\n"));
+                    return;
+                }
+                
+                if(drawCouponExpiredTime_day.trim()=="")
+                    drawCouponExpiredTime_day = 0;
+                if(drawCouponExpiredTime_hour.trim()=="")
+                    drawCouponExpiredTime_hour = 0;
+                if(drawCouponExpiredTime_minute.trim()=="")
+                    drawCouponExpiredTime_minute = 0;
+                if(drawCouponExpiredTime_second.trim()=="")
+                    drawCouponExpiredTime_second = 0;
+                if(drawPerformInterval_day.trim()=="")
+                    drawPerformInterval_day = 0;
+                if(drawPerformInterval_hour.trim()=="")
+                    drawPerformInterval_hour = 0;
+                if(drawPerformInterval_minute.trim()=="")
+                    drawPerformInterval_minute = 0;
+                if(drawPerformInterval_second.trim()=="")
+                    drawPerformInterval_second = 0;
+                var totalAdKeptTimeoutSeconds = parseInt(drawCouponExpiredTime_day)*24*60*60 +parseInt(drawCouponExpiredTime_hour)*60*60+ parseInt(drawCouponExpiredTime_minute)*60+parseInt(drawCouponExpiredTime_second);
+                var totalPerformTimeoutSeconds = parseInt(drawPerformInterval_day)*24*60*60 +parseInt(drawPerformInterval_hour)*60*60+parseInt(drawPerformInterval_minute)*60+parseInt(drawPerformInterval_second);             
+                $("#drawCouponExpiredTime").val(totalAdKeptTimeoutSeconds);
+                $("#drawPerformInterval").val(totalPerformTimeoutSeconds);
+                var form = document.forms['form'];
+                var inputNames = ['firstPrize', 'secondPrize', 'thirdPrize', 'fourthPrize', 'fifthPrize'];
+                $.each(inputNames, function(i, inputName){
+                    var el = document.createElement("input");
+                    el.type = "text";
+                    el.name = inputName;
+                    el.value = $("input[name='"+inputName+"']:visible").val();
+                    form.appendChild(el);
+                    el = document.createElement("input");
+                    el.type = "text";
+                    el.name = inputName+"Quantity";
+                    el.value = $("input[name='"+inputName+"Quantity']:visible").val();
+                    form.appendChild(el);
+                });
+                form.submit();
+            });
+        });
+        
+        
+    </script>
+   
