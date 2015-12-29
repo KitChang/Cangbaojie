@@ -20,8 +20,15 @@ module.exports = {
     updateStatus: function(req, res){
         var status = req.param("status");
         var id = req.param("request");
-        request.update({id: id}, {status: status}).exec(function(){
+        request.update({id: id}, {status: status}).exec(function(err){
+            if(err){
+                res.status(500);
+                res.end();
+                return;
+            }
             res.redirect("/request/findFromDashboard");
+            
+            
         })
     }
     

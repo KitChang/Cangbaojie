@@ -23,6 +23,9 @@ module.exports = {
     findOne: function(req, res){
         var id = req.param("id");
         Device.findOne(id, function(err, result){
+            if(!result){
+                
+            }
             advertisement.find({device: id}).populate('advertisementImage').exec(function(err, ads){
                 var accessDateBefore = moment().subtract(30, 'days').toDate();
                 DeviceMonitor.findOne({device: id, accessDate: {'<': accessDateBefore} }).exec(function(err, faultDeviceFound){

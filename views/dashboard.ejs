@@ -120,7 +120,7 @@
                         faultDevice = faultDevices.pop();
                 %>
                 <li class="list-group-item">
-                    <a href="/device/<%=faultDevice.device%>"><mark><%=faultDevice.device%></mark></a>
+                    <a href="/device/<%=faultDevice.device.id%>"><mark><%=faultDevice.device%></mark></a>
                     <span class="badge"><%=moment(faultDevice.accessDate).fromNow()%></span>
                 </li>
                 <%
