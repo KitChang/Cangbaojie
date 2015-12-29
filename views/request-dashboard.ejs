@@ -1,0 +1,43 @@
+<div class="container content">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel-body">
+                    <button class="btn btn-default right" onClick="javascript:window.history.back()">取消</button>
+                </div>
+                <div class="well">
+                <h3>推广请求</h3>
+                
+                
+                <%
+                    var request = null;
+                    while(requests.length){
+                        request = requests.pop();
+                        if(request.client){
+                %>
+                <div class="list-group">
+                    <li class="list-group-item">
+                    <a href="/client/<%=request.client.id%>"><mark><%=request.client.name%></mark></a>
+                        
+                    
+                    <span class="badge"><%=request.city%></span>
+
+                </li>
+                    <li class="list-group-item">
+                    <a class="btn btn-primary" href="/request/updateStatus?status=close&request=<%=request.id%>">完成</a>
+                    <a class="btn btn-primary" href="/request/updateStatus?status=process&request=<%=request.id%>">处理中</a>
+                        <span class="badge"><%=request.status%></span>
+                    </li>
+                </div>
+                <%
+                        }
+                    }
+                %>
+                
+               
+            </div></div>
+            
+        </div>
+</div>
+<script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
+<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+

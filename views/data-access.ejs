@@ -72,7 +72,6 @@
 
         $(document).ready(function(){
             var today = new Date();
-            alert(today.getDate());
             $("#month").append(function(){
                 var _html, html;
                 for (var i=0; i<12; i++){
@@ -190,6 +189,7 @@
                     .aggregation(Series.sum)
                     .key(function(d){ 
                     var createdAt = d.time;
+                    
                     var timeArr = createdAt.split(" ");
                     var hour = timeArr[4].split(":")[0];
                     //alert(hour);

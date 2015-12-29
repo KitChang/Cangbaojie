@@ -107,6 +107,16 @@ module.exports = {
                 res.redirect('/client/'+clientId+"/balance");
             });
         });
+    },
+    balanceReminder: function(req, res){
+        client.find({sort: 'account DESC'}).exec(function(err, clients){
+            res.view('client-balance-reminder', {clients: clients});
+        });
+    },
+    clickRanking: function(req, res){
+        client.find({sort: 'accessCount DESC'}).exec(function(err, clients){
+            res.view('client-click-ranking', {clients: clients});
+        })
     }
     
 };

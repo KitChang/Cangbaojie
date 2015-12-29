@@ -1,0 +1,33 @@
+<div class="container content">
+        <div class="row">
+            <div class="col-md-4"><div class="well">
+                <h3>所有到期提醒</h3>
+                <div class="list-group">
+                <%
+                    var ad;
+                    while(advertisements.length){
+                        ad = advertisements.pop();
+                %>
+                <li class="list-group-item">
+                    <a href="/client/<%=ad.client.id%>"><mark><%=ad.client.name%></mark></a>
+                    - 
+                    <a href="/advertisement/<%=ad.id%>"><mark><%=ad.title%></mark></a>
+                    
+                    <span class="badge"><%=moment().to(moment(ad.expiredDate))%></span>
+
+                </li>
+                <%
+                    }
+                %>
+                </div>
+
+            </div></div>
+
+        </div>
+</div>
+<script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
+<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+
+
+
+

@@ -228,6 +228,10 @@ module.exports = {
           type: 'string',
           enum: ['draft', 'publish', 'disabled'],
           defaultsTo: 'draft'
+      },
+      quiz: {
+          type: 'array',
+          defaultsTo: []
       }
       
   }

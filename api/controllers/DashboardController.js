@@ -11,7 +11,7 @@ module.exports = {
 	dashboard: function(req, res){
         console.log(sails.config.ibeaconMacaoApiHost);
         var yesterdayUTC = moment().subtract(1, 'days').utc().format("YYYY-MM-DD HH:mm:ss");
-        request.find({status: ["未审查", "处理中"]}).populate('client').populate('advertisement').exec(function(err, requests){
+        request.find({status: ["未审查", "处理中"]}).populate('client').exec(function(err, requests){
             var yesterdayStr = moment().subtract(1, 'days').format('MM/DD/YYYY');
             YesterdayData.findOne({date: yesterdayStr}).exec(function(err, yesterdayDataOne){
                 advertisement.find({limit: 5, sort: 'expiredDate ASC'}).populate('client').exec(function(err, advertisementsExpire){
@@ -30,32 +30,29 @@ module.exports = {
     },
     generateYesterdayData: function(req, res){
         var yesterday = moment().subtract(1, 'days').format('MM/DD/YYYY');
-        var yesterdayUTC = moment().subtract(1, 'days').utc().format("YYYY-MM-DD HH:mm:ss");
-        AppUser.find({createdAt: {'<': yesterdayUTC}}).exec(function(err, appUsers){
-            var totalAppUsers = appUsers.length;
-            var moment = require('moment');
-            var past = moment().subtract(10, 'days').utc().format("YYYY-MM-DD HH:mm:ss");
-            AppUser.find({createdAt: {'>': past, '<': yesterdayUTC}}).exec(function(err, newAppUsers){
+        var yesterdayDate = moment().subtract(1, 'days').toDate();
+        AppUser.find({createdAt: {'<': yesterdayDate}}).exec(function(err, appUsers){
+            var totalAppUsers = 0;
+            if(appUsers)
+                totalAppUsers = appUsers.length;
+            var yesterdayStart = moment().subtract(1, 'days').startOf('day').toDate();
+            var yesterdayEnd = moment().subtract(1, 'days').endOf('day').toDate();
+            
+            AppUser.find({createdAt: {'>=': yesterdayStart, '<': yesterdayEnd}}).exec(function(err, newAppUsers){
                 var totalNewAppUsers = newAppUsers.length;
-                access.find({createdAt: {'<': yesterdayUTC}}).populate("advertisement").exec(function(err, accessArr){
+                access.find({createdAt: {'>=': yesterdayStart, '<': yesterdayEnd}}).populate("advertisement").exec(function(err, accessArr){
                     var totalAccess = accessArr.length;
                     var accessOne;
-                    var totalChargedAccess = 0;
+                    var totalCharged = 0;
                     while(accessArr.length){
                         accessOne = accessArr.pop();
                         var ad = accessOne.advertisement;
                         if(ad!=null){
                             var pricePerClick = ad.pricePerClick;
-                        console.log("price per click: "+pricePerClick);
-                        if(isNaN(pricePerClick) || pricePerClick.replace(/ /g, "")==""){
-                            pricePerClick = 0.00;
-                        }else{
-                            pricePerClick = parseFloat(pricePerClick);
-                        }
-                            totalChargedAccess += pricePerClick;
+                            totalCharged += pricePerClick;
                         }
                     }
-                    YesterdayData.create({totalAppUsers: totalAppUsers, totalNewAppUsers: totalNewAppUsers, totalAccess: totalAccess, totalChargedAccess: totalChargedAccess, date:  yesterday}).exec(function(err, data){
+                    YesterdayData.create({totalAppUsers: totalAppUsers, totalNewAppUsers: totalNewAppUsers, totalAccess: totalAccess, totalCharged: totalCharged, date:  yesterday}).exec(function(err, data){
                         if(err){
                             return res.serverError(err);
                         }

@@ -475,6 +475,11 @@ module.exports = {
         advertisement.destroy({id: id}).exec(function(err){
             res.redirect('/advertisement');
         });;
+    },
+    expiredDateReminder: function(req, res){
+        advertisement.find({limit: 5, sort: 'expiredDate ASC'}).populate('client').exec(function(err, advertisements){
+            res.view('expired-date-reminder', {advertisements: advertisements, moment: moment});
+        });
     }
 }
 

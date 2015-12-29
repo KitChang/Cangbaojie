@@ -149,5 +149,17 @@ module.exports.routes = {
   'post /ProbabilityDraw': {
       controller: 'ProbabilityDrawController',
       action: 'create'
+  },
+  'get /advertisement/expired-date-reminder': {
+      controller: 'AdvertisementController',
+      action: 'expiredDateReminder'
+  },
+  'get /client/balance-reminder': {
+      controller: 'ClientController',
+      action: 'balanceReminder'
+  },
+  'get /client/click-ranking': {
+      controller: 'ClientController',
+      action: 'clickRanking'
   }
 };

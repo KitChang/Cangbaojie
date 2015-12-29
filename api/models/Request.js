@@ -8,10 +8,12 @@
 module.exports = {
   identity: 'request',
   attributes: {
-      advertisement: {model: 'advertisement'},
       client: {model: 'client'},
       status: {type: 'string', enum: ['open', 'process', 'closed'], defaultsTo: 'open', required: true},
-      read: {type: 'boolean', defaultsTo: false, required: true}
+      state: {type: 'string', defaultsTo: ''},
+      city: {type: 'string', defaultsTo: ''},
+      region: {type: 'string', defaultsTo: ''},
+      street: {type: 'string', defaultsTo: ''}
   }
 };
 

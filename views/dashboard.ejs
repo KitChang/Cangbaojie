@@ -11,8 +11,6 @@
                 %>
                     <li class="list-group-item">
                     <a href="/client/<%=request.client.id%>"><mark><%=request.client.name%></mark></a>
-                    - 
-                    
                     <span class="badge"><%=request.city%></span>
 
                 </li>
@@ -22,9 +20,9 @@
                 %>
                 </div>
                 <p>
-                    <button class="btn btn-primary" type="button" onClick="javascript: document.location.href='/request/read?request='">
+                    <a class="btn btn-primary" href="/request/findFromDashboard">
                     所有请求
-                    </button>
+                    </a>
                 </p>
             </div></div>
             <div class="col-md-4"><div class="well">
@@ -47,16 +45,16 @@
                 日期: <%=yesterdayData.date%>
                 </li>
                 <li class="list-group-item">
-                用户总量: <%=yesterdayData.totalAppUser%>
+                用户总量: <%=yesterdayData.totalAppUsers%>
                 </li>
                 <li class="list-group-item">
-                新增用户: <%=yesterdayData.totalNewUser%>
+                新增用户: <%=yesterdayData.totalNewAppUsers%>
                 </li>
                 <li class="list-group-item">
                 点击量: <%=yesterdayData.totalAccess%>
                 </li>
                 <li class="list-group-item">
-                消费统计: <%=yesterdayData.totalCharge%> 元
+                消费统计: <%=yesterdayData.totalCharged%> 元
                 </li>
 
                 </div>
@@ -77,7 +75,7 @@
                     - 
                     <a href="/advertisement/<%=ad.id%>"><mark><%=ad.title%></mark></a>
                     
-                    <span class="badge"><%=moment().to(moment(ad.expire_date))%></span>
+                    <span class="badge"><%=moment().to(moment(ad.expiredDate))%></span>
 
                 </li>
                 <%
@@ -85,9 +83,9 @@
                 %>
                 </div>
                 <p>
-                    <button class="btn btn-primary" type="button" onClick="javascript: document.location.href='/request/read?request='">
+                    <a class="fancyboxIframe btn btn-primary" href="/advertisement/expired-date-reminder?omitNavigation=omitNavigation">
                     所有到期
-                    </button>
+                    </a>
                 </p>
             </div></div>
             <div class="col-md-4"><div class="well">
@@ -101,16 +99,16 @@
                 <li class="list-group-item">
                     <a href="/client/<%=clientAccount.id%>"><mark><%=clientAccount.name%></mark></a>
                     <span class="badge">
-                        <%=clientAccount.account%>元</span>
+                        <%=clientAccount.account.toFixed(2)%>元</span>
                 </li>
                 <%
                     }
                 %>
                 </div>
                 <p>
-                    <button class="btn btn-primary" type="button" onClick="javascript: document.location.href='/request/read?request='">
+                    <a class="fancyboxIframe btn btn-primary" href="/client/balance-reminder?omitNavigation=omitNavigation">
                     所有余额
-                    </button>
+                    </a>
                 </p>
             </div></div>
             <div class="col-md-4"><div class="well">
@@ -130,9 +128,9 @@
                 %>
                 </div>
                 <p>
-                    <button class="btn btn-primary" type="button" onClick="javascript: document.location.href='/request/read?request='">
+                    <a class="fancyboxIframe btn btn-primary" href="http://www.baidu.com?iframe">
                     所有故障
-                    </button>
+                    </a>
                 </p>
             </div></div>
             <div class="col-md-4"><div class="well">
@@ -154,9 +152,9 @@
                   
                 </div>
                 <p>
-                    <button class="btn btn-primary" type="button" onClick="javascript: document.location.href='/request/read?request='">
+                    <a class="fancyboxIframe btn btn-primary" href="/client/click-ranking?omitNavigation=omitNavigation">
                     所有排行
-                    </button>
+                    </a>
                 </p>
                 
                 
@@ -165,3 +163,40 @@
 </div>
 <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
 <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="/fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+<script type="text/javascript" src="/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+<!-- Optionally add helpers - button, thumbnail and/or media -->
+<link rel="stylesheet" href="/fancybox/source/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" media="screen" />
+<script type="text/javascript" src="/fancybox/source/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
+<script type="text/javascript" src="/fancybox/source/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
+
+
+<link rel="stylesheet" href="/fancybox/source/helpers/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />
+<script type="text/javascript" src="/fancybox/source/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
+<script>
+</script>
+
+<script>
+    
+    $(document).ready(function(){
+        
+        $(".fancyboxIframe").fancybox({
+            type: 'iframe',
+            maxWidth	: 900,
+            maxHeight	: 600,
+            fitToView	: false,
+            width		: '70%',
+            height		: '70%',
+            autoSize	: false,
+            closeClick	: false,
+            openEffect	: 'none',
+            closeEffect	: 'none'
+        });
+    } );
+
+</script>
+
+

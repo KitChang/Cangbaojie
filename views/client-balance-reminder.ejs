@@ -1,0 +1,29 @@
+<div class="container content">
+        <div class="row">
+            <div class="col-md-4"><div class="well">
+                <h3>所有余额提醒</h3>
+                <div class="list-group">
+                <%
+                    var client = null;
+                    while(clients.length){
+                        client = clients.pop();
+                %>
+                <li class="list-group-item">
+                    <a href="/client/<%=client.id%>"><mark><%=client.name%></mark></a>
+                    <span class="badge">
+                        <%=client.account.toFixed(2)%>元</span>
+                </li>
+                <%
+                    }
+                %>
+                </div>
+               
+            </div></div>
+        </div>
+</div>
+<script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
+<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+
+
+
+
