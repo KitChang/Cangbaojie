@@ -144,6 +144,13 @@
 
                                 </div>
                                 <div class="form-group">
+                                <label>状态</label>
+
+                                <input type="text" name="status" id="status" class="form-control" value="<%=result.status%>" readonly>
+                                
+
+                                </div>
+                                <div class="form-group">
                                 <label>抽奖类型 <span class="mandatory">*</span></label>
                                 <% 
                                     var drawType;
@@ -202,7 +209,7 @@
                                     <div class="form-inline panel-elem">
                                         <div class="form-group">
                                         <label>二等奖</label>
-                                        <input type="text" name="secondPrize" class="form-control" value="<%=result.secondPrize%>">
+                                        <input type="text" name="secondPrize" id="secondPrize" class="form-control" value="<%=result.secondPrize%>">
                                         </div>
                                         <div class="form-group">
                                         <label>数量</label>
@@ -214,7 +221,7 @@
                                     <div class="form-inline panel-elem">
                                         <div class="form-group">
                                         <label>三等奖</label>
-                                        <input type="text" name="thirdPrize" class="form-control" value="<%=result.thirdPrize%>">
+                                        <input type="text" name="thirdPrize" id="thirdPrize" class="form-control" value="<%=result.thirdPrize%>">
                                         </div>
                                         <div class="form-group">
                                         <label>数量</label>
@@ -225,7 +232,7 @@
                                     <div class="form-inline panel-elem">
                                         <div class="form-group">
                                         <label>四等奖</label>
-                                        <input type="text" name="fourthPrize" class="form-control" value="<%=result.fourthPrize%>">
+                                        <input type="text" name="fourthPrize" id="fourthPrize" class="form-control" value="<%=result.fourthPrize%>">
                                         </div>
                                         <div class="form-group">
 
@@ -237,7 +244,7 @@
                                     <div class="form-inline panel-elem">
                                         <div class="form-group">
                                         <label>五等奖</label>
-                                        <input type="text" name="fifthPrize" class="form-control" value="<%=result.fifthPrize%>">
+                                        <input type="text" name="fifthPrize" id="fifthPrize" class="form-control" value="<%=result.fifthPrize%>">
                                         </div>
                                         <div class="form-group">
                                         <label>数量</label>
@@ -265,7 +272,7 @@
                                 }
                                 %>
                                 <span><a href="../advertisement/<%=result.id%>/prize">奖劵</a></span>
-                                <span><a href="../advertisement/<%=result.id%>/quiz">问答抽奖</a></span><br><br>
+                                <span><a href="../advertisement/<%=result.id%>/quiz">问答抽奖</a></span><br><br>                            <button type="button" id="publish" class="btn btn-default right">推出</button>
                                 <button type="button" id="submit" class="btn btn-default right">更新</button>
                                 <button type="button" class="btn btn-default right" onClick="javascript: window.history.back();">取消</button>
                            </div>
@@ -288,6 +295,43 @@
 
     <script>
         $(document).ready(function(){
+            $("#publish").click(function(err){
+                var form = document.forms['form'];
+                form.method = "post";
+                form.action = "/advertisement/<%=result.id%>/publish";
+                form.submit();
+            });
+            <%
+                if(result.numberOfPrize==2){
+            %>
+                $("#thirdPrizeQuantity").prop("disabled", true);
+                $("#thirdPrize").prop("disabled", true);
+                $("#fourthPrizeQuantity").prop("disabled", true);
+                $("#fourthPrize").prop("disabled", true);
+                $("#fifthPrizeQuantity").prop("disabled", true);
+                $("#fifthPrize").prop("disabled", true);
+            <%
+                }
+            %>
+            <%
+                if(result.numberOfPrize==3){
+            %>
+                
+                $("#fourthPrizeQuantity").prop("disabled", true);
+                $("#fourthPrize").prop("disabled", true);
+                $("#fifthPrizeQuantity").prop("disabled", true);
+                $("#fifthPrize").prop("disabled", true);
+            <%
+                }
+            %>
+            <%
+                if(result.numberOfPrize==4){
+            %>
+                $("#fifthPrizeQuantity").prop("disabled", true);
+                $("#fifthPrize").prop("disabled", true);
+            <%
+                }
+            %>
             $("#expiredDate").daterangepicker({singleDatePicker: true});
             $("#effectiveDate").daterangepicker({singleDatePicker: true});
             $("#submit").click(function(){

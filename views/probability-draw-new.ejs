@@ -43,6 +43,33 @@
     <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function(){
+            <%
+                if(advertisement.numberOfPrize==2){
+            %>
+                $("#thirdPrizeProbability").prop("disabled", true);
+                $("#fourthPrizeProbability").prop("disabled", true);
+                $("#fifthPrizeProbability").prop("disabled", true);
+            <%
+                }
+            %>
+            <%
+                if(advertisement.numberOfPrize==3){
+            %>
+                
+                $("#fourthPrizeProbability").prop("disabled", true);
+                $("#fifthPrizeProbability").prop("disabled", true);
+                
+            <%
+                }
+            %>
+            <%
+                if(advertisement.numberOfPrize==4){
+            %>
+                $("#fifthPrizeProbability").prop("disabled", true);
+                
+            <%
+                }
+            %>
             $("#submit").click(function(){
                 
                 var errMsg = [];

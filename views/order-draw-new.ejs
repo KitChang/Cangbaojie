@@ -12,11 +12,11 @@
                             <div class="panel-body">
                                 <form name="form" id="form" action="/OrderDraw?advertisement=<%=req.param('advertisement')%>" method="post">
                                 <div class="form-group">
-                                <label>访问数下限 <span class="mandatory">*</span></label>
-                                <input type="text" name="drawCountLowerBound" id="drawCountLowerBound" class="form-control" value="0">
+                                <label>访问数下限 (包含)<span class="mandatory">*</span></label>
+                                <input type="text" name="drawCountLowerBound" id="drawCountLowerBound" class="form-control" value="1">
                                 </div>
                                 <div class="form-group">
-                                <label>访问数上限 <span class="mandatory">*</span></label>
+                                <label>访问数上限 (包含) <span class="mandatory">*</span></label>
                                 <input type="text" name="drawCountUpperBound" id="drawCountUpperBound" class="form-control" value="0">
                                 </div>
                                 <div class="form-group">
@@ -54,6 +54,33 @@
     <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function(){
+            <%
+                if(advertisement.numberOfPrize==2){
+            %>
+                $("#thirdPrizeRange").prop("disabled", true);
+                $("#fourthPrizeRange").prop("disabled", true);
+                $("#fifthPrizeRange").prop("disabled", true);
+            <%
+                }
+            %>
+            <%
+                if(advertisement.numberOfPrize==3){
+            %>
+                
+                $("#fourthPrizeRange").prop("disabled", true);
+                $("#fifthPrizeRange").prop("disabled", true);
+                
+            <%
+                }
+            %>
+            <%
+                if(advertisement.numberOfPrize==4){
+            %>
+                $("#fifthPrizeRange").prop("disabled", true);
+                
+            <%
+                }
+            %>
             $("#submit").click(function(){
                 var errMsg = [];
                 if(isNaN($("#drawCountLowerBound").val()))

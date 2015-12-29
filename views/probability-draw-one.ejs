@@ -42,47 +42,32 @@
     <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function(){
-                if("<%=numberOfPrize%>"=="0"){
-                    $("#firstPrizeProbability").prop('disabled', true);
-                    $("#firstPrizeProbability").val("");
-                    $("#secondPrizeProbability").prop('disabled', true);
-                    $("#secondPrizeProbability").val("");
-                    $("#thirdPrizeProbability").prop('disabled', true);
-                    $("#thirdPrizeProbability").val("");
-                    $("#fourthPrizeProbability").prop('disabled', true);
-                    $("#fourthPrizeProbability").val("");
-                    $("#fifthPrizeProbability").prop('disabled', true);
-                    $("#fifthPrizeProbability").val("");
+            alert("sfdsds");
+                <%
+                if(advertisement.numberOfPrize==2){
+            %>
+                $("#thirdPrizeProbability").prop("readonly", "readonly");
+                $("#fourthPrizeProbability").prop("readonly", "readonly");
+                $("#fifthPrizeProbability").prop("readonly", "readonly");
+            <%
                 }
-                if("<%=numberOfPrize%>"=="1"){
-                    $("#secondPrizeProbability").prop('disabled', true);
-                    $("#secondPrizeProbability").val("");
-                    $("#thirdPrizeProbability").prop('disabled', true);
-                    $("#thirdPrizeProbability").val("");
-                    $("#fourthPrizeProbability").prop('disabled', true);
-                    $("#fourthPrizeProbability").val("");
-                    $("#fifthPrizeProbability").prop('disabled', true);
-                    $("#fifthPrizeProbability").val("");
+            %>
+            <%
+                if(advertisement.numberOfPrize==3){
+            %>  
+                $("#fourthPrizeProbability").prop("readonly", "readonly");
+                $("#fifthPrizeProbability").prop("readonly", "readonly");
+                
+            <%
                 }
-                if("<%=numberOfPrize%>"=="2"){
-                    $("#thirdPrizeProbability").prop('disabled', true);
-                    $("#thirdPrizeProbability").val("");
-                    $("#fourthPrizeProbability").prop('disabled', true);
-                    $("#fourthPrizeProbability").val("");
-                    $("#fifthPrizeProbability").prop('disabled', true);
-                    $("#fifthPrizeProbability").val("");
+            %>
+            <%
+                if(advertisement.numberOfPrize==4){
+            %>
+                $("#fifthPrizeProbability").prop("readonly", "readonly");
+            <%
                 }
-                if("<%=numberOfPrize%>"=="3"){
-                    $("#fourthPrizeProbability").prop('disabled', true);
-                    $("#fourthPrizeProbability").val("");
-                    $("#fifthPrizeProbability").prop('disabled', true);
-                    $("#fifthPrizeProbability").val("");
-        
-                }
-                if("<%=numberOfPrize%>"=="4"){
-                    $("#fifthPrizeProbability").prop('disabled', true);
-                    $("#fifthPrizeProbability").val("");
-                }
+            %>
             
             $("#submit").click(function(){
                 

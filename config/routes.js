@@ -119,6 +119,10 @@ module.exports.routes = {
       controller: 'UserController',
       action: 'login'
   },
+  'post /advertisement/:id/publish': {
+      controller: 'AdvertisementController',
+      action: 'publish'
+  },
   'get /advertisement/:id/image': {
       view: 'advertisement-image'
   },

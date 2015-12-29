@@ -58,7 +58,11 @@ module.exports = {
         });
     },
     new: function(req, res){
-        res.view('order-draw-new');
+        var advertisementId = req.param('advertisement');
+        advertisement.findOne({id: advertisementId}).exec(function(err, ad){
+            res.view('order-draw-new', {advertisement: ad});
+        });
+        
     },
     destroy: function(req, res){
         var id = req.param("id");

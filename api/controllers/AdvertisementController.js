@@ -143,7 +143,7 @@ module.exports = {
             var drawPerformInterval_second = req.param("drawPerformInterval_second");
             var drawCouponExpiredTime = req.param('drawCouponExpiredTime');
             var drawPerformInterval = req.param('drawPerformInterval');
-            advertisement.update({id: id}, 
+            option = 
             {
                 title: title,
                 category: category,
@@ -161,18 +161,27 @@ module.exports = {
                 drawPerformInterval_day: drawPerformInterval_day,
                 drawPerformInterval_hour: drawPerformInterval_hour,
                 drawPerformInterval_minute: drawPerformInterval_minute,
-                drawPerformInterval_second: drawPerformInterval_second,
-                firstPrize: firstPrize,
-                secondPrize: secondPrize,
-                thirdPrize: thirdPrize,
-                fourthPrize: fourthPrize,
-                fifthPrize: fifthPrize,
-                firstPrizeQuantity: firstPrizeQuantity,
-                secondPrizeQuantity: secondPrizeQuantity,
-                thirdPrizeQuantity: thirdPrizeQuantity,
-                fourthPrizeQuantity: fourthPrizeQuantity,
-                fifthPrizeQuantity: fifthPrizeQuantity
-            }).exec(function(err, result){
+                drawPerformInterval_second: drawPerformInterval_second
+            };
+            if(ad.status=="draft"){
+                option.firstPrize = firstPrize;
+                option.secondPrize = secondPrize;
+                option.thirdPrize = thirdPrize;
+                option.fourthPrize = fourthPrize;
+                option.fifthPrize = fifthPrize;
+                option.firstPrizeQuantity = firstPrizeQuantity;
+                option.secondPrizeQuantity = secondPrizeQuantity;
+                option.thirdPrizeQuantity = thirdPrizeQuantity;
+                option.fourthPrizeQuantity = fourthPrizeQuantity;
+                option.fifthPrizeQuantity = fifthPrizeQuantity;
+                option.firstPrizeQuantityRemain = firstPrizeQuantity;
+                option.secondPrizeQuantityRemain = secondPrizeQuantity;
+                option.thirdPrizeQuantityRemain = thirdPrizeQuantity;
+                option.fourthPrizeQuantityRemain = fourthPrizeQuantity;
+                option.fifthPrizeQuantityRemain = fifthPrizeQuantity;
+            }
+            advertisement.update({id: id}, option
+            ).exec(function(err, result){
                 if(err){
                     res.serverError(err);
                     return;
@@ -386,6 +395,80 @@ module.exports = {
         });
         });
     
+    },
+    publish: function(req, res){
+        var id = req.param("id");
+        advertisement.findOne({id: id}).populate("probabilityDraw").exec(function(err, ad){
+            var numberOfPrize = ad.numberOfPrize;
+            var option = {};
+            var checkFail = false;
+            if(numberOfPrize == 2){
+                if(ad.firstPrizeQuantity <= 0 || ad.firstPrizeQuantityRemain <= 0 || ad.firstPrize.trim() == "")
+                    checkFail = true;
+                if(ad.secondPrizeQuantity <= 0 || ad.secondPrizeQuantityRemain <= 0 || ad.secondPrize.trim() == "")
+                    checkFail = true;
+            }
+            if(numberOfPrize == 3){
+                if(ad.firstPrizeQuantity <= 0 || ad.firstPrizeQuantityRemain <= 0 || ad.firstPrize.trim() == "")
+                    checkFail = true;
+                if(ad.secondPrizeQuantity <= 0 || ad.secondPrizeQuantityRemain <= 0 || ad.secondPrize.trim() == "")
+                    checkFail = true;
+                if(ad.thirdPrizeQuantity <= 0 || ad.thirdPrizeQuantityRemain <= 0 || ad.thirdPrize.trim() == "")
+                    checkFail = true;
+            }
+            if(numberOfPrize == 4){
+                if(ad.firstPrizeQuantity <= 0 || ad.firstPrizeQuantityRemain <= 0 || ad.firstPrize.trim() == "")
+                    checkFail = true;
+                if(ad.secondPrizeQuantity <= 0 || ad.secondPrizeQuantityRemain <= 0 || ad.secondPrize.trim() == "")
+                    checkFail = true;
+                if(ad.thirdPrizeQuantity <= 0 || ad.thirdPrizeQuantityRemain <= 0 || ad.thirdPrize.trim() == "")
+                    checkFail = true;
+                if(ad.fourthPrizeQuantity <= 0 || ad.fourthPrizeQuantityRemain <= 0 || ad.fourthPrize.trim() == "")
+                    checkFail = true;
+            }
+            if(numberOfPrize == 5){
+                if(ad.firstPrizeQuantity <= 0 || ad.firstPrizeQuantityRemain <= 0 || ad.firstPrize.trim() == "")
+                    checkFail = true;
+                if(ad.secondPrizeQuantity <= 0 || ad.secondPrizeQuantityRemain <= 0 || ad.secondPrize.trim() == "")
+                    checkFail = true;
+                if(ad.thirdPrizeQuantity <= 0 || ad.thirdPrizeQuantityRemain <= 0 || ad.thirdPrize.trim() == "")
+                    checkFail = true;
+                if(ad.fourthPrizeQuantity <= 0 || ad.fourthPrizeQuantityRemain <= 0 || ad.fourthPrize.trim() == "")
+                    checkFail = true;
+                if(ad.fifthPrizeQuantity <= 0 || ad.fifthPrizeQuantityRemain <= 0 || ad.fifthPrize.trim() == "")
+                    checkFail = true;
+            };
+            if(checkFail){
+                res.redirect('/advertisement/'+id);
+                return;
+            }
+            if(numberOfPrize == 2){
+                option.thirdPrizeQuantityRemain = 0;
+                option.thirdPrizeQuantity = 0;
+                option.thirdPrize = "";
+                option.fourthPrizeQuantityRemain = 0;
+                option.fourthPrizeQuantity = 0;
+                option.fourthPrize = "";
+                option.fifthPrizeQuantity = 0;
+                option.fifthPrizeQuantityRemain = 0;
+                option.fifthPrize = "";
+            }else if(numberOfPrize == 3){
+                option.fourthPrizeQuantityRemain = 0;
+                option.fourthPrizeQuantity = 0;
+                option.fourthPrize = "";
+                option.fifthPrizeQuantity = 0;
+                option.fifthPrizeQuantityRemain = 0;
+                option.fifthPrize = "";
+            }else if(numberOfPrize == 4){
+                option.fifthPrizeQuantity = 0;
+                option.fifthPrizeQuantityRemain = 0;
+                option.fifthPrize = "";
+            }
+            option.status = "publish";
+            advertisement.update({id: id}, option).exec(function(err){
+                res.redirect('/advertisement/'+id);
+            })
+        });
     },
     destroy: function(req, res){
         var id= req.param('id');
