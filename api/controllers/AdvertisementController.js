@@ -252,7 +252,7 @@ module.exports = {
         prizeCouponExpiredDate = moment(prizeCouponExpiredDate, "MMDDYYYY").startOf('day').toDate();
         var prizeCouponExpiredType = req.param("prizeCouponExpiredType");
         if(prizeCouponExpiredType=="duration"){
-            prizeCouponExpiredDate = "";
+            prizeCouponExpiredDate = new Date();
         }else if(prizeCouponExpiredType=="date"){
             prizeCouponExpiredDuration = 0;
         }else{

@@ -33,7 +33,7 @@
                                 </div>
                                 <div class="form-group">
                                 <label>商家介绍 <span class="mandatory">*</span></label>
-                                <textarea style="min-width: 50%; min-height: 150px;" name="companyIntroduction" class="form-control">
+                                <textarea style="min-width: 30%; " name="companyIntroduction" class="form-control">
                                 <%
                                     if(!result.companyIntroduction){
                                 %>
@@ -76,8 +76,6 @@
 
 
     <script>
-        alert("sadfdsfds");
-        
         $("#prizeCouponExpiredDuration_radio").click(function(){
             $("#prizeCouponExpiredDate_div").css("display", "none");
             $("#prizeCouponExpiredDuration_div").css("display", "block");
