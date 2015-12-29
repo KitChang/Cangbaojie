@@ -7,7 +7,7 @@
               <li class="active">编辑</li>
             </ol>
             <div class="panel-body">
-              <form action="/device/<%=result.id%>" method="post" name="form" style="display: none;">
+              <form action="/device/<%=result.id%>" method="post" name="form">
               <div class="form-group">
                 <label>藏宝街标名</label>
                   <% 
@@ -32,7 +32,7 @@
                         <td><%=result.location%></td>
                         <td><%=result.location_type%></td>
                         <td>正常</td>
-                        <td><%=result.coordinate%></td>
+                        <td><%=result.point%></td>
                     </tr>
 
                 </tbody>

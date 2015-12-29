@@ -10,79 +10,75 @@
                 <div class="panel-body">
                     <form class="form-inline" action="/device/search" method="get">
                     <div class="form-group">
-                        <select class="form-control" id="type" name="locationType">
-                            <option value="">所有位置类</option>
-                            <option value="公交站">公交站</option>
-                            <option value="公交车">公交车</option>
-                            <option value="电梯">电梯</option>
-                            <option value="路名牌">路名牌</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <select class="form-control" id="state" name="state">
-                            <option value="">所有省</option>
-                            <option value="广西省">广西省</option>
-                            <option value="广东省">广东省</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <select class="form-control" id="city" name="city">
-                            <option value="">所有城市</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <select class="form-control" id="region" name="region">
-                            <option value="">所有地区</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <select class="form-control" id="street" name="street">
-                            <option value="">所有街道</option>
-                        </select>
-                    </div>
+                            <select class="form-control" id="type" name="locationType">
+                                <%
+                                if(req.param("locationType")&&req.param("locationType")!=""){
+                                %>
+                                <option value="<%=req.param('locationType')%>" selected><%=req.param('locationType')%></option>
+                                <%
+                                }
+                                %>
+                                <option value="">所有位置类</option>
+                                <option value="公交站">公交站</option>
+                                <option value="公交车">公交车</option>
+                                <option value="电梯">电梯</option>
+                                <option value="路名牌">路名牌</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" id="state" name="state">
+                                <%
+                                if(req.param("state")&&req.param("state")!=""){
+                                %>
+                                <option value="<%=req.param('state')%>" selected><%=req.param('state')%></option>
+
+                                <%
+                                }
+                                %>
+                                
+                                <option value="广东省">广东省</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" id="city" name="city">
+                                <%
+                                if(req.param("city")&&req.param("city")!=""){
+                                %>
+                                <option value="<%=req.param('city')%>" selected><%=req.param('city')%></option>
+                                <%
+                                }
+                                %>
+                                
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" id="region" name="region">
+                                <%
+                                if(req.param("region")&&req.param("region")!=""){
+                                %>
+                                <option value="<%=req.param('region')%>" selected><%=req.param('region')%></option>
+                                <%
+                                }
+                                %>
+                                
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" id="street" name="street">
+                                 <%
+                                if(req.param("street")&&req.param("street")!=""){
+                                %>
+                                <option value="<%=req.param('street')%>" selected><%=req.param('street')%></option>
+                                <%
+                                }
+                                %>
+                                
+                            </select>
+                        </div>
                     <button type="submit" class="btn btn-default right">搜</button> 
                         
                     </form>
-                    <p class="where text-right">
-                         <mark>
-                        <% 
-                        if(req.param('locationType')!=undefined&&req.param('locationType')!=null){
-                        %>
-                        <%=req.param("locationType")%>
-                        <% 
-                        }
-                        %>
-                        <% 
-                        if(req.param('state')!=undefined&&req.param('state')!=null){
-                        %>
-                        <%=req.param("state")%>
-                        <% 
-                        }
-                        %>
-                        <% 
-                        if(req.param('city')!=undefined&&req.param('city')!=null){
-                        %>
-                        <%=req.param("city")%>
-                        <% 
-                        }
-                        %>
-                        <%
-                        if(req.param('region')!=undefined&&req.param('region')!=null){
-                        %>
-                        <%=req.param("region")%>
-                        <% 
-                        }
-                        %>
-                        <%
-                        if(req.param('street')!=undefined&&req.param('street')!=null){
-                        %>
-                        <%=req.param("street")%>
-                        <% 
-                        }
-                        %>
-                             
-                       </mark>
-                    </p>
+                    
                     
                 </div>
                 <div class="panel-body">
@@ -123,15 +119,19 @@
     <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
     <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
     <script>
-    $("#state").change(function(){
+        $(document).ready(function(){
+
+            populateCity();
+            populateRegion();
+            populateStreet();
+            
+        });
+        function populateCity(){
         var selectedState = $("#state option:selected").text();
-        $("#city").empty();
-        $("#region").empty();
-        $("#street").empty();
+            
         $.ajax({
         url: "/geo/city?state="+selectedState
         }).done(function(data){
-          $("#city").empty();
           $("#city").append("<option value=''>所有城市</option>");
           html = "";
           while (data.length) {
@@ -142,19 +142,17 @@
           }
           $("#city").append(html);
           });
-      });
-    
-    $("#city").change(function(){
+        }
+        function populateRegion(){
         var selectedState = $("#state option:selected").text();
         var selectedCity = $("#city option:selected").text();
-        $("#region").empty();
-        $("#street").empty();
-        
+        if(selectedCity=="所有城市"||selectedCity==""){
+            $("#region").append("<option value=''>所有地区</option>");
+        }
         $.ajax({
         url: "/geo/region?state="+selectedState+"&city="+selectedCity,
         }).done(function(data){
           //alert(data);
-          $("#region").empty();
           $("#region").append("<option value=''>所有地区</option>");
           html = "";
           while (data.length) {
@@ -164,30 +162,51 @@
             //code
           }
           $("#region").append(html);
+          });
+        }
+            
+        function populateStreet(){
+            var selectedState = $("#state option:selected").text();
+            var selectedCity = $("#city option:selected").text();
+            var selectedRegion = $("#region option:selected").text();
+            if(selectedRegion=="所有地区"||selectedRegion=="")
+                $("#street").append("<option value=''>所有街道</option>");;
+            
+            $.ajax({
+            url: "/geo/street?state="+selectedState+"&city="+selectedCity+"&region="+selectedRegion,
+            }).done(function(data){
+              //alert(data);
+              $("#street").append("<option value=''>所有街道</option>");
+              html = "";
+              while (data.length) {
+                var street = data.pop();
+                option = "<option value='"+street+"'>"+street+"</option>";
+                html = html + option;
+                //code
+              }
+              $("#street").append(html);
+            });
+        }
+            
+    
+        $("#state").change(function(){
+            $("#city").empty();
+            $("#region").empty();
+            $("#region").append("<option value=''>所有地区</option>");
+            $("#street").empty();
+            $("#street").append("<option value=''>所有街道</option>");
+            populateCity();
         });
-      })
-    $("#region").change(function(){
-        var selectedState = $("#state option:selected").text();
-        var selectedCity = $("#city option:selected").text();
-        var selectedRegion = $("#region option:selected").text();
-        $("#street").empty();
-        
-        $.ajax({
-        url: "/geo/street?state="+selectedState+"&city="+selectedCity+"&region="+selectedRegion,
-        }).done(function(data){
-          //alert(data);
-          $("#street").empty();
-          $("#street").append("<option value=''>所有街道</option>");
-          html = "";
-          while (data.length) {
-            var street = data.pop();
-            option = "<option value='"+street+"'>"+street+"</option>";
-            html = html + option;
-            //code
-          }
-          $("#street").append(html);
+        $("#city").change(function(){
+            $("#region").empty();
+            $("#street").empty();
+            $("#street").append("<option value=''>所有街道</option>");
+            populateRegion();
         });
-      })
+        $("#region").change(function(){
+            $("#street").empty();
+            populateStreet();
+        });
     </script>
     <script type="text/javascript" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
     <script>
