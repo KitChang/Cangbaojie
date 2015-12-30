@@ -29,7 +29,7 @@ module.exports = {
     },
     generateYesterdayData: function(req, res){
         var yesterday = moment().subtract(1, 'days').format('MM/DD/YYYY');
-        var yesterdayDate = moment().subtract(1, 'days').toDate();
+        var yesterdayDate = moment().subtract(1, 'days').endOf('day').toDate();
         AppUser.find({createdAt: {'<': yesterdayDate}}).exec(function(err, appUsers){
             var totalAppUsers = 0;
             if(appUsers)
