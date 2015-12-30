@@ -111,7 +111,10 @@ module.exports.routes = {
       controller: 'DataController',
       action: 'prizeWinner'
   },
-
+  'get /data/prize-winner': {
+      controller: 'DataController',
+      action: 'prizeWinnerAdvertisement'
+  },
   'get /login': {
       view: 'login'
   },

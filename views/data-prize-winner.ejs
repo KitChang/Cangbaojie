@@ -19,21 +19,21 @@
                     while(resultArr.length){
                         var row = resultArr.pop();
                         var date = row.createdAt;
-                        var date2 = moment(date).startOf('day').format("YYYY-MM-DD");
-                        var pickStatus = row.pick_status;
-                        if(pickStatus)
+                        var date2 = moment(date).startOf('day').format("MM/DD/YYYY");
+                        var pickStatus = row.picked;
+                        if(pickStatus==true)
                             pickStatus = "已领";
                         else
                             pickStatus = "未领";
-                        var expiredDate = row.coupon_expiredDate;
-                        expiredDate = moment(expiredDate).add(8, 'hours').utc().format("YYYY-MM-DD HH:mm:ss");
+                        var expiredDate = row.prizeCouponExpiredAt;
+                        expiredDateStr = moment(expiredDate).format("MM/DD/YYYY HH:mm:ss");
                         var expired = !moment().isBefore(expiredDate);
                         if(expired)
                             expired = "过期";
                         else
                             expired = "未过期";
                     %>
-                    <tr><td><%=date2%></td><td><%=row.app_user.username%></td><td><%=row.app_user.phone%></td><td><%=row.prize%></td><td><%=pickStatus%></td><td><%=expiredDate%></td><td><%=expired%></td></tr>
+                    <tr><td><%=date2%></td><td><%=row.appUser.nickname%></td><td><%=row.appUser.phone%></td><td><%=row.prize%></td><td><%=pickStatus%></td><td><%=expiredDateStr%></td><td><%=expired%></td></tr>
                     <%
                     }
                     %>

@@ -118,9 +118,13 @@
                     var faultDevice = null;
                     while(faultDevices.length){
                         faultDevice = faultDevices.pop();
+                        var deviceName = faultDevice.identifier;
+                        if(faultDevice.identifier==""||faultDevice.identifier==undefined)
+                            deviceName = faultDevice.device;
+                        
                 %>
                 <li class="list-group-item">
-                    <a href="/device/<%=faultDevice.device.id%>"><mark><%=faultDevice.device%></mark></a>
+                    <a href="/device/<%=faultDevice.device%>"><mark><%=deviceName%></mark></a>
                     <span class="badge"><%=moment(faultDevice.accessDate).fromNow()%></span>
                 </li>
                 <%

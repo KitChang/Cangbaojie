@@ -114,7 +114,7 @@ module.exports = {
         });
     },
     clickRanking: function(req, res){
-        client.find({sort: 'accessCount DESC'}).exec(function(err, clients){
+        client.find({sort: 'accessCount ASC'}).exec(function(err, clients){
             res.view('client-click-ranking', {clients: clients});
         })
     }
