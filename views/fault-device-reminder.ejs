@@ -1,0 +1,38 @@
+<div class="container content">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel-body">
+                    <button class="btn btn-default right" onClick="javascript:window.history.back()">取消</button>
+                </div>
+                <div class="well">
+                <h3>故障提醒</h3>
+                <%
+                    var faultDevice = null;
+                    while(faultDevices.length){
+                        faultDevice = faultDevices.pop();
+                        var deviceName = faultDevice.identifier;
+                        if(faultDevice.identifier==""||faultDevice.identifier==undefined)
+                            deviceName = faultDevice.device;
+                        
+                %>
+                <div class="list-group">
+                <li class="list-group-item">
+                    <a href="/device/<%=faultDevice.device%>"><mark><%=deviceName%></mark></a>
+                    <span class="badge">无访问时间段 <%=moment(faultDevice.accessDate).fromNow()%></span>
+                </li>
+                <li class="list-group-item">
+                    <a class="btn btn-primary" href="/DeviceMonitor/verified-ok?deviceMonitor=<%=faultDevice.id%>">检验正常</a>
+                        <span class="badge">检查日期 <%=moment(faultDevice.verifiedDate).format('MM/DD/YYYY')%></span>
+                </li>
+                </div>
+                <%
+                    }
+                %>
+                </div>
+            </div>
+        </div>
+        
+</div>
+<script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
+<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+

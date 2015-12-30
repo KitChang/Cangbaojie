@@ -9,16 +9,15 @@ var moment = require('moment');
 moment.locale('zh-cn');
 module.exports = {
 	dashboard: function(req, res){
-        console.log(sails.config.ibeaconMacaoApiHost);
-        var yesterdayUTC = moment().subtract(1, 'days').utc().format("YYYY-MM-DD HH:mm:ss");
-        request.find({status: ["未审查", "处理中"]}).populate('client').exec(function(err, requests){
+        var yesterdayDate = moment().subtract(1, 'days').toDate();
+        request.find({status: ["open", "process"]}).populate('client').exec(function(err, requests){
             var yesterdayStr = moment().subtract(1, 'days').format('MM/DD/YYYY');
             YesterdayData.findOne({date: yesterdayStr}).exec(function(err, yesterdayDataOne){
                 advertisement.find({limit: 5, sort: 'expiredDate ASC'}).populate('client').exec(function(err, advertisementsExpire){
                     
                     client.find({limit: 5, sort: 'account DESC'}).exec(function(err, clientsAccount){
-                        var durationStr = moment().subtract(30, 'days').utc().format("YYYY-MM-DD HH:mm:ss");
-                        DeviceMonitor.find({limit: 5, sort: 'accessDate ASC', accessDate: {'<': durationStr}}).exec(function(err, faultDevices){
+                        var durationDate = moment().subtract(30, 'days').toDate();
+                        DeviceMonitor.find({limit: 5, sort: 'accessDate ASC', accessDate: {'<': durationDate}, verifiedDate: {"<": durationDate}}).exec(function(err, faultDevices){
                             client.find({limit: 5, sort: 'accessCount ASC'}).exec(function(err, clientsAccess){
                                 res.view('dashboard', {requests: requests, yesterdayData: yesterdayDataOne, advertisementsExpire: advertisementsExpire, moment: moment, clientsAccount: clientsAccount, faultDevices: faultDevices, clientsAccess: clientsAccess});
                             });
@@ -103,7 +102,7 @@ module.exports = {
     },
     faultDevice: function(req, res){
         var past = moment().subtract(32, 'days').toDate();
-        DeviceMonitor.update({},{accessDate: past }).exec(function(){
+        DeviceMonitor.update({},{accessDate: past, verifiedDate: past }).exec(function(){
             res.end();
         })
     }

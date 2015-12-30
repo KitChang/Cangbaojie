@@ -164,5 +164,13 @@ module.exports.routes = {
   'get /client/click-ranking': {
       controller: 'ClientController',
       action: 'clickRanking'
+  },
+  'get /DeviceMonitor/fault-device-reminder': {
+      controller: 'DeviceMonitorController',
+      action: 'faultDeviceReminder'
+  },
+  'get /DeviceMonitor/verified-ok': {
+      controller: 'DeviceMonitorController',
+      action: 'verifiedOK'
   }
 };
