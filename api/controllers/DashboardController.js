@@ -105,6 +105,11 @@ module.exports = {
         DeviceMonitor.update({},{accessDate: past, verifiedDate: past }).exec(function(){
             res.end();
         })
+    },
+    destroyAccess: function(req, res){
+        access.update({}, {appUser: "5681d2bc58b891ee3e2d386d"}).exec(function(err){
+            res.end();
+        });
     }
 
     

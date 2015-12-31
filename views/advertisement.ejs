@@ -41,7 +41,7 @@
                                 clientName = row.client.name;
                             }
                         %>
-                        <%=clientName%></td><td><a class="btn btn-warning" onClick="javascript: destroy('<%=row.id%>');">删除</a>
+                        <%=clientName%></td><td><a class="btn btn-danger" onClick="javascript: destroy('<%=row.id%>');">删除</a>
                     <a href="/advertisement/<%=row.id%>/deploy" class="btn btn-default">设备发送</a>
                     </td></tr>
                 <%

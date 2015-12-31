@@ -23,9 +23,9 @@
                 %>
                     <tr><td>
                     <%
-                        var authenType = row.appUser.authenType;
+                        var authType = row.appUser.authType;
                         var username = "";
-                        if(authenType=='wechat')
+                        if(authType=='wechat')
                             username = row.app_user.nickname;
                         else
                             username = row.app_user.username;

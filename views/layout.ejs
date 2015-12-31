@@ -80,7 +80,14 @@
     
     <%- body %>
     <footer class="footer">
-        <p>&copy; 2015</p>
+        <center>
+            <p>&nbsp&nbsp; <% if(req.session.user){
+                %>
+                &copy珠海伯睿网络科技
+                <%
+                }
+                %></p>
+            </center>
     </footer>
 
 

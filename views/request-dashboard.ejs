@@ -25,7 +25,7 @@
                     <li class="list-group-item">
                     <a class="btn btn-primary" href="/request/updateStatus?status=closed&request=<%=request.id%>">完成</a>
                     <a class="btn btn-primary" href="/request/updateStatus?status=process&request=<%=request.id%>">处理中</a>
-                        <span class="badge"><%=request.status%></span>
+                        <span class="badge"><%=req.__(request.status)%></span>
                     </li>
                 </div>
                 <%

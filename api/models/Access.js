@@ -8,13 +8,24 @@
 module.exports = {
   identity: 'access',
   attributes: {
-      advertisement: {model: 'advertisement', required: true},
-      device: {model: 'device', required: true},
-      state: 'string',
-      city: 'string',
-      region: 'string',
-      street: 'string',
-      location: 'string'
+      device: {
+        model: 'device'
+    },
+    advertisement: {
+        model: 'advertisement'
+    },
+    client: {
+        model: 'client'
+    }, 
+    appUser: {
+        model: 'AppUser'
+    },
+  state: 'string',
+  city: 'string',
+  region: 'string',
+  street: 'string',
+  location: 'string',
+      
   }
 };
 

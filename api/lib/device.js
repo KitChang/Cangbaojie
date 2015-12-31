@@ -1,55 +1,66 @@
 var Device = module.exports = {};
 var request = require("request");
-var host = "http://ibeacon-api.herokuapp.com/";
-host = "http://"+sails.config.ibeaconMacaoApiHost;
-port = sails.config.ibeaconMacaoApiPort;
-//host = "http://localhost:1337/";
+url = "http://"+sails.config.ibeaconMacauApiHost;
+port = sails.config.ibeaconMacauApiPort;
+url = url+":"+port;
 Device.find = function(option, cb){
     request({
-        url: host+":"+port+"/device",
+        url: url + "/device",
         qs: option
     }, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             var resultArr = JSON.parse(body);
             cb(null, resultArr);
         }else{
-            cb(error);
+            cb(error, null);
         }           
     })         
 }
 
 Device.search = function(option, cb){
     request(
-    {url: host+":"+port+"/device/search",
+    {url: url + "/device/search",
      qs: option
     }, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             resultArr = JSON.parse(body);
             cb(null, resultArr);
         }else{
-            cb(error);
+            cb(error, null);
         }
     })       
 },
 Device.findOne = function(id, cb){
-    request(host+":"+port+"/device/"+id, function (error, response, body) {
+    request(url+"/device/"+id, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             var result = JSON.parse(body);
             cb(null, result);
         }else{
-            cb(error);
+            cb(error, null);
         }
-
     })         
 },
+Device.getId = function(option, cb){
+    request({url: url+"/device/id",
+     qs: option
+    }, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var result = body;
+            cb(null, result);
+        }else{
+            cb(error, null);
+        }
+    })  
+},
 Device.updateCbjTag = function(id, cbjTag, cb){
-    request.post({url:host+":"+port+"/device/cbjTag", form: {id: id, cbjTag: cbjTag}}, function(err,httpResponse,body){
+    request.post({url:url+"/device/cbjTag", form: {id: id, cbjTag: cbjTag}}, function(err,httpResponse,body){
         console.log(httpResponse.statusCode);
         if (httpResponse.statusCode==200) {
             var result = JSON.parse(body);
             cb(null, result);
         }else{
-            cb(err);
+            cb(err, null);
         }
         })
 }
+
