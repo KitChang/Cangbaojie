@@ -75,7 +75,7 @@
                                 
                             </select>
                         </div>
-                    <button type="submit" class="btn btn-default right">搜索</button> 
+                    <button type="submit" class="btn btn-warning right">搜索</button> 
                         
                     </form>
                     
@@ -84,7 +84,7 @@
                 <div class="panel-body">
                 <table class="table table-striped" id="table">
                 <thead>
-                    <tr><th>设备编号</th><th>Minor</th><th>省</th><th>城市</th><th>地区</th><th>街道</th><th>详细位置</th><th>位置类型</th><th>藏宝街标示</th></tr>
+                    <tr><th>设备编号</th><th>省</th><th>城市</th><th>地区</th><th>街道</th><th>详细位置</th><th>位置类型</th></tr>
                 </thead>
                 <tbody>
                 <%
@@ -94,14 +94,14 @@
                 %>
                     <tr>
                         <td><a href="/device/<%=row.id%>"><%=row.identifier%></a></td>
-                        <td><%=row.minor%></td>
+                        
                         <td><%=row.state%></td>
                         <td><%=row.city%></td>
                         <td><%=row.region%></td>
                         <td><%=row.street%></td>
                         <td><%=row.location%></td>
                         <td><%=row.locationType%></td>
-                        <td><%=row.cbjTag%></td>
+                        
                         
                     </tr>
                 <%
