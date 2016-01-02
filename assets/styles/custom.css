@@ -14,7 +14,7 @@ body {
 .v4-tease {
   display: block;
   padding: 15px 20px;
-  color: gold;
+  color: #FFE301;
   text-align: center;
   background-color: #0275d8;
 }
@@ -25,6 +25,8 @@ body {
 
 .well{
     min-height: 250px;
+    background-color: white;
+    background-image: none;
 }
 
 .panel
@@ -57,15 +59,16 @@ body {
 
 
 
+
 .content {
-    padding-top: 60px;
+    padding-top: 170px;
     padding-bottom: 60px
 }
 
 .navbar-default {
 
   background-image: none;
-  background: gold;
+  background: #FFE301;
   border-radius: 4px;
   -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 1px 5px rgba(0, 0, 0, .075);
           box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 1px 5px rgba(0, 0, 0, .075);
@@ -89,7 +92,7 @@ body {
   bottom:0;
   width:100%;
   height:60px;
-  background-color:gold;
+  background-color:#FFE301;
 
 }
 .list-group-item{
@@ -115,7 +118,7 @@ body {
 }
 .panel-default > .panel-heading {
   background-image: none;
-  background: gold;
+  background: #FFE301;
 }
 .panel-primary > .panel-heading {
   background-image: -webkit-linear-gradient(top, #337ab7 0%, #2e6da4 100%);
@@ -124,6 +127,16 @@ body {
   background-image:         linear-gradient(to bottom, #337ab7 0%, #2e6da4 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff337ab7', endColorstr='#ff2e6da4', GradientType=0);
   background-repeat: repeat-x;
+}
+.btn-primary{
+    background-color: #FFE301;
+    background-image: none;
+    color: black;
+    border-color: #dcdcdc;
+}
+.btn-primary:hover{
+    background-color: gold;
+    color: black
 }
 
 .full-width {

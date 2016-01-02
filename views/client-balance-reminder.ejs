@@ -1,4 +1,4 @@
-<div class="container content">
+<div class="container ">
         <div class="row">
             <div class="col-md-4"><div class="well">
                 <h3>所有余额提醒</h3>
@@ -9,7 +9,7 @@
                         client = clients.pop();
                 %>
                 <li class="list-group-item">
-                    <a href="/client/<%=client.id%>"><mark><%=client.name%></mark></a>
+                    <a href="/client/<%=client.id%>"><%=client.name%></a>
                     <span class="badge">
                         <%=client.account.toFixed(2)%>元</span>
                 </li>

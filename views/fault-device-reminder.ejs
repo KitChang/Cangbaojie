@@ -1,4 +1,4 @@
-<div class="container content">
+<div class="container">
         <div class="row">
             <div class="col-md-4">
                 <div class="panel-body">
@@ -17,7 +17,7 @@
                 %>
                 <div class="list-group">
                 <li class="list-group-item">
-                    <a href="/device/<%=faultDevice.device%>"><mark><%=deviceName%></mark></a>
+                    <a href="/device/<%=faultDevice.device%>"><%=deviceName%></a>
                     <span class="badge">无访问时间段 <%=moment(faultDevice.accessDate).fromNow()%></span>
                 </li>
                 <li class="list-group-item">

@@ -9,7 +9,6 @@ module.exports = {
 	find: function(req, res) {
         
         user.find().exec(function(err, resultArr){
-            
             if(err){
                 return res.serverError(err);
             }

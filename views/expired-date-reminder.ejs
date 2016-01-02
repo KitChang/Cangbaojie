@@ -1,4 +1,4 @@
-<div class="container content">
+<div class="container">
         <div class="row">
             <div class="col-md-4"><div class="well">
                 <h3>所有到期提醒</h3>
@@ -9,9 +9,9 @@
                         ad = advertisements.pop();
                 %>
                 <li class="list-group-item">
-                    <a href="/client/<%=ad.client.id%>"><mark><%=ad.client.name%></mark></a>
+                    <a href="/client/<%=ad.client.id%>"><%=ad.client.name%></a>
                     - 
-                    <a href="/advertisement/<%=ad.id%>"><mark><%=ad.title%></mark></a>
+                    <a href="/advertisement/<%=ad.id%>"><%=ad.title%></a>
                     
                     <span class="badge"><%=moment().to(moment(ad.expiredDate))%></span>
 

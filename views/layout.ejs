@@ -9,20 +9,34 @@
     <link rel="icon" href="../../favicon.ico">
     <title>藏宝街</title>
     <!-- Bootstrap core CSS -->
-    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/bootstrap/css/bootstrap-theme.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <link href="/styles/custom.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
-     <link rel="stylesheet" href="/jQuery-File-Upload-9.11.2/css/jquery.fileupload.css"/>
+    <link rel="stylesheet" href="/jQuery-File-Upload-9.11.2/css/jquery.fileupload.css"/>
     <link href="//cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css" rel="stylesheet">
     </head>
 
   <body>
     <%
-    if(!req.param("omitNavigation")){
+    if(!req.param("omitNavigation")&&req.session.user){
     %>
+      
 <nav class="navbar navbar-default navbar-fixed-top">
+    
+        
+    
       <div class="container">
+        <div class="row" style="padding-top: 5px;">
+            <center>
+            <img src="/images/logo.png" class="img-responsive" width="250px"/>
+            </center>
+        </div>
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
@@ -30,7 +44,6 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">藏宝街</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -41,7 +54,7 @@
                       <ul class="dropdown-menu">
                         <li><a href="http://<%=req.host%>:<%=req.port%>/advertisement">广告</a></li>
                           <li><a href="http://<%=req.host%>:<%=req.port%>/client">广告客户商家</a></li>
-                      </ul>
+                      </ul> 
                     </li>
                     <li class="dropdown">
                       <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">数据管理 <span class="caret"></span></a>
@@ -68,9 +81,14 @@
                       username = req.session.user.username;
                   %>
                   
+          
           <ul class="nav navbar-nav navbar-right">
-              <li></li>
-            <li><a href="/user/logout"><%=username%> 退出</a></li>
+            
+              <li><a href="/user/logout"> 退出</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            
+              <li><a href="#"> <%=username%></a></li>
           </ul>
         </div>
       </div>
@@ -81,13 +99,10 @@
     <%- body %>
     <footer class="footer">
         <center>
-            <p>&nbsp&nbsp; <% if(req.session.user){
-                %>
-                &copy珠海伯睿网络科技
-                <%
-                }
-                %></p>
-            </center>
+            <p>&nbsp&nbsp; 
+                &copy2005 珠海伯睿网络科技
+
+        </center>
     </footer>
 
 
