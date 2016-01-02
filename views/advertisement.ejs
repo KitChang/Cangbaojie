@@ -7,13 +7,13 @@
                 </ol>
                 <div class="panel-body">
                     
-                    <button class="btn btn-default right" onClick="javascript: window.location.href='/advertisement/client'">创建</button>
+                    <button class="btn btn-primary right" onClick="javascript: window.location.href='/advertisement/client'">创建</button>
                 </div>
                 <div class="panel-body">
                 <form class="form-inline" name="form" action="/device/search" method="get">
                 <table class="table table-striped" id="table">
                     <thead>
-                        <tr><th>题目</th><th>广告图</th></th><th>客户商家</th><th></th></tr>
+                        <tr><th>广告图</th><th>题目</th></th><th>客户商家</th><th></th></tr>
                     </thead>
                     
                     <tbody>
@@ -22,7 +22,7 @@
                 while (resultArr.length) {
                   row = resultArr.pop();
                 %>
-                    <tr><td><a href="/advertisement/<%=row.id%>"><%=row.title%>(<%=row.id%>)</a></td>
+                    <tr>
                         <td>
                             <%
                             if(row.advertisementImage!=null){
@@ -34,6 +34,7 @@
                             }
                             %>
                         </td>
+                        <td><a href="/advertisement/<%=row.id%>"><%=row.title%></a></td>
                         <td>
                         <%
                             var clientName = "";
@@ -42,7 +43,7 @@
                             }
                         %>
                         <%=clientName%></td><td><a class="btn btn-danger" onClick="javascript: destroy('<%=row.id%>');">删除</a>
-                    <a href="/advertisement/<%=row.id%>/deploy" class="btn btn-default">设备发送</a>
+                    <a href="/advertisement/<%=row.id%>/deploy" class="btn btn-info">设备发送</a>
                     </td></tr>
                 <%
                 }
