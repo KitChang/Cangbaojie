@@ -62,7 +62,7 @@ body {
 
 .content {
     padding-top: 170px;
-    padding-bottom: 60px
+    padding-bottom: 70px;
 }
 
 .navbar-default {
@@ -87,11 +87,10 @@ body {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .15), 0 1px 10px rgba(0, 0, 0, .075);
   border: 1px solid;
   border-color: #e7e7e7;
-  left: 0;
   position:fixed;
-  bottom:0;
+  bottom:0%;
   width:100%;
-  height:60px;
+  height:70px;
   background-color:#FFE301;
 
 }
@@ -116,18 +115,11 @@ body {
   -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
           box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
 }
-.panel-default > .panel-heading {
+.panel-heading {
   background-image: none;
-  background: #FFE301;
+  background-color: white;
 }
-.panel-primary > .panel-heading {
-  background-image: -webkit-linear-gradient(top, #337ab7 0%, #2e6da4 100%);
-  background-image:      -o-linear-gradient(top, #337ab7 0%, #2e6da4 100%);
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#337ab7), to(#2e6da4));
-  background-image:         linear-gradient(to bottom, #337ab7 0%, #2e6da4 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff337ab7', endColorstr='#ff2e6da4', GradientType=0);
-  background-repeat: repeat-x;
-}
+
 .btn-primary{
     background-color: #FFE301;
     background-image: none;
