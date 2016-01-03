@@ -4,7 +4,6 @@
                             <ol class="breadcrumb panel-heading">
                               <li><a href="/advertisement">广告管理</a></li>
                               <li><a href="/advertisement/<%=req.param('advertisement')%>">广告</a></li>
-                                <li><a href="/ProbabilityDraw?advertisement=<%=req.param('advertisement')%>">机率抽奖</a></li>
                               <li class="active">创建法则</li>
                             </ol>  
                             <div class="panel-body">
@@ -33,7 +32,7 @@
                                 <input type="hidden" name="advertisement" class="form-control" value="<%=req.param('advertisement')%>">
                                 
                                 </form>
-                                <button type="button" id="submit" class="btn btn-default">创建</button>
+                                <button type="button" id="submit" class="btn btn-primary">创建</button>
                                 <button type="button" class="btn btn-default" onClick="javascript:window.history.back()">取消</button>
                             </div>
                         </div>              

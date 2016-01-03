@@ -21,6 +21,7 @@
                         var date = row.createdAt;
                         var date2 = moment(date).format("MM/DD/YYYY HH:mm:ss");
                         var phone = "wechat用戶";
+                        var prizeStr = ["", "一等奖", "二等奖", "三等奖", "四等奖", "五等奖"];
                         if (row.appUser.authType == "local") {
                             phone = row.appUser.phone;
                         }
@@ -36,8 +37,9 @@
                             expired = "过期";
                         else
                             expired = "未过期";
+                        var prize = prizeStr[row.prize];
                     %>
-                    <tr><td><%=date2%></td><td><%=row.appUser.username%></td><td><%=phone%></td><td><%=row.prize%></td><td><%=pickStatus%></td><td><%=expiredDateStr%></td><td><%=expired%></td></tr>
+                    <tr><td><%=date2%></td><td><%=row.appUser.username%></td><td><%=phone%></td><td><%=prize%></td><td><%=pickStatus%></td><td><%=expiredDateStr%></td><td><%=expired%></td></tr>
                     <%
                     }
                     %>

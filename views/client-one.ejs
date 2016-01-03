@@ -7,48 +7,70 @@
                               <li><a href="/client">广告客户商家</a></li>
                               <li class="active">编辑</li>
                             </ol>
-                            <div class="panel-body">
-                                <button type="button" class="btn btn-default right" onClick="javascript:window.history.back()" value=""/> 取消 </button>
-                            </div>
-                            <div class="panel-body">
+                            <div class="panel-body" style="display: none;">
                                 <dl class="dl-horizontal">
                                 <dt>余额</dt>
-                                <dd>人民币 <%=result.account%> 元</dd>
+                                <dd>人民币 <%=result.account%> 元 <button type="button" class="btn btn-primary" onClick="javascript:document.location.href='/client/<%=result.id%>/balance';" value=""/> 充值 </button></dd>
                                 </dl>
-                            <button type="button" class="btn btn-primary" onClick="javascript:document.location.href='/client/<%=result.id%>/balance';" value=""/> 充值 </button>
+                            
                             </div>
                             <div class="panel-body">
-                                <form id="form" name="form" action="/client/<%=req.param('id')%>" method="post">                    
+                                <form class="form-horizontal" role="form" id="form" name="form" action="/client/<%=req.param('id')%>" method="post">
                                 <div class="form-group">
-                                <label>广告商名 <span class="mandatory">*</span></label>
-                                <input type="text" name="name" class="form-control" value="<%=result.name%>">
+                                <label class="control-label col-sm-2" for="name">余额 <span class="mandatory">*</span></label>
+                                <div class="col-sm-10">
+                                    <label class="control-label col-sm-2" for="name">
+                                        人民币 <%=result.account%> 元 
+                                    </label>
+                                    <button type="button" class="btn btn-primary" onClick="javascript:document.location.href='/client/<%=result.id%>/balance';" value=""/> 充值 </button>
+
+                                </div>
+                                </div>                    
+                                <div class="form-group">
+                                <label class="control-label col-sm-2" for="name">广告商名 <span class="mandatory">*</span></label>
+                                <div class="col-sm-10">
+                                    <input style="width: 100%;" type="text" name="name" id="name" class="form-control" value="<%=result.name%>">
+                                </div>
                                 </div>
                                 <div class="form-group">
-                                <label>公司叙述<span class="mandatory">*</span></label>
-                                <textarea name="companyIntroduction" class="form-control"><%=result.companyIntroduction%>
-                                </textarea>
+                                <label class="control-label col-sm-2" for="companyIntroduction">公司叙述<span class="mandatory">*</span></label>
+                                <div class="col-sm-10">
+                                    <textarea style="width: 100%;height:150px;" name="companyIntroduction" id="companyIntroduction" class="form-control"><%=result.companyIntroduction%>
+                                    </textarea>
+                                </div>
                                 </div>
                                 <div class="form-group">
-                                <label>联系人 <span class="mandatory">*</span></label>
-                                <input type="text" name="contactPerson" class="form-control" value="<%=result.contactPerson%>">
+                                <label class="control-label col-sm-2" for="contactPerson">联系人 <span class="mandatory">*</span></label>
+                                <div class="col-sm-10">
+                                    <input style="width: 100%;" type="text" name="contactPerson" id="contactPerson" class="form-control" value="<%=result.contactPerson%>">
+                                </div>
                                 </div>
                                 <div class="form-group">
-                                <label>移动电话 <span class="mandatory">*</span></label>
-                                <input type="text" name="mobilePhone" id="mobilePhone" class="form-control" value="<%=result.mobilePhone%>">
+                                <label class="control-label col-sm-2" for="mobilePhone">移动电话 <span class="mandatory">*</span></label>
+                                <div class="col-sm-10">
+                                    <input style="width: 100%;" type="text" name="mobilePhone" id="mobilePhone" class="form-control" value="<%=result.mobilePhone%>">
+                                </div>
                                 </div>
                                 <div class="form-group">
-                                <label>传真</label>
-                                <input type="text" name="fax" class="form-control" value="<%=result.fax%>">
+                                <label class="control-label col-sm-2" for="fax">传真</label>
+                                <div class="col-sm-10">
+                                    <input style="width: 100%;" type="text" id="fax" name="fax" class="form-control" value="<%=result.fax%>">
+                                </div>
                                 </div>
                                 <div class="form-group">
-                                <label>邮箱地址 <span class="mandatory">*</span></label>
-                                <input type="text" name="email" id="email" class="form-control" value="<%=result.email%>">
+                                <label class="control-label col-sm-2" for="email">邮箱地址 <span class="email">*</span></label>
+                                <div class="col-sm-10">
+                                <input style="width: 100%;" type="text" name="email" id="email" class="form-control" value="<%=result.email%>">
+                                </div>
                                 </div>
                                 <div class="form-group">
-                                <label>联系地址 <span class="mandatory">*</span></label>
-                                <input type="text" name="address" class="form-control" value="<%=result.address%>">
+                                <label class="control-label col-sm-2" for="address">联系地址 <span class="mandatory">*</span></label>
+                                <div class="col-sm-10">
+                                    <input style="width: 100%;" type="text" name="address" id="address" class="form-control" value="<%=result.address%>">
                                 </div>
-                                    <button type="submit" class="btn btn-primary">提交</button>
+                                </div>
+                                    <button type="button" class="btn btn-default right" onClick="javascript:window.history.back()" value=""/> 取消 </button>
+                                    <button type="submit" class="btn btn-primary right">提交</button>
                                 </form>
                             </div>
                         </div>
