@@ -6,15 +6,15 @@
                 <div class="panel-heading"><a href="http://<%=req.host%>:<%=req.port%>/data/access/<%=req.param('id')%>">广告点击量</a></div>             
                     
                 <div class="panel-body">
-                    <div class="panel-elem">
-                        <mark><%=advertisement.title%></mark>
+                    <div class="page-header">
+                        <h2><b><%=advertisement.title%></b></h2>
                     </div>
                     <form class="form-inline panel-elem" method="get" action="/data/access/<%=req.param('id')%>">
                     <div class="form-group">
                         <label>年份</label>
                         <select class="form-control" id="year" name="year">
                             <option value="2015">2015</option>
-                            <option value="2016">2016</option>
+                            <option value="2016" selected>2016</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -24,13 +24,14 @@
                         </select>
                     </div>
                     <a class="btn btn-default" id="access-month">月统计</a>
-                    <div class="form-group">
-                        <label>日</label>
+                    <a class="btn btn-default right" id="access-day">日统计</a>
+                    <div class="form-group right">
+                        <label>日期</label>
                         <select class="form-control" id="day" name="day">
                             
                         </select>
                     </div>
-                    <a class="btn btn-default" id="access-day">日统计</a>
+                    
                     </form>
                     <div class="panel-elem">
                         <mark>月统计点击量</mark>

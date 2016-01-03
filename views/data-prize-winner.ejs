@@ -56,7 +56,10 @@
     <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
     <script>
-        $("#table").DataTable({"language": {
-                "url": "//cdn.datatables.net/plug-ins/1.10.10/i18n/Chinese.json"
-            }});
+        $("#table").DataTable(
+            {
+                "language": 
+                {"url": "//cdn.datatables.net/plug-ins/1.10.10/i18n/Chinese.json"},
+                "order": [[ 0, "desc" ]]
+            });
     </script>
