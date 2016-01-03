@@ -17,6 +17,7 @@ module.exports = {
       address: {type: 'string'},
       companyIntroduction: {type: 'string', required: true},
       account: {type: 'float', required: true, defaultsTo: 0.00},
-      accessCount: {type: 'integer', defaultsTo: 0, required: true}
+      accessCount: {type: 'integer', defaultsTo: 0, required: true},
+      logoUrl: {type: 'string', defaultsTo: "/images/default_client.png"}
   }
 };

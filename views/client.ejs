@@ -28,7 +28,7 @@
                   row = resultArr.pop();
                 %>
                     <tr>
-                        <td><img src="images/default_logo.png" class="img-rounded" width="50" height="50" style="margin-right: 10px;"></img><a href="/client/<%=row.id%>"><%=row.name%></a></td>
+                        <td><img src="<%=row.logoUrl>" class="img-rounded" width="50" height="50" style="margin-right: 10px;"></img><a href="/client/<%=row.id%>"><%=row.name%></a></td>
                         <td><%=row.contactPerson%></td>
                         <td><%=row.mobilePhone%>,<%=row.phone%></td>
                         <td><%=row.email%></td>
