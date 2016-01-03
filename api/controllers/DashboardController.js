@@ -14,7 +14,6 @@ module.exports = {
             var yesterdayStr = moment().subtract(1, 'days').format('MM/DD/YYYY');
             YesterdayData.findOne({date: yesterdayStr}).exec(function(err, yesterdayDataOne){
                 advertisement.find({limit: 5, sort: 'expiredDate DESC'}).populate('client').exec(function(err, advertisementsExpire){
-                    
                     client.find({limit: 5, sort: 'account DESC'}).exec(function(err, clientsAccount){
                         var durationDate = moment().subtract(30, 'days').toDate();
                         DeviceMonitor.find({limit: 5, sort: 'accessDate ASC', accessDate: {'<': durationDate}, verifiedDate: {"<": durationDate}}).exec(function(err, faultDevices){
@@ -61,28 +60,7 @@ module.exports = {
             })
         })
     },
-    payDeadline: function(req, res){
-        var day = getRandom(1, 30);
-        var deadLine = moment().subtract(day, 'days').toDate();
-        var payDate = moment().subtract(30, 'days').toDate();
-        var account = getRandom(10, 2000);
-        client.update({}, {payDeadline: deadLine, payDate: payDate, account: account}).exec(function(err, clients){
-            res.end();
-            return;
-            
-        });
-        
-    },
-    updateStreet: function(req, res){
-        access.update({}, {street: "南屏镇"}).exec(function(err){
-            res.end();
-        });
-    },
-    updateRequestRead: function(req, res){
-        request.update({}, {read: false}).exec(function(err){
-           res.end(); 
-        });
-    },
+    
     destroy: function(req, res){
         
         YesterdayData.destroy().exec(function(err){
