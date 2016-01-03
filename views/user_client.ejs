@@ -16,7 +16,7 @@
                 <form name="form">
                 <table class="table table-striped" id="table">
                     <thead>
-                    <tr><th>商家用户帐户</th><th>商家名</th><th>删除</th></tr>
+                    <tr><th>商家用户帐户</th><th>商家名</th><th>电子邮箱</th><th>删除</th></tr>
                     </thead>
                     <tbody>
                 <%
@@ -33,6 +33,7 @@
                             }
                         %>
                         <%=clientName%></td>
+                        <td><%=row.email%></td>
                         <td><a class="btn btn-danger" onClick="javascript: destroy('<%=row.id%>');">删除</a></td></tr>
                 <%
                 }

@@ -72,46 +72,7 @@
                     </div>
                     <button onClick="document.forms['search-form'].submit();" class="btn btn-warning right">搜索</button>         
                     </form>
-                    <p class="where text-right">
-                         <mark>
-                        <% 
-                        if(req.param('locationType')!=undefined&&req.param('locationType')!=null){
-                        %>
-                        <%=req.param("locationType")%>
-                        <% 
-                        }
-                        %>
-                        <% 
-                        if(req.param('state')!=undefined&&req.param('state')!=null){
-                        %>
-                        <%=req.param("state")%>
-                        <% 
-                        }
-                        %>
-                        <% 
-                        if(req.param('city')!=undefined&&req.param('city')!=null){
-                        %>
-                        <%=req.param("city")%>
-                        <% 
-                        }
-                        %>
-                        <%
-                        if(req.param('region')!=undefined&&req.param('region')!=null){
-                        %>
-                        <%=req.param("region")%>
-                        <% 
-                        }
-                        %>
-                        <%
-                        if(req.param('street')!=undefined&&req.param('street')!=null){
-                        %>
-                        <%=req.param("street")%>
-                        <% 
-                        }
-                        %>
-                             <%=resultArr.length%>
-                       </mark>
-                    </p>
+                    
                 </div>
                 <div class="panel-body">
                 <form name="add-device-form" action="/advertisement/<%=req.param('id')%>/device" method="post">
