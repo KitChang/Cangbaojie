@@ -13,7 +13,7 @@ module.exports = {
         request.find({status: ["open", "process"]}).populate('client').exec(function(err, requests){
             var yesterdayStr = moment().subtract(1, 'days').format('MM/DD/YYYY');
             YesterdayData.findOne({date: yesterdayStr}).exec(function(err, yesterdayDataOne){
-                advertisement.find({limit: 5, sort: 'expiredDate ASC'}).populate('client').exec(function(err, advertisementsExpire){
+                advertisement.find({limit: 5, sort: 'expiredDate DESC'}).populate('client').exec(function(err, advertisementsExpire){
                     
                     client.find({limit: 5, sort: 'account DESC'}).exec(function(err, clientsAccount){
                         var durationDate = moment().subtract(30, 'days').toDate();
