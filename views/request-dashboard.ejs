@@ -1,10 +1,8 @@
 <div class="container content">
         <div class="row">
-            <div class="col-md-4">
-                <div class="panel-body">
-                    <button class="btn btn-default right" onClick="javascript:window.history.back()">取消</button>
-                </div>
-                <div class="well">
+            <div class="col-md-12">
+                
+                
                 <h3>推广请求</h3>
                 
                 
@@ -13,13 +11,15 @@
                     while(requests.length){
                         request = requests.pop();
                         if(request.client){
+                            var date = request.createdAt;
+                            var date2 = date.toLocaleDateString();
                 %>
                 <div class="list-group">
                     <li class="list-group-item">
-                    <a href="/client/<%=request.client.id%>"><%=request.client.name%></a>
+                    <a href="/client/<%=request.client.id%>"><%=request.client.name%></a>-<%=request.city%>
                         
                     
-                    <span class="badge"><%=request.city%></span>
+                    <span class="badge"><%=date2%></span>
 
                 </li>
                     <li class="list-group-item">
@@ -34,7 +34,9 @@
                 %>
                 
                
-            </div></div>
+                <button class="btn btn-default right" onClick="javascript:window.history.back()">取消</button>
+                
+            </div>
             
         </div>
 </div>
