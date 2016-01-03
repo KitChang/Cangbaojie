@@ -35,7 +35,7 @@
                                 <%
                                 }
                                 %>
-                                
+                                <option value="">所有省</option>
                                 <option value="广东省">广东省</option>
                             </select>
                         </div>
@@ -132,6 +132,7 @@
         $.ajax({
         url: "/geo/city?state="+selectedState
         }).done(function(data){
+            console.log("city");
           $("#city").append("<option value=''>所有城市</option>");
           html = "";
           while (data.length) {
@@ -141,6 +142,9 @@
             //code
           }
           $("#city").append(html);
+          }).error(function(err){
+            console.log("all city");
+          $("#city").append("<option value=''>所有城市</option>");
           });
         }
         function populateRegion(){

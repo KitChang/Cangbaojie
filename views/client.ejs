@@ -8,8 +8,9 @@
                               <li class="active">广告客户商家</li>
                 </ol>
                 <div class="panel-body">
-                    <button class="btn btn-primary right" onClick="javascript: window.location.href='/client/new'">创建</button>
+                    
                     <button type="button" class="btn btn-default right" onClick="javascript:window.history.back()" value=""/> 取消 </button>
+                    <button class="btn btn-primary right" onClick="javascript: window.location.href='/client/new'">创建</button>
                 </div>
                 <div class="panel-body">
                 <form name="form" action="/dfd/" method="post">
@@ -30,7 +31,7 @@
                     <tr>
                         <td><img src="<%=row.logoUrl%>" class="img-rounded" width="50" height="50" style="margin-right: 10px;"></img><a href="/client/<%=row.id%>"><%=row.name%></a></td>
                         <td><%=row.contactPerson%></td>
-                        <td><%=row.mobilePhone%>,<%=row.phone%></td>
+                        <td><%=row.mobilePhone%></td>
                         <td><%=row.email%></td>
                         <td><a class="btn btn-danger" onClick="javascript: destroy('<%=row.id%>');">删除</a></td>
                     </tr>
