@@ -86,7 +86,7 @@ module.exports = {
         var street = req.param('street');
         var option = {};
         if(locationType&&locationType!=""){
-            //option.locationType = locationType;
+            option.locationType = locationType;
         }
         if (state&&state!="") {
             option.state = state;
