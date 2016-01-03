@@ -19,7 +19,7 @@
                     while(resultArr.length){
                         var row = resultArr.pop();
                         var date = row.createdAt;
-                        var date2 = moment(date).format("MM/DD/YYYY HH:mm:ss");
+                        var date2 = moment(date).format("YYYY-MM-DD HH:mm:ss");
                         var phone = "wechat用戶";
                         var prizeStr = ["", "一等奖", "二等奖", "三等奖", "四等奖", "五等奖"];
                         if (row.appUser.authType == "local") {

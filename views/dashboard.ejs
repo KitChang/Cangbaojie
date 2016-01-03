@@ -97,10 +97,12 @@
                     while(requests.length){
                         request = requests.pop();
                         if(request.client){
+                        var date = request.createdAt;
+                        var date2 = date.toLocaleDateString();
                 %>
                     <li class="list-group-item">
-                    <a href="/client/<%=request.client.id%>"><%=request.client.name%></a>
-                    <span class="badge"><%=request.city%></span>
+                    <a href="/client/<%=request.client.id%>"><%=request.client.name%></a>－<%=request.city%>
+                    <span class="badge"><%=date2%></span>
 
                 </li>
                 <%
