@@ -1,8 +1,8 @@
 
         
-        <div class="container content">
+        <div class="container-fluid content">
             <div class="row">
-                <div class="col-md-12">
+                
                         <div class="panel panel-default" style="width: 45%">
                             
                             <ol class="breadcrumb panel-heading">
@@ -13,11 +13,11 @@
                                 <form id="form" name="form" action="../advertisement/<%=result.id%>" method="post">                
                                 <div class="form-group">
                                 <label>广告标题 <span class="mandatory">*</span></label>
-                                <input type="text" name="title" id="title" class="form-control" value="<%=result.title%>">
+                                <input type="text" name="title" id="title" class="form-control" value="<%=result.title%>" style="width: 100%;">
                                 </div>
                                 <div class="form-group">
                                 <label>详细描述 <span class="mandatory">*</span></label>
-                                    <textarea style="text-align:left" name="description" id="description" class="form-control"><%=result.description%></textarea>
+                                    <textarea style="text-align:left; width: 100%; height: 150px;" name="description" id="description" class="form-control"><%=result.description%></textarea>
                                 </div>
                                 <div class="form-group">
                                 <label>分类 <span class="mandatory">*</span></label>
@@ -100,13 +100,15 @@
                                     
                                 </select>
                                 </div>
+                                <div class="form-inline">
                                 <div class="form-group">
-                                <label>广告有效日期 <span class="mandatory">*</span></label>
+                                <label>广告有效日期 <span class="mandatory">*</span></label><br>
                                 <input type="text" name="effectiveDate" id="effectiveDate" class="form-control" value="<%=moment(result.effectiveDate).format("MM/DD/YYYY")%>" >
                                 </div>
                                 <div class="form-group">
-                                <label>广告失效日期 <span class="mandatory">*</span></label>
+                                <label>广告失效日期 <span class="mandatory">*</span></label><br>
                                 <input type="text" name="expiredDate" id="expiredDate" class="form-control" value="<%=moment(result.expiredDate).format("MM/DD/YYYY")%>">
+                                </div>
                                 </div>
                                 <div class="form-group">
                                 <div class="form-inline">
@@ -165,34 +167,9 @@
                                 </form>
                             </div>
                         </div>
-                        <div class="panel panel-default" >
-                        <%
-                        if(result.advertisementImage){
-                            var image = result.advertisementImage;
-                        %>
-                        <div class="panel-body">                  
-<img class="img-thumbnail" height="140px" width="140px" src="http://res.cloudinary.com/djdts3tqq/image/upload/v<%=image.imageVersion%>/<%=image.imagePublicId%>.<%=image.imageFormat%>">
-                        </div>
                         
-                        <%
-                            }
-                        %>
-                        <div class="panel-body">
-                            <form id="form" name="form" action="/advertisement/<%=req.param('id')%>/image" method="post" enctype="multipart/form-data">
-                            <div class="form-group">
-                            <span class="btn btn-success fileinput-button">
-                            <i class="glyphicon glyphicon-plus"></i>
-                            <span>上载广告图</span>
-                            <input type="file" id="fileupload" name="advertisementImage" >
-                            </span>
-                            <div><span id="file-info"></span></div>
-                            </div>
-                            <button type="submit" class="btn btn-primary">提交</button>
-                            </form>
-                        </div></div>
-
                         
-                        <div class="panel panel-default" style="width:45%" >
+                        <div class="panel panel-default" style="width:50%" >
                             <div class="panel-heading">幸运抽奖</div>
                             <div class="panel-body">    
                                     <div class="form-inline panel-elem">
@@ -254,7 +231,32 @@
                                     </div>
                             </div>
                         </div>
-                    
+                        <div class="panel panel-default" >
+                        <%
+                        if(result.advertisementImage){
+                            var image = result.advertisementImage;
+                        %>
+                        <div class="panel-body">                  
+                        <img class="img-thumbnail" height="140px" width="140px" src="http://res.cloudinary.com/djdts3tqq/image/upload/v<%=image.imageVersion%>/<%=image.imagePublicId%>.<%=image.imageFormat%>">
+                        </div>
+                        
+                        <%
+                            }
+                        %>
+                        <div class="panel-body">
+                            <form id="form" name="form" action="/advertisement/<%=req.param('id')%>/image" method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                            <span class="btn btn-success fileinput-button">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>上载广告图</span>
+                            <input type="file" id="fileupload" name="advertisementImage" >
+                            </span>
+                            <div><span id="file-info"></span></div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">提交</button>
+                            </form>
+                        </div></div>
+
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <% 
@@ -277,7 +279,7 @@
                                 <button type="button" class="btn btn-default right" onClick="javascript: window.history.back();">取消</button>
                            </div>
                         </div>
-                </div>
+                
             </div>
             
     </div>
