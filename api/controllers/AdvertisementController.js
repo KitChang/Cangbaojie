@@ -477,7 +477,7 @@ module.exports = {
         });;
     },
     expiredDateReminder: function(req, res){
-        advertisement.find({limit: 5, sort: 'expiredDate ASC'}).populate('client').exec(function(err, advertisements){
+        advertisement.find({limit: 5, sort: 'expiredDate DESC'}).populate('client').exec(function(err, advertisements){
             res.view('expired-date-reminder', {advertisements: advertisements, moment: moment});
         });
     }
