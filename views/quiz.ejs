@@ -5,17 +5,18 @@
                     
                     <div class="panel panel-default full-width">
                         <div class="panel-heading">问答抽奖</div>
-                        <div class="panel-body panel-elem">
-                            <button type="button" id="add-question" class="btn btn-default">加问答题</button>
-                            <button type="button" id="remove-question" class="btn btn-default">删问答题</button>
-                            <button type="button" id="submit" class="btn btn-default">提交</button>
-                            <button type="button" class="btn btn-default" onClick="javascript: window.history.back();">取消</button>
-                        </div>
+                        
                         <div class="panel-body">
                             <form id="question-form" action="../../advertisement/<%=req.param('id')%>/quiz" name="form" method="post">
                             </form>
                         </div>
-                            
+                        <div class="panel-body panel-elem">
+                            <button type="button" id="add-question" class="btn btn-warning">+ 问答题</button>
+                            <button type="button" id="remove-question" class="btn btn-danger">- 问答题</button>
+
+                            <button type="button" class="btn btn-default right" onClick="javascript: window.history.back();">取消</button>
+                            <button type="button" id="submit" class="btn btn-primary right">提交</button>
+                        </div>    
                             
                         
                         
@@ -66,10 +67,10 @@
             questionHtml.push("<label> 问答题 "+qNumber+" </label> ");
             questionHtml.push("<input type='text' name='question[]' class='form-control' value='"+option['question']+"'>");
             questionHtml.push(" <label> 正确答案 </label> ");
-            questionHtml.push("<input type='answer' name='questionAnswer[]' class='form-control answer' value='"+option['questionAnswer']+"'>");
+            questionHtml.push("<input type='answer' name='questionAnswer[]' class='form-control answer' placeholder='A~E' value='"+option['questionAnswer']+"'>");
             
-            questionHtml.push(" <button type='button' id='add-option_"+qIndex+"' class='btn btn-default'>加选项</button>");
-            questionHtml.push(" <button type='button' id='remove-option_"+qIndex+"' class='btn btn-default'>删选项</button>");
+            questionHtml.push(" <button type='button' id='add-option_"+qIndex+"' class='btn btn-success'>+ 选项</button>");
+            questionHtml.push(" <button type='button' id='remove-option_"+qIndex+"' class='btn btn-danger'>- 选项</button>");
             questionHtml.push("</div>")
             
             questionHtml.push("</div>");
