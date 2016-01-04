@@ -13,10 +13,15 @@
                         if(request.client){
                             var date = request.createdAt;
                             var date2 = date.toLocaleDateString();
+                            var location = "";
+                            if (request.state!="") location = request.state;
+                            if (request.city!="") location += "->" + request.city;
+                            if (request.region!="") location += "->" + request.region;
+                            if (request.street!="") location += "->" + request.street;
                 %>
                 <div class="list-group">
                     <li class="list-group-item">
-                    <a href="/client/<%=request.client.id%>"><%=request.client.name%></a>-<%=request.city%>
+                    <a href="/client/<%=request.client.id%>"><%=request.client.name%></a>-<%=location%>
                         
                     
                     <span class="badge"><%=date2%></span>
