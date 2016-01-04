@@ -1,0 +1,47 @@
+<div class="container content">
+        <div class="row">
+            <div class="col-md-12">
+                
+                
+                <h3>充值请求</h3>
+                <%
+                    var request = null;
+                    while(requests.length){
+                        request = requests.pop();
+                %>
+                <div class="list-group">
+                    <li class="list-group-item">
+                    <a href="/client/<%=request.client.id%>"><%=request.client.name%></a>
+                    <p>
+                    日期: <%=moment(request.createdAt).format("MM/DD/YYYY")%><br>
+                    用户名: <%=request.user.username%> <br>
+                    用户称呼: <%=request.name%> <br>
+                    联系电话: <%=request.contactPhone%> <br>
+                    电邮地址: <%=request.email%> <br>
+                    备注: <%=request.remarks%><br>
+                    金额: <%=request.topupValue%></p>
+                </li>
+                    <li class="list-group-item">
+                    <a class="btn btn-primary" href="/TopupRequest/update-status?status=closed&id=<%=request.id%>">完成</a>
+                    <a class="btn btn-primary" href="/TopupRequest/update-status?status=process&id=<%=request.id%>">处理中</a>
+                    <span class="badge"><%=req.__(request.status)%></span>
+                    </li>
+                </div>
+                <%
+                    
+                    }
+                %>
+                <button class="btn btn-default right" onClick="javascript:window.history.back()">取消</button>
+                
+            </div>
+            
+        </div>
+</div>
+<script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
+<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+
+
+name": "admin111",
+    "contactPhone": "0756-8682028",
+    "email": "ken@adomain.com",
+    "remarks": " 566",

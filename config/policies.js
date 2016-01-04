@@ -68,6 +68,9 @@ module.exports.policies = {
         login: [],
         logout: 'sessionAuth'
     },
+    User_clientController: {
+        '*': 'sessionAuth'
+    },
     WinnerController: {
         '*': 'sessionAuth'
     },
@@ -79,7 +82,19 @@ module.exports.policies = {
     },
     PrizeCouponController: {
         '*': 'sessionAuth'
-    }
+    },
+    TopupRequestController: {
+        '*': 'sessionAuth'
+    },
+    MessageController: {
+        '*': 'sessionAuth'
+    },
+    RequestController: {
+        '*': 'sessionAuth'
+    },
+    AdvertisementImageController: {
+        '*': 'sessionAuth'
+    },
     
     
 };

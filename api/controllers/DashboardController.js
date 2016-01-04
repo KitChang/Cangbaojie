@@ -90,12 +90,12 @@ module.exports = {
         });
     },
     message: function(req, res){
-        message.find({limit: 5, sort: 'createdAt ASC'}).populate('client').exec(function(err, messages){
+        message.find({status: ['open', 'process'], limit: 5, sort: 'createdAt ASC'}).populate('client').exec(function(err, messages){
             res.view('dashboard-message', {messages: messages, moment: moment});
         });
     },
    topupRequest: function(req, res){
-        TopupRequest.find({limit: 5, sort: 'createdAt ASC'}).populate('client').exec(function(err, requests){
+        TopupRequest.find({status: ['open', 'process'], limit: 5, sort: 'createdAt ASC'}).populate('client').exec(function(err, requests){
             res.view('dashboard-topup-request', {requests: requests, moment: moment});
         });
     }

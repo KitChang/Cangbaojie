@@ -181,5 +181,27 @@ module.exports.routes = {
   'get /dashboard/topup-request':{
       controller: 'DashboardController',
       action: 'topupRequest'
-  }
+  },
+  'get /message/find-from-dashboard': {
+      controller: 'MessageController',
+      action: 'findFromDashboard'
+  },
+  'get /TopupRequest/find-from-dashboard': {
+      controller: "TopupRequestController",
+      action: 'findFromDashboard'
+  },
+  'get /TopupRequest/update-status': {
+      controller: "TopupRequestController",
+      action: "updateStatus"
+  },
+  'get /message/update-status': {
+      controller: "MessageController",
+      action: "updateStatus"
+  },
+  'get /request/update-status': {
+      controller: "RequestController",
+      action: "updateStatus"
+  },
+  
+
 };
