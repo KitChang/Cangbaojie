@@ -14,12 +14,11 @@
                     <a href="/client/<%=message.client.id%>"><%=message.client.name%></a> 
                     
                     <p>
-                    日期: <%=moment(message.createdAt).format("MM/DD/YYYY")%><br>
-                    用户名: <%=message.user.username%><br>
-                    用户称呼: <%=message.name%><br>
-                    联系电话: <%=message.contactPhone%><br>
-                    电邮地址: <%=message.email%><br>
-                    <u>标题: <%=message.title%></u>
+                    日期: <%=moment(message.createdAt).format("MM/DD/YYYY")%>    |    
+                    用户称呼: <%=message.name%>    |    
+                    联系电话: <%=message.contactPhone%>    |    
+                    电邮地址: <%=message.email%><br><hr>
+                    <big>标题: <%=message.title%></big>
                     </p>
                     <p><%=message.message%></p> 
                 </li>

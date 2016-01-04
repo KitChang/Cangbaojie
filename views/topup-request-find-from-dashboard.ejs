@@ -13,13 +13,11 @@
                     <li class="list-group-item">
                     <a href="/client/<%=request.client.id%>"><%=request.client.name%></a>
                     <p>
-                    日期: <%=moment(request.createdAt).format("MM/DD/YYYY")%><br>
-                    用户名: <%=request.user.username%> <br>
-                    用户称呼: <%=request.name%> <br>
-                    联系电话: <%=request.contactPhone%> <br>
-                    电邮地址: <%=request.email%> <br>
-                    备注: <%=request.remarks%><br>
-                    金额: <%=request.topupValue%> 人民币</p>
+                    日期: <%=moment(request.createdAt).format("MM/DD/YYYY")%>  |  
+                    用户称呼: <%=request.name%>  |  
+                    联系电话: <%=request.contactPhone%> | 
+                    电邮地址: <%=request.email%><br><hr>
+                    金额: <%=request.topupValue%> 人民币    |    备注: <%=request.remarks%></p>
                 </li>
                     <li class="list-group-item">
                     <a class="btn btn-primary" href="/TopupRequest/update-status?status=closed&id=<%=request.id%>">完成</a>
