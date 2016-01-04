@@ -88,6 +88,16 @@ module.exports = {
         access.update({}, {appUser: "5681d2bc58b891ee3e2d386d"}).exec(function(err){
             res.end();
         });
+    },
+    message: function(req, res){
+        message.find({limit: 5, sort: 'createdAt ASC'}).populate('client').exec(function(err, messages){
+            res.view('dashboard-message', {messages: messages, moment: moment});
+        });
+    },
+   topupRequest: function(req, res){
+        TopupRequest.find({limit: 5, sort: 'createdAt ASC'}).populate('client').exec(function(err, requests){
+            res.view('dashboard-topup-request', {requests: requests, moment: moment});
+        });
     }
 
     

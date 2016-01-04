@@ -195,6 +195,20 @@
             
             
         </div>
+        <div class="row">
+            
+            
+            <div class="col-md-6"><div class="well" id="message">
+                
+            </div></div>
+            
+            <div class="col-md-6"><div class="well" id="topupRequest">
+                
+            </div></div>
+            
+            
+        </div>
+        
 </div>
 <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
 <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
@@ -230,6 +244,8 @@
             openEffect	: 'none',
             closeEffect	: 'none'
         });
+        $("#message").load("/dashboard/message?omitNavigation=omitNavigation&omitFooter=omitFooter");
+        $("#topupRequest").load("/dashboard/topup-request?omitNavigation=omitNavigation&omitFooter=omitFooter");
     } );
 
 </script>

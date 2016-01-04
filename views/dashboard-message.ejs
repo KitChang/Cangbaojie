@@ -1,0 +1,23 @@
+<h3>到期提醒</h3>
+<div class="list-group">
+<%
+    var message;
+    while(messages.length){
+        message = messages.pop();
+%>
+<li class="list-group-item">
+    <a href="/client/<%=message.client.id%>"><%=message.client.name%></a>
+    - 
+    <%=message.title%>
+
+    <span class="badge"><%=moment(message.createdAt).format("MM/DD/YYYY")%></span>
+</li>
+<%
+    }
+%>
+</div>
+<p>
+    <a class="fancyboxIframe btn btn-primary" href="/advertisement/expired-date-reminder?omitNavigation=omitNavigation">
+    所有留言
+    </a>
+</p>

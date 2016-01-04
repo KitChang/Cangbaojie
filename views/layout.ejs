@@ -98,6 +98,9 @@
     %>
     
     <%- body %>
+    <%
+      if(!req.param("omitFooter")){
+    %>
     <footer class="footer">
         <center>
             <p>&nbsp&nbsp; 
@@ -105,6 +108,12 @@
 
         </center>
     </footer>
+      
+    <%
+      }
+    
+    %>
+    
 
 
 

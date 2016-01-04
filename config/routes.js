@@ -172,5 +172,14 @@ module.exports.routes = {
   'get /DeviceMonitor/verified-ok': {
       controller: 'DeviceMonitorController',
       action: 'verifiedOK'
+  },
+  
+  'get /dashboard/message': {
+      controller: 'DashboardController',
+      action: 'message'
+  },
+  'get /dashboard/topup-request':{
+      controller: 'DashboardController',
+      action: 'topupRequest'
   }
 };

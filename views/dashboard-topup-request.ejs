@@ -1,0 +1,24 @@
+<h3>到期提醒</h3>
+<div class="list-group">
+<%
+    var request;
+    while(requests.length){
+        request = requests.pop();
+%>
+<li class="list-group-item">
+    <a href="/client/<%=request.client.id%>"><%=request.client.name%></a>
+    - 
+    金额: <%=request.topupValue%> 人民币
+
+    <span class="badge"><%=moment(request.createdAt).format("MM/DD/YYYY")%></span>
+
+</li>
+<%
+    }
+%>
+</div>
+<p>
+    <a class="fancyboxIframe btn btn-primary" href="/advertisement/expired-date-reminder?omitNavigation=omitNavigation">
+    所有留言
+    </a>
+</p>
