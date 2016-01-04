@@ -8,8 +8,16 @@
                   <li><a href="/advertisement/<%=req.param('advertisement')%>">广告</a></li>
                   <li class="active">排序抽奖</li>
                 </ol>  
+                <%
+                    var upper = 0;
+                    var lower = 1;
+                    if (resultArr.length>0) {
+                        upper = resultArr[resultArr.length-1].drawCountUpperBound + 2;
+                        lower = resultArr[resultArr.length-1].drawCountUpperBound + 1;
+                    }
+                %>
                 <div class="panel-body">
-                    <button onClick="href=window.location.href='/OrderDraw/new?advertisement=<%=req.param('advertisement')%>'" class="btn btn-default right">加抽奖法则</button>
+                    <button onClick="href=window.location.href='/OrderDraw/new?advertisement=<%=req.param('advertisement')%>&upper=<%=upper%>&lower=<%=lower%>'" class="btn btn-default right">加抽奖法则</button>
                 </div>
                 <div class="panel-body">
                     <dl class="dl-horizontal">

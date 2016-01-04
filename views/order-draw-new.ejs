@@ -13,11 +13,11 @@
                                 <form name="form" id="form" action="/OrderDraw?advertisement=<%=req.param('advertisement')%>" method="post">
                                 <div class="form-group">
                                 <label>访问数下限 (包含)<span class="mandatory">*</span></label>
-                                <input type="text" name="drawCountLowerBound" id="drawCountLowerBound" class="form-control" value="1">
+                                <input type="text" name="drawCountLowerBound" id="drawCountLowerBound" class="form-control" value="<%=req.param('lower')%>" readonly>
                                 </div>
                                 <div class="form-group">
                                 <label>访问数上限 (包含) <span class="mandatory">*</span></label>
-                                <input type="text" name="drawCountUpperBound" id="drawCountUpperBound" class="form-control" value="0">
+                                <input type="text" name="drawCountUpperBound" id="drawCountUpperBound" class="form-control" value="<%=req.param('upper')%>">
                                 </div>
                                 <div class="form-group">
                                 <label>一等奖数量</label>
@@ -111,7 +111,14 @@
                     $("#fourthPrizeRange").val("0");
                 if($("#fifthPrizeRange").val().trim()=="")
                     $("#fifthPrizeRange").val("0");
-                    
+                if(parseInt($("#drawCountUpperBound").val()) <= parseInt($("#drawCountLowerBound").val())){
+                    errMsg.push("上限需大於下限");
+                }
+                var maxRange = parseInt($("#drawCountUpperBound").val()) - parseInt($("#drawCountLowerBound").val())+1;
+                var minRange = parseInt($("#firstPrizeRange").val()) + parseInt($("#secondPrizeRange").val())+parseInt($("#thirdPrizeRange").val())+parseInt($("#fourthPrizeRange").val())+parseInt($("#fifthPrizeRange").val());
+                if (maxRange < minRange) {
+                    errMsg.push("奖品总量超出范围");
+                };
                 if(errMsg.length > 0){
                     alert(errMsg.join('\n'));
                     return;
