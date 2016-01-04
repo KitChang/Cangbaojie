@@ -50,12 +50,7 @@ body {
 {
     clear: both;
 }
-.table > tbody > tr > td {
-  padding: 8px;
-  line-height: 1.42857143;
-  vertical-align: middle;
-  border-top: 1px solid #ddd;
-}
+
 
 
 
@@ -92,7 +87,8 @@ body {
   width:100%;
   height:70px;
   background-color:#FFE301;
-  font-weight: bold
+  font-weight: bold；
+  color: #333;
 
 }
 .list-group-item{
