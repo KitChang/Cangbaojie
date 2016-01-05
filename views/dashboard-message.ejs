@@ -3,7 +3,7 @@
 <%
     var message;
     while(messages.length){
-        message = messages.pop();
+        message = messages.shift();
 %>
 <li class="list-group-item">
     <a href="/client/<%=message.client.id%>"><%=message.client.name%></a>
