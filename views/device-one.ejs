@@ -31,7 +31,15 @@
                         <td><%=result.region%></td><td><%=result.street%></td>
                         <td><%=result.location%></td>
                         <td><%=result.location_type%></td>
-                        <td>正常</td>
+                        <td><%
+                            var status = "正常";
+                            if(faultDeviceFound){
+                                status = "故障";
+                            }
+                            %>
+                            <%=status%>
+                            
+                        </td>
                     </tr>
 
                 </tbody>

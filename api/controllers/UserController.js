@@ -99,7 +99,9 @@ module.exports = {
         session.logout();
         res.redirect("/login");
     },
+    
     destroy: function(req, res){
+        res.end();
 //        user_client.destroy().exec(function(err){
 //            user.destroy().exec(function(err){
 //            res.end();

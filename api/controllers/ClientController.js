@@ -79,6 +79,8 @@ module.exports = {
         });
     },
     destroy: function(req, res){
+        res.end();
+        return;
 //        var id = req.param("id");
 //        client.destroy({id: id}).exec(function(err, result){
 //            res.redirect('client');
