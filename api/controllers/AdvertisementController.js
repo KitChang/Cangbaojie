@@ -471,10 +471,10 @@ module.exports = {
         });
     },
     destroy: function(req, res){
-        var id= req.param('id');
+        /*var id= req.param('id');
         advertisement.destroy({id: id}).exec(function(err){
             res.redirect('/advertisement');
-        });;
+        });;*/
     },
     expiredDateReminder: function(req, res){
         advertisement.find({limit: 5, sort: 'expiredDate DESC'}).populate('client').exec(function(err, advertisements){

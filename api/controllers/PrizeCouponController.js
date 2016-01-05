@@ -27,10 +27,10 @@ module.exports = {
         })
     },
     destroy: function(req, res){
-        PrizeCoupon.destroy().exec(function(err){
-            res.end();
-            return;
-        });
+//        PrizeCoupon.destroy().exec(function(err){
+//            res.end();
+//            return;
+//        });
     }
 };
 

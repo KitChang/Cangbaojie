@@ -68,12 +68,12 @@ module.exports = {
     },
     destroy: function(req, res){
         
-        var id = req.param("id");
-        
-        user_client.destroy({id: id}).exec(function(err, result){
-            
-            res.redirect('user_client');
-        })
+//        var id = req.param("id");
+//        
+//        user_client.destroy({id: id}).exec(function(err, result){
+//            
+//            res.redirect('user_client');
+//        })
     },
     add: function(req, res){
         
