@@ -77,15 +77,15 @@ module.exports = {
         });
     },
     destroy: function(req, res){
-        var id = req.param("id");
-        var advertisementId = req.param("advertisement");
-        ProbabilityDraw.destroy({id: id}).exec(function(err, result){
-            if(err){
-                res.serverError(err);
-                return;
-            }      
-            res.redirect('/ProbabilityDraw?advertisement='+advertisementId);
-        })
+//        var id = req.param("id");
+//        var advertisementId = req.param("advertisement");
+//        ProbabilityDraw.destroy({id: id}).exec(function(err, result){
+//            if(err){
+//                res.serverError(err);
+//                return;
+//            }      
+//            res.redirect('/ProbabilityDraw?advertisement='+advertisementId);
+//        })
     }
     
 };

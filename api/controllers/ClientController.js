@@ -79,10 +79,10 @@ module.exports = {
         });
     },
     destroy: function(req, res){
-        var id = req.param("id");
-        client.destroy({id: id}).exec(function(err, result){
-            res.redirect('client');
-        })
+//        var id = req.param("id");
+//        client.destroy({id: id}).exec(function(err, result){
+//            res.redirect('client');
+//        })
     },
     add: function(req, res){
         
