@@ -3,7 +3,7 @@
 <%
     var request;
     while(requests.length){
-        request = requests.pop();
+        request = requests.shift();
 %>
 <li class="list-group-item">
     <a href="/client/<%=request.client.id%>"><%=request.client.name%></a>
