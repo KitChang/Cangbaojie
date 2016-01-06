@@ -6,34 +6,46 @@
                     
 
                     
-                        <div class="panel panel-default full-width">
-                            
-                            <div class="panel-heading">奖劵</div>
+                        <div class="panel panel-dashboard full-width">
+                            <ol class="breadcrumb panel-heading panel-heading-cbj">
+                              <li><a href="/advertisement">广告管理</a></li>
+                              <li><a href="/advertisement/<%=result.id%>">广告</a></li>
+                              <li class="active">奖劵</li>
+                            </ol>
                             <div class="panel-body">
-                                <form id="form" name="form" action="/advertisement/<%=result.id%>/prize" method="post">   
+                                <form class="form-horizontal" id="form" name="form" action="/advertisement/<%=result.id%>/prize" method="post">   
                                 <div class="form-group" id="radio">
-                                <label>奖劵有效类型 <span class="mandatory">*</span></label>
-                                <br/>
+                                <label class="control-label col-sm-2">奖劵有效类型 <span class="mandatory">*</span></label>
+                                <div class="col-sm-10 form-inline"> 
                                 <label>奖劵有效天数</label>
                                 <input type="radio" id="prizeCouponExpiredDuration_radio" value="duration" name="prizeCouponExpiredType" class="form-control">
+                                <br>
                                 <label>奖劵有效日期</label>
                                  <input type="radio" id="prizeCouponExpiredDate_radio" value="date" name="prizeCouponExpiredType" class="form-control">
+                                 </div>
                                 </div>
                                 <div class="form-group" id="prizeCouponExpiredDuration_div">
-                                <label>奖劵有效天数</label>
-                                <input type="text" id="prizeCouponExpiredDuration" name="prizeCouponExpiredDuration" class="form-control">
+                                <label class="control-label col-sm-2">奖劵有效天数 <span class="mandatory">*</span></label>
+                                <div  class="col-sm-10"> 
+                                    <input type="text" id="prizeCouponExpiredDuration" name="prizeCouponExpiredDuration" class="form-control full-width">
+                                </div>
                                 </div>
                                 <div class="form-group" id="prizeCouponExpiredDate_div">
-                                <label>奖劵有效日期</label>
-                                <input type="text" id="prizeCouponExpiredDate" name="prizeCouponExpiredDate" class="form-control">
+                                <label class="control-label col-sm-2">奖劵有效日期 <span class="mandatory">*</span></label>
+                                <div  class="col-sm-10"> 
+                                    <input type="text" id="prizeCouponExpiredDate" name="prizeCouponExpiredDate" class="form-control full-width">
+                                </div>
                                 </div>
                                 <div class="form-group">
-                                <label>领奖地点 <span class="mandatory">*</span></label>
-                                <input type="text" name="redeemLocation" class="form-control">
+                                <label class="control-label col-sm-2">领奖地点 <span class="mandatory">*</span></label>
+                                <div  class="col-sm-10"> 
+                                    <input type="text" name="redeemLocation" class="form-control full-width">
+                                </div>
                                 </div>
                                 <div class="form-group">
-                                <label>商家介绍 <span class="mandatory">*</span></label>
-                                <textarea style="min-width: 30%; " name="companyIntroduction" class="form-control">
+                                <label class="control-label col-sm-2">商家介绍 <span class="mandatory">*</span></label>
+                                <div  class="col-sm-10"> 
+                                    <textarea style="height: 150px; " name="companyIntroduction" class="form-control full-width">
                                 <%
                                     if(!result.companyIntroduction){
                                 %>
@@ -48,16 +60,22 @@
                 
                                     </textarea>
                                 </div>
-                                <div class="form-group">
-                                <label>高级领奖码 <span class="mandatory">*</span></label>
-                                <input type="text" name="highCode" class="form-control">
                                 </div>
                                 <div class="form-group">
-                                <label>一般领奖码 <span class="mandatory">*</span></label>
-                                <input type="text" name="lowCode" class="form-control">
+                                <label class="control-label col-sm-2">高级领奖码 <span class="mandatory">*</span></label>
+                                <div  class="col-sm-10"> 
+                                    <input type="text" name="highCode" class="form-control full-width">
                                 </div>
-                                    <button type="submit" class="btn btn-default">提交</button>
-                                    <button type="button" class="btn btn-default" onClick="javascript: window.history.back();">取消</button>
+                                </div>
+                                <div class="form-group">
+                                <label class="control-label col-sm-2">一般领奖码 <span class="mandatory">*</span></label>
+                                <div  class="col-sm-10"> 
+                                    <input type="text" name="lowCode" class="form-control full-width">
+                                </div>
+                                </div>
+                                    
+                                    <button type="button" class="btn btn-default right" onClick="javascript: window.history.back();">取消</button>
+                                    <button type="submit" class="btn btn-primary right">提交</button>
                                 </form>
                             </div>
                         </div>              

@@ -53,7 +53,7 @@ body {
 
 
 .content {
-    padding-top: 170px;
+    padding-top: 100px;
     padding-bottom: 70px;
 }
 
@@ -109,11 +109,33 @@ body {
   -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
           box-shadow: 0 1px 2px rgba(0, 0, 0, .05);
 }
+
+.panel-default-cbj {
+  border-style: solid;
+  border-color: #FFE301;
+}
+
+.panel-dashboard {
+  margin: 0px;
+  margin-bottom: 20px;
+  border-style: solid;
+  border-color: #FFE301;
+}
+
 .panel-heading {
   background-image: none;
   background-color: white;
 }
-
+.panel-heading-dashboard {
+  padding: 5px;
+  padding-left: 15px;
+  border-style: solid;
+  border-color: #FFE301;
+  background-color: #FFE301!important;
+}
+.panel-heading-cbj {
+  background-color: #FFE301!important;
+}
 .btn-primary{
     background-color: #FFE301;
     background-image: none;
