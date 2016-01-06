@@ -1,9 +1,8 @@
 
       <div class="container content">
         <div class="row">
-            <div class="panel panel-default full-width">
-                <ol class="breadcrumb panel-heading">
-                  <li>资料管理</li>
+            <div class="panel panel-dashboard full-width">
+                <ol class="breadcrumb panel-heading panel-heading-cbj">
                   <li>获奖人－请选广告</li>
                 </ol>  
 
@@ -18,7 +17,7 @@
                 while (resultArr.length) {
                   row = resultArr.pop();
                 %>
-                        <tr><td><%=row.client.name%></td></td><td><%=row.title%></td><td><a href="/data/prize-winner/<%=row.id%>" class="btn btn-default">奖项统计</a></td></tr>
+                        <tr><td><%=row.client.name%></td></td><td><%=row.title%></td><td><a href="/data/prize-winner/<%=row.id%>" class="btn btn-primary">奖项统计</a></td></tr>
                 <%
                 }
                 %>
