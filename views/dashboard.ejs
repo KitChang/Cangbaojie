@@ -1,7 +1,8 @@
 <div class="container content">
         <div class="row">
-            <div class="col-md-6"><div class="well">
-                <h3>昨天数据</h3>
+            <div class="col-md-6"><div style="margin: 0px;margin-bottom: 20px;border-style: solid;border-color: #FFE301;" class="panel clearfix full-width">
+                <div style="border-style: solid;border-color: #FFE301;background-color: #FFE301!important;" class="panel-heading"><b>昨天数据</b></div>
+                <div class="panel-body">
                 <%
                 if(yesterdayData==null){
                 %>
@@ -44,10 +45,14 @@
                 <%
                 }
                 %>
+                </div>
             </div></div>
-            <div class="col-md-6"><div class="well">
-                <h3>点击排行</h3>
-                <div class="list-group">
+            <div class="col-md-6">
+                <div style="margin: 0px;margin-bottom: 20px;border-style: solid;border-color: #FFE301;" class="panel clearfix full-width">
+                <div style="border-style: solid;border-color: #FFE301;background-color: #FFE301!important;" class="panel-heading"><b>点击排行</b>
+                </div>
+                <div class="panel-body">
+                <div style="margin-bottom: 5px;" class="list-group">
                 <%
                     var clientAccess = null;
                     while(clientsAccess.length){
@@ -63,20 +68,22 @@
                 %>
                   
                 </div>
-                <p>
-                    <a class="fancyboxIframe btn btn-primary" href="/client/click-ranking?omitNavigation=omitNavigation">
-                    所有排行
+                
+                    <a style="font-size: 12px;" class="fancyboxIframe right" href="/client/click-ranking?omitNavigation=omitNavigation">
+                    显示所有
                     </a>
-                </p>
                 
                 
+                </div>
             </div></div>
     </div>
     <div class="row">
-            <div class="col-md-6"><div class="well">
-                <h3>推广请求</h3>
+            <div class="col-md-6"><div style="margin: 0px;margin-bottom: 20px;border-style: solid;border-color: #FFE301;" class="panel clearfix full-width">
+                <div style="border-style: solid;border-color: #FFE301;background-color: #FFE301!important;" class="panel-heading"><b>推广请求</b>
+                </div>
+                <div class="panel-body">
                 
-                <div class="list-group">
+                <div style="margin-bottom: 5px;" class="list-group">
                 <%
                     var request = null;
                     while(requests.length){
@@ -108,15 +115,19 @@
                     }
                 %>
                 </div>
-                <p>
-                    <a class="btn btn-primary" href="/request/findFromDashboard">
-                    所有请求
+                
+                    <a style="font-size: 12px;" class="right" href="/request/findFromDashboard">
+                    显示所有
                     </a>
-                </p>
+                
+                </div>
             </div></div>
-            <div class="col-md-6"><div class="well">
-                <h3>故障提醒</h3>
-                <div class="list-group">
+            <div class="col-md-6"><div style="margin: 0px;margin-bottom: 20px;border-style: solid;border-color: #FFE301;" class="panel clearfix full-width">
+                <div style="border-style: solid;border-color: #FFE301;background-color: #FFE301!important;" class="panel-heading"><b>故障提醒</b>
+                </div>
+                <div class="panel-body">
+                
+                <div style="margin-bottom: 5px;" class="list-group">
                 <%
                     var faultDevice = null;
                     while(faultDevices.length){
@@ -135,17 +146,21 @@
                 %>
                 </div>
                 <p>
-                    <a class="btn btn-primary" href="/DeviceMonitor/fault-device-reminder">
-                    所有故障
+                    <a style="font-size: 12px;" class="right" href="/DeviceMonitor/fault-device-reminder">
+                    显示所有
                     </a>
                 </p>
+                </div>
             </div></div>
     </div>
     <div class="row">
             
-            <div class="col-md-6"><div class="well">
-                <h3>到期提醒</h3>
-                <div class="list-group">
+            <div class="col-md-6"><div style="margin: 0px;margin-bottom: 20px;border-style: solid;border-color: #FFE301;" class="panel clearfix full-width">
+                <div style="border-style: solid;border-color: #FFE301;background-color: #FFE301!important;" class="panel-heading"><b>到期提醒</b>
+                </div>
+                <div class="panel-body">
+                
+                <div style="margin-bottom: 5px;" class="list-group">
                 <%
                     var ad;
                     while(advertisementsExpire.length){
@@ -163,15 +178,19 @@
                     }
                 %>
                 </div>
-                <p>
-                    <a class="fancyboxIframe btn btn-primary" href="/advertisement/expired-date-reminder?omitNavigation=omitNavigation">
-                    所有到期
+                
+                    <a style="font-size: 12px;" class="fancyboxIframe right" href="/advertisement/expired-date-reminder?omitNavigation=omitNavigation">
+                    显示所有
                     </a>
-                </p>
+                
+                </div>
             </div></div>
-            <div class="col-md-6"><div class="well">
-                <h3>余额提醒</h3>
-                <div class="list-group">
+            <div class="col-md-6"><div style="margin: 0px;margin-bottom: 20px;border-style: solid;border-color: #FFE301;" class="panel clearfix full-width">
+                <div style="border-style: solid;border-color: #FFE301;background-color: #FFE301!important;" class="panel-heading"><b>余额提醒</b>
+                </div>
+                <div class="panel-body">
+                
+                <div style="margin-bottom: 5px;" class="list-group">
                 <%
                     var clientAccount = null;
                     while(clientsAccount.length){
@@ -186,11 +205,12 @@
                     }
                 %>
                 </div>
-                <p>
-                    <a class="fancyboxIframe btn btn-primary" href="/client/balance-reminder?omitNavigation=omitNavigation">
-                    所有余额
+                
+                    <a style="font-size: 12px;" class="fancyboxIframe right" href="/client/balance-reminder?omitNavigation=omitNavigation">
+                    显示所有
                     </a>
-                </p>
+                
+                </div>
             </div></div>
             
             
@@ -198,11 +218,11 @@
         <div class="row">
             
             
-            <div class="col-md-6"><div class="well" id="message">
+            <div class="col-md-6"><div style="margin: 0px;margin-bottom: 20px;border-style: solid;border-color: #FFE301;" class="panel clearfix full-width" id="message">
                 
             </div></div>
             
-            <div class="col-md-6"><div class="well" id="topupRequest">
+            <div class="col-md-6"><div style="margin: 0px;margin-bottom: 20px;border-style: solid;border-color: #FFE301;" class="panel clearfix full-width" id="topupRequest">
                 
             </div></div>
             

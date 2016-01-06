@@ -32,11 +32,7 @@
         
     
       <div class="container">
-        <div class="row" style="padding-top: 5px;">
-            <center>
-            <img src="/images/logo.png" class="img-responsive" width="250px"/>
-            </center>
-        </div>
+        
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
@@ -47,9 +43,16 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-                    <li><a href="http://<%=req.host%>:<%=req.port%>/">控制面版</a></li>
-                    <li><a href="http://<%=req.host%>:<%=req.port%>/device">设备管理</a></li>
-                    <li class="dropdown">
+                    <li style="margin-right: 40px; padding-left:20px;">
+                      <div class="row" style="padding-top: 5px;">
+                          <center>
+                          <img src="/images/logo.png" class="img-responsive" width="180px"/>
+                          </center>
+                      </div>
+                    </li>
+                    <li style="margin-top: 20px;"><a href="http://<%=req.host%>:<%=req.port%>/">控制面版</a></li>
+                    <li style="margin-top: 20px;"><a href="http://<%=req.host%>:<%=req.port%>/device">设备管理</a></li>
+                    <li style="margin-top: 20px;" class="dropdown">
                       <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">广告管理 <span class="caret"></span></a>
                       <ul class="dropdown-menu">
                         
@@ -57,7 +60,7 @@
                           <li><a href="http://<%=req.host%>:<%=req.port%>/advertisement">广告</a></li>
                       </ul> 
                     </li>
-                    <li class="dropdown">
+                    <li style="margin-top: 20px;" class="dropdown">
                       <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">数据统计 <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                           <li><a href="http://<%=req.host%>:<%=req.port%>/data/advertisement">广告点击</a></li>
@@ -67,7 +70,7 @@
                           
                         </ul>
                     </li>
-              <li class="dropdown">
+              <li style="margin-top: 20px;" class="dropdown">
                       <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">账户管理 <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                           <li><a href="http://<%=req.host%>:<%=req.port%>/user">员工账户</a></li>
@@ -85,11 +88,11 @@
           
           <ul class="nav navbar-nav navbar-right">
             
-              <li><a href="/user/logout"> 退出</a></li>
+              <li style="margin-top: 20px;"><a href="/user/logout"> 退出</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             
-              <li><a href="#" style="pointer-events: none;"> <%=username%></a></li>
+              <li style="margin-top: 20px;"><a href="#" style="pointer-events: none;"> <%=username%></a></li>
           </ul>
         </div>
       </div>
@@ -101,10 +104,9 @@
     <%
       if(!req.param("omitFooter")){
     %>
-    <footer class="footer">
-        <br>
+    <footer class="footer" style="height: 40px;">
         <center>
-            <p>&nbsp&nbsp; 
+            <p style="margin-top: 8px;">
                 Copyright&copy2015 珠海伯睿网络科技有限公司
 
         </center>
