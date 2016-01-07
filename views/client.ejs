@@ -2,8 +2,8 @@
     
       <div class="container content">
         <div class="row">
-            <div class="panel panel-default full-width">
-                <ol class="breadcrumb panel-heading">
+            <div class="panel panel-dashboard full-width">
+                <ol class="breadcrumb panel-heading panel-heading-cbj">
                               <li>广告管理</a></li>
                               <li class="active">广告客户商家</li>
                 </ol>
@@ -19,7 +19,7 @@
                     <thead>
                     <tr><th>广告客户商家</th><th>联系人</th>
                         <th>电话</th><th>邮箱</th>
-                    <th>刪除</th></tr>
+                    <th></th></tr>
 
                     </thead>
                     <tbody>
@@ -33,7 +33,7 @@
                         <td><%=row.contactPerson%></td>
                         <td><%=row.mobilePhone%></td>
                         <td><%=row.email%></td>
-                        <td><a class="btn btn-danger" onClick="javascript: destroy('<%=row.id%>');">删除</a></td>
+                        <td><a style="display: none;" class="btn btn-danger" onClick="javascript: destroy('<%=row.id%>');">删除</a></td>
                     </tr>
                 <%
                 }
@@ -45,9 +45,6 @@
 
             </div>
         </div>
-        <footer class="footer">
-        <p>&copy; Company 2015</p>
-        </footer>
       </div>
     
 

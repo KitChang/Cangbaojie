@@ -1,8 +1,8 @@
     
       <div class="container content">
         <div class="row">
-            <div class="panel panel-default full-width">
-                <ol class="breadcrumb panel-heading">
+            <div class="panel panel-dashboard full-width">
+                <ol class="breadcrumb panel-heading-cbj">
                   <li class="active">广告</li>
                 </ol>
                 <div class="panel-body">
@@ -34,15 +34,15 @@
                             }
                             %>
                         </td>
-                        <td><%=row.title%></td>
-                        <td>
+                        <td style="vertical-align: middle;"><%=row.title%></td>
+                        <td style="vertical-align: middle;">
                         <%
                             var clientName = "";
                             if(row.client!=null){
                                 clientName = row.client.name;
                             }
                         %>
-                        <%=clientName%></td><td><a class="btn btn-danger" onClick="javascript: destroy('<%=row.id%>');">删除</a>
+                        <%=clientName%></td><td style="vertical-align: middle;"><a style="display: none;" class="btn btn-danger" onClick="javascript: destroy('<%=row.id%>');">删除</a>
                     <a href="/advertisement/<%=row.id%>/deploy" class="btn btn-info">设备发送</a>
                     </td></tr>
                 <%

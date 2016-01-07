@@ -17,7 +17,7 @@ module.exports = {
                     client.find({limit: 5, sort: 'account DESC'}).exec(function(err, clientsAccount){
                         var durationDate = moment().subtract(30, 'days').toDate();
                         DeviceMonitor.find({limit: 5, sort: 'accessDate ASC', accessDate: {'<': durationDate}, verifiedDate: {"<": durationDate}}).exec(function(err, faultDevices){
-                            client.find({limit: 5, sort: 'accessCount ASC'}).exec(function(err, clientsAccess){
+                            client.find({limit: 4, sort: 'accessCount ASC'}).exec(function(err, clientsAccess){
                                 res.view('dashboard', {requests: requests, yesterdayData: yesterdayDataOne, advertisementsExpire: advertisementsExpire, moment: moment, clientsAccount: clientsAccount, faultDevices: faultDevices, clientsAccess: clientsAccess});
                             });
                         });
