@@ -3,11 +3,11 @@
       <div class="container content">
         <div class="row">
             <div class="panel panel-default">
-                <div class="panel-heading">广告点击量 (地区)</div>             
+                <div class="panel-heading">行业点击</div>             
                     
                 <div class="panel-body">
                     
-                    <form class="form-inline" method="get" action="/data/access-region">
+                    <form class="form-inline" method="get" action="/data/access-category">
                         
                         <div class="form-group">
                              <label>位置</label>
@@ -104,7 +104,7 @@
         url: "/geo/city?state="+selectedState
         }).done(function(data){
             console.log("city");
-          $("#city").append("<option value=''>所有城市</option>");
+          //$("#city").append("<option value=''>所有城市</option>");
           html = "";
           while (data.length) {
             var city = data.pop();
@@ -124,7 +124,50 @@
         populateCity();
         $("#dateFrom").daterangepicker({singleDatePicker: true});
         $("#dateTo").daterangepicker({singleDatePicker: true});
+        s = new Series().y(function(d){return d.sum});
+        <%
+        while(resultArr.length){
+            result = resultArr.pop();
+            item = {};
+            item.key = result.category;
+            item.sum = 1;
+            
+        %>
+            s.put({key: "<%=item.key%>", sum: <%=item.sum%>});
+        <%
+        }
+        %>
+        var aggreData = Series.y(function(d){ return d.sum; })
+                .aggregation(Series.sum)
+                .key(function(d){ 
+                  var key = d.key;
+                  return key })(s);
+        color = ["#46BFBD", "#FDB45C", "#212121", "#64af9c", "#6b1f3c", "#127690", "#a2798f", "#008b8b", "#99ccff", "#cc99ff", "#9feaae", "#40d65d", "#65ada2", "#5ee4bb", "#9ffff7", "#2412b4", "#34d491", "#da6665", "#f3d681", "#b9b9b9", "#b9b9b9", "#ffae1a", "#2137ff", "#d8941a", "#d8941a", "#ff2a1a", "#e6b3e6", "#e6b3e6", "#a8e4f0", "#6ef79c", "#5cf53d", "#d6d65c", "#adb87a", "#d6995c", "#f76e6e", "#f08a75", "#eb9947", "#ffdd33", "#cccc00", "#99eb47", "#75f075", "#85e0b3", "#33ffdd","#998cd9",];
         
+        var total = 0;
+        aggreData.forEach(function(d){
+            total = total + parseInt(d.y);
+        })
+        var i = 0;
+        aggreData.forEach(function(d){
+            d.value = d.y;
+            d.color = color[i];
+            var percent = (d.y/total)*100;
+            percent = percent.toFixed(2);
+            d.label = d.t+" "+ percent+"% ";
+            d.highlight = "red"
+            i++;
+        });
+        var ctx = document.getElementById("myChart").getContext("2d");
+        var myPieChart = new Chart(ctx).Doughnut(aggreData);
+        legendHtml = "";
+        aggreData.forEach(function(d){
+            legendHtml_ = "<dt><span style='background-color:"+d.color+"'>&nbsp;&nbsp;&nbsp;&nbsp;</span></dt><dd>"+d.label+": "+d.value+"</dd>";
+            legendHtml += legendHtml_;
+        });
+        legendHtml = "<dl class='dl-horizontal'>"+legendHtml+"</dl>";
+        
+        $("#legend").append(legendHtml);
        
     });
       

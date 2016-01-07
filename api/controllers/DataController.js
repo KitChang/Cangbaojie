@@ -36,9 +36,10 @@ module.exports = {
         var client = req.param('client');
         dateFrom = moment(dateFromStr, "MM/DD/YYYY").startOf('day').toDate();
         dateTo = moment(dateToStr, "MM/DD/YYYY").endOf('day').toDate();
-        if(!city)
+        if(!city){
             res.view('data-access-region', {resultArr: []});
-        else{
+            return;
+        }else{
             var option = {state: state, city: city, createdAt: {"<": dateTo, ">": dateFrom}};
             if(client){
                 option.client = client;
@@ -59,8 +60,10 @@ module.exports = {
         var client = req.param('client');
         dateFrom = moment(dateFromStr, "MM/DD/YYYY").startOf('day').toDate();
         dateTo = moment(dateToStr, "MM/DD/YYYY").endOf('day').toDate();
-        if(!city)
-            res.view('data-access-region', {resultArr: []});
+        if(!city){
+            res.view('data-access-category', {resultArr: []});
+            return;
+        }
         else{
             var option = {state: state, city: city, createdAt: {"<": dateTo, ">": dateFrom}};
             if(client){
@@ -91,9 +94,10 @@ module.exports = {
         var state = req.param('state');
         var city = req.param('city');
         var region = req.param('region');
-        if(!city)
+        if(!city){
             res.view('data-access-street', {resultArr: []});
-        else{
+            return;
+        }else{
             access.find({state: state, city: city, region: region}).exec(function(err, resultArr)             {
                 if(err)
                         return res.serverError(err);
