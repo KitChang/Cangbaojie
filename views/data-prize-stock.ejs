@@ -1,120 +1,157 @@
-    
-      <div class="container content">
+
+    <div class="content">
+      <div class="container">
         <div class="row">
-            <div class="panel panel-default">
-                <div class="panel-heading"><a href="http://<%=req.host%>:<%=req.port%>/advertisement">广告</a></div>   
+            <div class="panel panel-default full-width">
+                <ol style="background-color: #FFE301!important;" class="breadcrumb panel-heading">
+                    <li><b><a href="/data/prize-stock-client">选择商家</a></b></li>
+                          <li><b>奖项数据</b></li>
+                </ol>      
                 <div class="panel-body">
-                    <a href="/advertisement/new" class="btn btn-default">创建</a>
+                    <form class="form-inline" action="/data/prize-stock/search" method="get">
+                        <div class="form-group">
+                        <label>广告</label>
+                        <input type="hidden" name="client" value="<%=req.param('client')%>"/>
+                        <select class="form-control" name="advertisement">
+                            
+                            <%
+                            
+                            if(ads){
+                                var ad;
+                                while(ads.length){
+                                    ad = ads.pop();
+                                if(selectedAd&&ad.id==selectedAd.id){
+                            %>
+                            <option value="<%=ad.id%>" selected><%=ad.title%></option>
+                            <%
+                                    
+                                }else{
+                            %>
+                            <option value="<%=ad.id%>"><%=ad.title%></option>
+                            <%
+                                    
+                                }
+                                }
+                            }
+                            %>
+                        </select>
+                        </div>
+                        <button type="submit" class="btn btn-warning">搜索</button>
+                    </form>
                     
                 </div>
-                <form name="form" action="/dfd/" method="post">
                 
+            
+                <div class="panel-body">
                 <table class="table table-striped" id="prize-stock-table">
                     <thead>
-                    <tr><th>奖项</th><th>奖项数量</th><th>已抽取数量</th><th>奖项剩余</th><th>已领取奖项</th><th>未领取奖项</th></tr>
+                    <tr><th>奖项</th><th>奖品</th><th>奖项数量</th><th>已抽取数量</th><th>奖项剩余</th><th>已领取奖项</th><th>未领取奖项</th></tr>
                     </thead>
                     <tbody>
+                    <%
+                        if(selectedAd){
+                    %>
+                        <tr>
+                        <td><b>一等奖</b></td><td><%=selectedAd.firstPrize%></td><td><%=selectedAd.firstPrizeQuantity%></td>
+                        <td>
+                        <%
+                            var drawnPrizeQuantity = selectedAd.firstPrizeQuantity - selectedAd.firstPrizeQuantityRemain;
+                        %>
+                        <%=drawnPrizeQuantity%>
+                        </td>
+                        <td><%=selectedAd.firstPrizeQuantityRemain%></td>
+                        <td><%=selectedAd.redeem1PrizeQuantity%></td>
+                        <td>
+                        <%
+                            var notRedeemPrizeQuantity = drawnPrizeQuantity - selectedAd.redeem1PrizeQuantity;
+                        %>
+                            <%=notRedeemPrizeQuantity%>
+                        </td></tr>
+                    <tr>
+                        <td><b>二等奖</b></td><td><%=selectedAd.secondPrize%></td><td><%=selectedAd.secondPrizeQuantity%></td>
+                        <td>
+                        <%
+                            drawnPrizeQuantity = selectedAd.secondPrizeQuantity - selectedAd.secondPrizeQuantityRemain;
+                        %>
+                        <%=drawnPrizeQuantity%>
+                        </td>
+                        <td><%=selectedAd.secondPrizeQuantityRemain%></td>
+                        <td><%=selectedAd.redeem2PrizeQuantity%></td>
+                        <td>
+                        <%
+                            notRedeemPrizeQuantity = drawnPrizeQuantity - selectedAd.redeem2PrizeQuantity;
+                        %>
+                            <%=notRedeemPrizeQuantity%>
+                        </td></tr>
+                    <tr>
+                        <td><b>三等奖</b></td><td><%=selectedAd.thirdPrize%></td><td><%=selectedAd.thirdPrizeQuantity%></td>
+                        <td>
+                        <%
+                            drawnPrizeQuantity = selectedAd.thirdPrizeQuantity - selectedAd.thirdPrizeQuantityRemain;
+                        %>
+                        <%=drawnPrizeQuantity%>
+                        
+                        </td>
+                        <td><%=selectedAd.thirdPrizeQuantityRemain%></td>
+                        <td><%=selectedAd.redeem3PrizeQuantity%></td>
+                        <td>
+                        <%
+                            notRedeemPrizeQuantity = drawnPrizeQuantity - selectedAd.redeem3PrizeQuantity;
+                        %>
+                            <%=notRedeemPrizeQuantity%>
+                        </td></tr>
+                    <tr>
+                        <td><b>四等奖</b></td><td><%=selectedAd.fourthPrize%></td><td><%=selectedAd.fourthPrizeQuantity%></td>
+                        <td>
+                        <%
+                            drawnPrizeQuantity = selectedAd.fourthPrizeQuantity - selectedAd.fourthPrizeQuantityRemain;
+                        %>
+                        <%=drawnPrizeQuantity%>
+                        </td>
+                        <td><%=selectedAd.fourthPrizeQuantityRemain%></td>
+                        <td><%=selectedAd.redeem4PrizeQuantity%></td>
+                        <td>
+                        <%
+                            notRedeemPrizeQuantity = drawnPrizeQuantity - selectedAd.redeem4PrizeQuantity;
+                        %>
+                            <%=notRedeemPrizeQuantity%>
+                        </td></tr>
+                    <tr>
+                        <td><b>五等奖</b></td><td><%=selectedAd.fifthPrize%></td><td><%=selectedAd.fifthPrizeQuantity%></td>
+                        <td>
+                        <%
+                            drawnPrizeQuantity = selectedAd.fifthPrizeQuantity - selectedAd.fifthPrizeQuantityRemain;
+                        %>
+                        <%=drawnPrizeQuantity%>
+                        </td>
+                        <td><%=selectedAd.fifthPrizeQuantityRemain%></td>
+                        <td><%=selectedAd.redeem5PrizeQuantity%></td>
+                        <td>
+                        <%
+                            notRedeemPrizeQuantity = drawnPrizeQuantity - selectedAd.redeem5PrizeQuantity;
+                        %>
+                            <%=notRedeemPrizeQuantity%>
+                        </td></tr>
+                    
+                    <%
+                            
+                        }
+                    %>
+                    
                     </tbody>
                 </table>
-                </form>
+                </div>
+                
 
             </div>
         </div>
-        
+
+
       </div>
+    </div>
+    
+
     <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
     <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript" charset="utf8" src="../../js/series.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
-    <script>
-        $(function(){
-            
-            var data = new Series().y(function(d){return d.sum});
-            <%
-                while(winners.length){
-                    var winner = winners.pop();
-                    item = {};
-                    item.prize = winner.prize;
-                    item.sum = 1;
-                    item.claim = 1;
-            %>
-                data.put({prize: "<%=item.prize%>", sum: <%=item.sum%>, claim : <%=item.claim%>});
-            <%
-                }
-            %>
-            
-            var data_sum = Series.y(function(d){ return d.sum;})
-                .aggregation(Series.sum)
-                .key(function(d){ 
-                var key = d.prize;
-                return key })(data);
-            var data_claim = Series.y(function(d){ return d.claim;})
-                .aggregation(Series.sum)
-                .key(function(d){ 
-                var key = d.prize;
-                return key })(data);
-            
-            var prizeQuant = ["<%=prize.lucky_draw.firstPrizeQuantity%>", "<%=prize.lucky_draw.secondPrizeQuantity%>", "<%=prize.lucky_draw.thirdPrizeQuantity%>", "<%=prize.lucky_draw.fourthPrizeQuantity%>", "<%=prize.lucky_draw.fifthPrizeQuantity%>"];
-            var prize = ["<%=prize.lucky_draw.firstPrize%>", "<%=prize.lucky_draw.secondPrize%>", "<%=prize.lucky_draw.thirdPrize%>", "<%=prize.lucky_draw.fourthPrize%>", "<%=prize.lucky_draw.fifthPrize%>"];
-            data_sum = Series.range(0, 5).map(function(d){
-            var v = 0;
-            //alert(d);
-            data_sum.forEach(function(d_i){
-                if((d_i.t-1)==d){
-                    v = d_i.y;
-                }
-            });
-            var l = "undefine";
-            var prizeQuant2 = prizeQuant[d];
-            prizeQuant2 = parseInt(prizeQuant2);
-            prizeQuant2 = (prizeQuant2=='NaN') ? 0 : prizeQuant2;
-            var left = prizeQuant2 - v;
-            return {
-            l: left,
-            q: v,
-            p: d
-            }
-            });
-        
-            data_claim = Series.range(0, 5).map(function(d){
-            var v = 0;
-            data_sum.forEach(function(d_i){
-                if((d_i.t-1)==d){
-                    v = d_i.y;
-                }
-            });
-            var l = "undefine";
-            var winQuant = data_sum[d].q;
-            winQuant = parseInt(winQuant);
-            winQuant = (winQuant=='NaN') ? 0 : winQuant;
-            var left = winQuant - v;
-            return {
-            l: left,
-            c: v,
-            p: d
-            }
-            });
-
-            var data_final = [];
-            for(var i = 0; i < 5; i++){
-                data_final.push({prize: prize[i], quantity: prizeQuant[i], win_quantity: data_sum[i].q, left: data_sum[i].l, claim: data_claim[i].c, claim_left: data_claim[i].l});
-            }
-            var html = "";
-            for(var i = 0; i < 5; i++){
-                trHtml = "<tr><td>"+data_final[i].prize+"</td><td>"+data_final[i].quantity+"</td><td>"+data_final[i].win_quantity+"</td><td>"+data_final[i].left+"</td><td>"+data_final[i].claim+"</td><td>"+data_final[i].claim_left+"</td></tr>";
-                html += trHtml;
-            }         
-            $("#prize-stock-table tbody").append(html);
-        })
-            
-        
-        
-        
-        
-        
-        
-        
-        
-    </script>
+      
 

@@ -1,0 +1,90 @@
+
+    
+      <div class="container content">
+        <div class="row">
+            <div class="panel panel-default full-width">
+                <div class="panel-heading">
+                  数据统计 /
+                  App 用户
+                </div>
+                
+                <div class="panel-body">
+                    <form class="form-inline" action="/data/AppUser" method="get">
+                        <div class="form-group">
+                        <label>性别</label>
+                        <select class="form-control" name="sex">
+                            <%
+                            if(req.param('sex')=="1"){
+                            %>
+                            <option value="1" selected>男</option>
+                            <option value="2">女</option>
+                            <%
+                            }else{
+                            %>
+                            <option value="1">男</option>
+                            <option value="2" selected>女</option>
+                            <%
+                            }
+                            %>
+                        </select>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-warning">搜索</button>
+                    </form>                
+                    <button type="button" class="btn btn-default right" onClick="javascript:window.history.back()" value=""/> 取消 </button>
+                    
+                </div>
+                <div class="panel-body">
+                <form name="form" action="/dfd/" method="post">
+                
+                <table class="table table-striped" id="table">
+                    <thead>
+                    <tr><th>用户名</th><th>性别</th>
+                        <th>电话</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                <%
+                var row;
+                while (appUserArr.length) {
+                  row = appUserArr.pop();
+                %>
+                    <tr>
+                        <td><%=row.username%></td>
+                        <td><%=row.sex%></td>
+                        <td><%=row.phone%></td>
+                    </tr>
+                <%
+                }
+                %>
+                    </tbody>
+                </table>
+                </form>
+                </div>
+
+            </div>
+        </div>
+        <footer class="footer">
+        <p>&copy; Company 2015</p>
+        </footer>
+      </div>
+    
+
+
+    <script>
+        function destroy(rowId){
+            document.form.action = "/client/destroy/"+rowId;
+            document.form.method = "post";
+            document.form.submit();
+        }
+    </script>
+      
+    <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+    <script>
+        $("#table").DataTable({"language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.10/i18n/Chinese.json"
+            }});
+    </script>
+

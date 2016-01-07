@@ -91,9 +91,17 @@ module.exports.routes = {
       controller: 'DataController',
       action: 'accessDevice'
   },
+  'get /data/prize-stock/search': {
+      controller: 'DataController',
+      action: 'prizeStockSearch'
+  },
   'get /data/prize-stock': {
       controller: 'DataController',
-      action: 'prizeStockAdvertisement'
+      action: 'prizeStock'
+  },
+  'get /data/prize-stock-client': {
+      controller: 'DataController',
+      action: 'prizeStockClient'
   },
   'get /advertisement/client': {
       controller: 'AdvertisementController',
@@ -110,6 +118,10 @@ module.exports.routes = {
   'get /data/prize-winner/:advertisement': {
       controller: 'DataController',
       action: 'prizeWinner'
+  },
+  'get /data/AppUser': {
+      controller: 'DataController',
+      action: 'appUser'
   },
   'get /data/prize-winner': {
       controller: 'DataController',
@@ -202,6 +214,10 @@ module.exports.routes = {
       controller: "RequestController",
       action: "updateStatus"
   },
+  'get /data/AppUser-statistics': {
+      controller: 'DataController',
+      action: 'appUserStatistics'
+  }
   
 
 };

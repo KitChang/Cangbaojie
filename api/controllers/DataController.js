@@ -84,12 +84,30 @@ module.exports = {
         });
         
     },
-    
-    prizeStockAdvertisement: function(req, res){
-        advertisement.find().exec(function(err, resultArr){
+    prizeStockClient: function(req, res){
+          client.find().exec(function(err, resultArr){
             if(err)
                     return res.serverError(err);
-            res.view('data-prize-stock-advertisement', {resultArr: resultArr});
+            res.view('data-prize-stock-client', {resultArr: resultArr});
+            });
+    },
+    prizeStock: function(req, res){
+        var clientId = req.param('client');
+        advertisement.find({client: clientId}).exec(function(err, ads){
+            console.log("ads l:"+ads.length);
+            res.view('data-prize-stock', {ads: ads, selectedAd: null});
+        });
+    },
+    prizeStockSearch: function(req, res){
+        var addId = req.param('advertisement');
+        var clientId = req.param('client');
+        console.log("client: "+clientId);
+        advertisement.find({client: clientId}).exec(function(err, ads){
+            console.log("ads l:"+ads.length);
+            advertisement.findOne({id: addId}).exec(function(err, ad){
+                console.log("ads l:"+ads.length);
+                res.view('data-prize-stock', {ads: ads, selectedAd: ad});
+            })
         });
     },
     prizeWinnerAdvertisement: function(req, res){
@@ -124,6 +142,49 @@ module.exports = {
                 res.view('data-prize-winner', {resultArr: resultArr, ads: advertisements, moment: moment});
             });
             
+        });
+    },
+    appUser: function (req, res){
+        var sex = req.param("sex");
+        var option = {};
+        if(sex&&sex!=""){
+            option.sex = sex;
+        }
+        AppUser.find(option).exec(function(err, appUserArr){
+            res.view('data-AppUser', {appUserArr: appUserArr});
+        });
+    }, 
+    appUserStatistics: function (req, res){
+        AppUser.find().exec(function(err, appUserArr){
+            AppUser.find({sex: "1"}).exec(function(err, maleAppUserArr){
+                var monthAgo = moment().subtract(30, 'days').toDate();
+                AppUser.find({createdAt: {">": monthAgo}}).exec(function(err, newAppUserArr){
+                    access.find({createdAt: {">": monthAgo}}).exec(function(err, accessArr){
+                        var activeAppUserArr = [];
+                        while(accessArr.length){
+                            var accessOne = accessArr.pop();
+                            var appUserId = accessOne.appUser;
+                            activeAppUserArr[appUserId] = null;
+                            var activeAppUserKeys = Object.keys(activeAppUserArr);
+                        }
+                        var totalUsers = appUserArr.length;
+                        var maleUsers = maleAppUserArr.length;
+                        var femaleUsers = totalUsers - maleUsers;
+                        var newUsers = newAppUserArr.length;
+                        var oldUsers = totalUsers - newUsers;
+                        var activeUsers = activeAppUserKeys.length;
+                        var inactiveUsers = totalUsers - activeUsers;
+                        
+                        res.view('data-AppUser-statistics', {totalUsers: totalUsers, maleUsers: maleUsers, femaleUsers: femaleUsers, newUsers: newUsers, oldUsers: oldUsers, activeUsers: activeUsers, inactiveUsers: inactiveUsers});
+                        
+                        
+                        
+                        
+                        
+                    })
+                })
+                
+            })
         });
     }
     
