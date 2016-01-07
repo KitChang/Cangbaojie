@@ -31,15 +31,61 @@ module.exports = {
         var state = req.param('state');
         var city = req.param('city');
         var region = req.param('region');
+        var dateFromStr = req.param('dateFrom');
+        var dateToStr = req.param('dateTo');
+        var client = req.param('client');
+        dateFrom = moment(dateFromStr, "MM/DD/YYYY").startOf('day').toDate();
+        dateTo = moment(dateToStr, "MM/DD/YYYY").endOf('day').toDate();
         if(!city)
             res.view('data-access-region', {resultArr: []});
         else{
-            access.find({state: state, city: city}).exec(function(err, resultArr){
+            var option = {state: state, city: city, createdAt: {"<": dateTo, ">": dateFrom}};
+            if(client){
+                option.client = client;
+            }
+            access.find(option).exec(function(err, resultArr){
                 if(err)
                         return res.serverError(err);
                 res.view('data-access-region', {resultArr: resultArr});
         });
         }
+    },
+    accessCategory: function(req, res){
+        var state = req.param('state');
+        var city = req.param('city');
+        var region = req.param('region');
+        var dateFromStr = req.param('dateFrom');
+        var dateToStr = req.param('dateTo');
+        var client = req.param('client');
+        dateFrom = moment(dateFromStr, "MM/DD/YYYY").startOf('day').toDate();
+        dateTo = moment(dateToStr, "MM/DD/YYYY").endOf('day').toDate();
+        if(!city)
+            res.view('data-access-region', {resultArr: []});
+        else{
+            var option = {state: state, city: city, createdAt: {"<": dateTo, ">": dateFrom}};
+            if(client){
+                option.client = client;
+            }
+            access.find(option).exec(function(err, resultArr){
+                if(err)
+                        return res.serverError(err);
+                res.view('data-access-category', {resultArr: resultArr});
+        });
+        }
+    },
+    accessRegionClient: function(req, res){
+          client.find().exec(function(err, resultArr){
+            if(err)
+                    return res.serverError(err);
+            res.view('data-access-region-client', {resultArr: resultArr});
+            });
+    },
+    accessCategoryClient: function(req, res){
+          client.find().exec(function(err, resultArr){
+            if(err)
+                    return res.serverError(err);
+            res.view('data-access-category-client', {resultArr: resultArr});
+            });
     },
     accessStreet: function(req, res){
         var state = req.param('state');

@@ -1,0 +1,32 @@
+
+      <div class="container content">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading"><a href="http://<%=req.host%>:<%=req.port%>/data/access">请选客户商家</a>                      </div>   
+                <div class="panel-body">
+                    <table class="table table-striped">
+                    <thead>
+                    <tr><th>客户商家名</th><th></th></tr>
+                    </thead>
+                    <%
+                    var row;
+                    while (resultArr.length) {
+                      row = resultArr.pop();
+                    %>
+                       <tr><td><%=row.name%></td><td><a href="/data/access-category?client=<%=row.id%>" class="btn btn-default">行业点击</a></td></tr>
+                    <%
+                    }
+                    %>
+                    </table>
+                    
+                </div>
+                
+                
+            </div>
+        </div>
+        
+      </div>
+    
+    <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    

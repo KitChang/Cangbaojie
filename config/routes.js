@@ -83,6 +83,18 @@ module.exports.routes = {
       controller: 'DataController',
       action: 'accessRegion'
   },
+  'get /data/access-category': {
+      controller: 'DataController',
+      action: 'accessCategory'
+  },
+  'get /data/access-region/client': {
+      controller: 'DataController',
+      action: 'accessRegionClient'
+  },
+  'get /data/access-category/client': {
+      controller: 'DataController',
+      action: 'accessCategoryClient'
+  },
   'get /data/access-street': {
       controller: 'DataController',
       action: 'accessStreet'
