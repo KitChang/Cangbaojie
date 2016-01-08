@@ -237,6 +237,9 @@ module.exports = {
           type: 'boolean',
           required: true,
           defaultsTo: false
+      },
+      indexUrl : {
+          type: 'string'
       }
       
   }

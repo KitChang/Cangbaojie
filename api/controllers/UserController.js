@@ -18,7 +18,7 @@ module.exports = {
         
         var id = req.param('id');
         
-        user.findOne({id: id, deleted: false}).exec(function(err, result){
+        user.findOne({id: id}).exec(function(err, result){
             
             res.view('user-one', {result: result})
         });
