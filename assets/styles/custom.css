@@ -9,7 +9,7 @@ body {
 
 .list-group-item {
     overflow: hidden;
-    white-space: nowrap; /* Don't forget this one */
+    /*white-space: nowrap; /* Don't forget this one */
     text-overflow: ellipsis;
 }
 
@@ -29,6 +29,9 @@ body {
     min-height: 250px;
     background-color: white;
     background-image: none;
+}
+.breadcrumb {
+  border-radius: 0px;
 }
 
 .panel
