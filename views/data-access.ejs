@@ -20,7 +20,6 @@
                     <div class="form-group">
                         <label>月份</label>
                         <select class="form-control" id="month" name="month">
-                            
                         </select>
                     </div>
                     <a class="btn btn-default" id="access-month">月统计</a>
@@ -31,7 +30,6 @@
                             
                         </select>
                     </div>
-                    
                     </form>
                     <div class="panel-elem">
                         <mark>月统计点击量</mark>
@@ -220,6 +218,7 @@
                 var y = [], t = [];
                 data.forEach(function(d){
                 y.push(d.v);t.push(d.t);});
+                
                 
                 data2 = {
                     labels: t,

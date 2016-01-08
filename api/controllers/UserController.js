@@ -7,12 +7,10 @@
 
 module.exports = {
 	find: function(req, res) {
-        
-        user.find().exec(function(err, resultArr){
+        user.find({deleted: false}).exec(function(err, resultArr){
             if(err){
                 return res.serverError(err);
             }
-            
             res.view('user', {resultArr: resultArr});
         });
     },
@@ -20,7 +18,7 @@ module.exports = {
         
         var id = req.param('id');
         
-        user.findOne({id: id}).exec(function(err, result){
+        user.findOne({id: id, deleted: false}).exec(function(err, result){
             
             res.view('user-one', {result: result})
         });
@@ -101,12 +99,10 @@ module.exports = {
     },
     
     destroy: function(req, res){
-        res.end();
-//        user_client.destroy().exec(function(err){
-//            user.destroy().exec(function(err){
-//            res.end();
-//        });
-//        });
+        var id = req.param('id');
+        user_client.update({id: id},{deleted: true}).exec(function(err){
+            
+        });
     }
     
     

@@ -37,7 +37,13 @@ module.exports = {
       },
       verificationExpiredAt: {
           type: 'date'
+      },
+      deleted: {
+          type: 'boolean',
+          required: true,
+          defaultsTo: false
       }
+      
   }
 };
 

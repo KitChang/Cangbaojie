@@ -8,7 +8,7 @@ var Device = require("../lib/device");
 var moment = require("moment");
 module.exports = {
 	find: function(req, res){
-            advertisement.find().populate('client').populate('advertisementImage').exec (function(err, resultArr){
+            advertisement.find({deleted: false}).populate('client').populate('advertisementImage').exec (function(err, resultArr){
             if(err){
                 return res.serverError(err);
             }
@@ -18,7 +18,7 @@ module.exports = {
     
     findOne: function(req, res){
         var id = req.param("id");
-        advertisement.findOne({id: id}).populate('advertisementImage').populate('probabilityDraw').exec(function(err, result)          {
+        advertisement.findOne({id: id, deleted: false}).populate('advertisementImage').populate('probabilityDraw').exec(function(err, result)          {
             if(err){
                 return res.serverError(err);
             }
@@ -471,10 +471,10 @@ module.exports = {
         });
     },
     destroy: function(req, res){
-        /*var id= req.param('id');
-        advertisement.destroy({id: id}).exec(function(err){
+        var id= req.param('id');
+        advertisement.update({id: id}, {deleted: true}).exec(function(err){
             res.redirect('/advertisement');
-        });;*/
+        });
     },
     expiredDateReminder: function(req, res){
         advertisement.find({limit: 5, sort: 'expiredDate DESC'}).populate('client').exec(function(err, advertisements){

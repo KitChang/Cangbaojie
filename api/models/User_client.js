@@ -8,7 +8,12 @@
 module.exports = {
   identity: 'user_client',
   attributes: {
-      client: { model: 'client'}
+      client: { model: 'client'},
+      deleted: {
+          type: 'boolean',
+          required: true,
+          defaultsTo: false
+      }
   }
 };
 

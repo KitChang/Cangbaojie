@@ -8,7 +8,11 @@
 module.exports = {
   identity: 'user',
   attributes: {
-
+      deleted: {
+          type: 'boolean',
+          required: true,
+          defaultsTo: false
+      }
   }
 };
 

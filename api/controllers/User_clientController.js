@@ -1,7 +1,7 @@
 module.exports = {
 	find: function(req, res){
         
-        user_client.find().populate('client').exec(function(err, resultArr){
+        user_client.find({deleted: false}).populate('client').exec(function(err, resultArr){
             
             if(err)
                 return res.serverError(err);
@@ -13,7 +13,7 @@ module.exports = {
         
         var id = req.param("id");
         
-        user_client.findOne({id: id}).exec(function(err, result){
+        user_client.findOne({id: id, deleted: false}).exec(function(err, result){
             if(err)
                 return res.serverError(err);
             
@@ -68,12 +68,12 @@ module.exports = {
     },
     destroy: function(req, res){
         
-//        var id = req.param("id");
-//        
-//        user_client.destroy({id: id}).exec(function(err, result){
-//            
-//            res.redirect('user_client');
-//        })
+        var id = req.param("id");
+        
+        user_client.update({id: id}, {deleted: true}).exec(function(err, result){
+            
+            res.redirect('user_client');
+        })
     },
     add: function(req, res){
         
@@ -81,14 +81,7 @@ module.exports = {
     remove: function(req, res){
         
     },
-    destroy: function(req, res){
-        var id = req.param("id");
-        
-        user_client.destroy({id: id}).exec(function(err, result){
-            
-            res.redirect('user_client');
-        })
-    },
+
     client: function(req, res){
         
         client.find().exec(function(err, resultArr){

@@ -232,6 +232,11 @@ module.exports = {
       quiz: {
           type: 'array',
           defaultsTo: []
+      },
+      deleted: {
+          type: 'boolean',
+          required: true,
+          defaultsTo: false
       }
       
   }

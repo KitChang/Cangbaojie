@@ -13,7 +13,12 @@ module.exports = {
       state: {type: 'string', defaultsTo: ''},
       city: {type: 'string', defaultsTo: ''},
       region: {type: 'string', defaultsTo: ''},
-      street: {type: 'string', defaultsTo: ''}
+      street: {type: 'string', defaultsTo: ''},
+      deleted: {
+          type: 'boolean',
+          required: true,
+          defaultsTo: false
+      }
   }
 };
 

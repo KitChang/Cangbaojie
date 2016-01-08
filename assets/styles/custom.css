@@ -7,6 +7,11 @@ body {
   background-color: #fff;
 }
 
+.list-group-item {
+    overflow: hidden;
+    white-space: nowrap; /* Don't forget this one */
+    text-overflow: ellipsis;
+}
 
 .v4-tease {
   display: block;
@@ -122,10 +127,6 @@ body {
   border-color: #FFE301;
 }
 
-.panel-heading {
-  background-image: none;
-  background-color: white;
-}
 .panel-heading-dashboard {
   padding: 5px;
   padding-left: 15px;
