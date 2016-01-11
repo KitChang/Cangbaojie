@@ -480,6 +480,14 @@ module.exports = {
         advertisement.find({limit: 5, sort: 'expiredDate DESC'}).populate('client').exec(function(err, advertisements){
             res.view('expired-date-reminder', {advertisements: advertisements, moment: moment});
         });
+    },
+    getJSON: function(req, res){
+        console.log("get json");
+        var clientId = req.param('client');
+        advertisement.find({client: clientId}).exec(function(err, ads){
+            res.json(ads);
+
+        })
     }
 }
 

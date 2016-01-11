@@ -43,6 +43,10 @@ module.exports.routes = {
     controller: 'AdvertisementController',
     action: 'quiz'  
   },
+  'get /advertisement/json': {
+      controller: 'AdvertisementController',
+      action: 'getJSON'
+  },
   'post /advertisement/:id/quiz': {
       controller: 'AdvertisementController',
       action: 'updateQuiz'
@@ -51,6 +55,7 @@ module.exports.routes = {
       controller: "AdvertisementController",
       action: 'updatePrize'
   },
+  
   'get /advertisement/:id/prize': {
       controller: "AdvertisementController",
       action: 'prize'
@@ -71,13 +76,9 @@ module.exports.routes = {
       controller: 'AdvertisementController',
       action: 'addDevice'
   },
-  'get /data/access/:id': {
-      controller: 'DataController',
-      action: 'access'
-  },
   'get /data/access': {
       controller: 'DataController',
-      action: 'advertisement'
+      action: 'access'
   },
   'get /data/access-region': {
       controller: 'DataController',

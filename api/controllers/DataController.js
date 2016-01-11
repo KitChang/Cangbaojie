@@ -6,8 +6,9 @@
  */
 var Device = require("../lib/device");
 var moment = require("moment");
+var _ = require("underscore");
 module.exports = {
-	access: function(req, res){
+	access2: function(req, res){
         var id = req.param('id');
         advertisement.findOne({id: id}).exec(function(err, result){
             if(err)
@@ -17,6 +18,124 @@ module.exports = {
                     return res.serverError(err);
                 res.view('data-access', {resultArr: resultArr, advertisement: result});
             });
+        });
+        
+    },
+    access2: function(req, res){
+        var advertisementId = req.param('advertisement');
+        var clientId = req.param("client");
+        client.find().exec(function(err, clientArr){
+            if(advertisementId){
+                
+                var option = {};
+                if(advertisementId&&advertisementId!="")
+                    option.advertisement = advertisementId;
+                if(clientId&&clientId!="")
+                    option.client = clientId;
+                advertisement.findOne({id: advertisementId}).exec(function(err, result){
+                if(err)
+                    return res.serverError(err);
+                var buttonAction = req.param("buttonAction");
+                if(buttonAction=="accessMonth"){
+                    var month = req.param("month");
+                    var year = req.param("year");
+                    var startOfMonthStr = "01"+"/"+month+"/"+year;
+                    var startOfMonth = moment(startOfMonthStr, "DD/MM/YYYY").toDate();
+                    console.log(startOfMonth);
+                    var endOfMonth = moment(startOfMonthStr, "DD/MM/YYYY").endOf('month').endof('day').toDate();
+                    console.log(endOfMonth);
+                    option['createdAt'] = {"<": endOfMonth, ">": startOfMonth};
+                    access.find(option).exec(function(err, accessArr){
+                        console.log(accessArr.length);
+                    if(err)
+                        return res.serverError(err);
+                        res.view('data-access', {accessArr: accessArr, advertisement: result, clientArr: clientArr});
+                    });
+                     
+                        
+                }else if(buttonAction=="accessDate"){
+                    var date = "";
+                }
+                });
+                return;  
+                
+            }else{
+                res.view('data-access', {accessArr: [], advertisement: null, clientArr: clientArr});
+                return;
+            }
+        })
+        
+        
+        
+    },
+    access: function(req, res){
+        var advertisementId = req.param('advertisement');
+        var clientId = req.param('client');
+        advertisement.find().populate("client").exec(function(err, adArr){
+            var clientObj = {};
+            for(var i=0; i<adArr.length; i++){
+                clientObj[adArr[i].client.id] = adArr[i].client;
+            }
+            var values = [];
+            for(var property in clientObj) {
+            values.push(clientObj[property]);
+            }
+            clientArr = values;
+            if(advertisementId==null){
+                console.log("85");
+                res.view('data-access', {adArr: adArr, clientArr: clientArr, accessCountMonth: null, accessCountDate: null, selectedClient: null, selectedAd: null});
+                return;
+            }else{
+                console.log("88");
+                var option = {};
+                if(advertisementId!="")
+                    option.advertisement = advertisementId;
+                if(clientId!="")
+                    option.client = clientId;
+                var buttonAction = req.param('buttonAction');
+                if(buttonAction=="accessMonth"){
+                    var year = req.param("year");
+                    var month = req.param("month");
+                    var startOfMonthStr = month+"/"+"01"+"/"+year;
+                    var startOfMonthDate = moment(startOfMonthStr, "MM/DD/YYYY").startOf('day').toDate();
+                    var endOfMonthDate = moment(startOfMonthStr, "MM/DD/YYYY").endOf('month').toDate();
+                    console.log(startOfMonthDate+" "+endOfMonthDate);
+                    if(startOfMonthDate&&endOfMonthDate)
+                        option.createdAt = {">": startOfMonthDate, "<": endOfMonthDate};
+                    access.find(option).exec(function(err, accessArr){
+                        accessObj = _.groupBy(accessArr, function(access){
+                            console.log(access.createdAt.getDate());
+                            return access.createdAt.getDate();
+                        });
+                        var accessCountMonth = {};
+                        for(var property in accessObj) {
+                            accessCountMonth[property] = accessObj[property].length;
+                            console.log(accessCountMonth[property]);
+                            console.log("115");
+                        }
+                        res.view('data-access', {adArr: adArr, clientArr: clientArr, accessCountMonth: accessCountMonth, accessCountDate: null, selectedClient: null, selectedAd: null});
+                    });
+                }else if(buttonAction=="accessDate"){
+                    var dateStr = req.param('date');
+                    var accessDateFrom = moment(dateStr, "MM/DD/YYYY").startOf('day').toDate();
+                    var accessDateTo = moment(dateStr, "MM/DD/YYYY").endOf('day').toDate();
+                    option.createdAt = {">": accessDateFrom, "<": accessDateTo};
+                    console.log(option);
+                    access.find(option).exec(function(err, accessArr){
+                        accessObj = _.groupBy(accessArr, function(access){
+                            return moment(access.createdAt).hour();
+                        });
+                        var accessCountDate = {};
+                        for(var property in accessObj) {
+                            accessCountDate[property] = accessObj[property].length;
+                            console.log(accessCountDate[property]);
+                        }
+                        res.view('data-access', {adArr: adArr, clientArr: clientArr, accessCountMonth: null, accessCountDate: accessCountDate, selectedClient: null, selectedAd: null});
+                    });
+                }
+                
+                
+            }
         });
         
     },
@@ -69,6 +188,7 @@ module.exports = {
             if(client){
                 option.client = client;
             }
+            
             access.find(option).exec(function(err, resultArr){
                 if(err)
                         return res.serverError(err);
