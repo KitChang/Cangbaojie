@@ -39,11 +39,11 @@
                             ad = adArr.pop();
                             if(req.param('advertisement')&&req.param('advertisement')==ad.id){
                     %>
-                        <option value="<%=ad.id%>" selected><%=ad.client.name%>-<%=ad.title%></option>
+                        <option value="<%=ad.id%>" selected><%=ad.title%></option>
                     <%
                             }else{
                     %>
-                        <option value="<%=ad.id%>"><%=ad.client.name%>-<%=ad.title%></option>
+                        <option value="<%=ad.id%>" ><%=ad.title%></option>
                     <%
                             }
                         }
@@ -163,9 +163,6 @@ $(document).ready(function(){
 
     $("#date").daterangepicker({singleDatePicker: true});
     
-    
-    
-    
     var yData = []; var yLabel = [];
     <% if(accessCountMonth!=null){
             var yVal = 0;
@@ -215,7 +212,22 @@ $(document).ready(function(){
         $("#buttonAction").attr("value", "accessDate");
         document.forms['form'].submit();
     })
-    
+    $("#client").change(function(){
+        var clientId = $("#client").val();
+        $.ajax({
+            url: "/advertisement/json?client="+clientId
+            }).done(function(data){
+              var adOption = "";
+              $("#advertisement").empty();
+              while (data.length) {
+                var ad = data.pop();
+                _option = "<option value='"+ad.id+"'>"+ad.title+"</option>";
+                adOption = adOption + _option;
+              }
+              adOption = adOption + "<option value=''>所有广告</option>"
+              $("#advertisement").append(adOption);
+        });
+    });    
 
     
     

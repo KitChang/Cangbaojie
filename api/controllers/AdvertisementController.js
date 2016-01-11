@@ -63,7 +63,6 @@ module.exports = {
         var drawCouponExpiredTime = req.param('drawCouponExpiredTime');
         var drawPerformInterval = req.param('drawPerformInterval');
         var numberOfPrize = req.param('numberOfPrize');
-        var indexUrl = req.param('indexUrl');
         advertisement.create({
             client: client,
             title: title,
@@ -99,8 +98,7 @@ module.exports = {
             secondPrizeQuantityRemain: secondPrizeQuantity,
             thirdPrizeQuantityRemain: thirdPrizeQuantity,
             fourthPrizeQuantityRemain: fourthPrizeQuantity,
-            fifthPrizeQuantityRemain: fifthPrizeQuantity,
-            indexUrl: indexUrl
+            fifthPrizeQuantityRemain: fifthPrizeQuantity
         }).exec(function(err, result){
             if(err){
                 res.serverError(err);
@@ -145,7 +143,6 @@ module.exports = {
             var drawPerformInterval_second = req.param("drawPerformInterval_second");
             var drawCouponExpiredTime = req.param('drawCouponExpiredTime');
             var drawPerformInterval = req.param('drawPerformInterval');
-            var indexUrl = req.param('indexUrl');
             option = 
             {
                 title: title,
@@ -164,8 +161,7 @@ module.exports = {
                 drawPerformInterval_day: drawPerformInterval_day,
                 drawPerformInterval_hour: drawPerformInterval_hour,
                 drawPerformInterval_minute: drawPerformInterval_minute,
-                drawPerformInterval_second: drawPerformInterval_second,
-                indexUrl: indexUrl
+                drawPerformInterval_second: drawPerformInterval_second
             };
             if(ad.status=="draft"){
                 option.firstPrize = firstPrize;
@@ -486,9 +482,12 @@ module.exports = {
         });
     },
     getJSON: function(req, res){
-        console.log("get json");
         var clientId = req.param('client');
-        advertisement.find({client: clientId}).exec(function(err, ads){
+        var option = {};
+        if(clientId!="")
+            option.client = clientId;
+        option.deleted = false;
+        advertisement.find(option).exec(function(err, ads){
             res.json(ads);
 
         })
