@@ -7,7 +7,7 @@
 
 module.exports = {
 	find: function(req, res){
-        client.find().exec(function(err, resultArr){
+        client.find({deleted: false}).exec(function(err, resultArr){
             if(err)
                 return res.serverError(err);
             res.view('client', {resultArr: resultArr});
@@ -81,7 +81,7 @@ module.exports = {
     destroy: function(req, res){
         
         var id = req.param("id");
-        client.update({id: id}, {deleted: false}).exec(function(err, result){
+        client.update({id: id}, {deleted: true}).exec(function(err, result){
             res.redirect('client');
         })
     },

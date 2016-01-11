@@ -13,7 +13,7 @@ module.exports = {
         
         var id = req.param("id");
         
-        user_client.findOne({id: id, deleted: false}).exec(function(err, result){
+        user_client.findOne({id: id}).exec(function(err, result){
             if(err)
                 return res.serverError(err);
             
