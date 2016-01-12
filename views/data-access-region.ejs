@@ -8,7 +8,30 @@
                 <div class="panel-body">
                     
                     <form class="form-inline" method="get" action="/data/access-region">
-                        
+                        <div class="form-group">
+                            <label>商家客户</label>
+                            <select class="form-control" id="client" name="client">
+                                <option value="">所有客户</option>
+                            <%
+                                var client;
+                                if(clientArr){
+                                while(clientArr.length){
+                                    client = clientArr.pop();
+                                    if(req.param('client')&&req.param('client')==client.id){
+                            %>
+                                <option value="<%=client.id%>" selected><%=client.name%></option>
+                            <%
+                                    }else{
+                            %>
+                                <option value="<%=client.id%>"><%=client.name%></option>
+                            <%
+                                    }
+                                }
+
+                                }
+                            %>
+                            </select>
+                        </div>
                         <div class="form-group">
                              <label>位置</label>
                             <select class="form-control" id="state" name="state">
@@ -67,12 +90,7 @@
                             }
                         %>
                         </div>
-                    <%
-                        var client = "";
-                        if(req.param('client'))
-                            client = req.param('client');
-                    %>
-                    <input type="hidden" class="form-control" name="client" id="client" value="<%=client%>">
+                    
                     <button class="btn btn-default">统计</button>
                     </form>
                     

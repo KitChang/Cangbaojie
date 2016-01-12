@@ -155,20 +155,38 @@ module.exports = {
         var client = req.param('client');
         dateFrom = moment(dateFromStr, "MM/DD/YYYY").startOf('day').toDate();
         dateTo = moment(dateToStr, "MM/DD/YYYY").endOf('day').toDate();
-        if(!city){
-            res.view('data-access-region', {resultArr: []});
-            return;
-        }else{
-            var option = {state: state, city: city, createdAt: {"<": dateTo, ">": dateFrom}};
-            if(client){
-                option.client = client;
+        advertisement.find().populate("client").exec(function(err, adArr){
+            var clientObj = {};
+            for(var i=0; i<adArr.length; i++){
+                clientObj[adArr[i].client.id] = adArr[i].client;
             }
-            access.find(option).exec(function(err, resultArr){
-                if(err)
-                        return res.serverError(err);
-                res.view('data-access-region', {resultArr: resultArr});
+            var values = [];
+            for(var property in clientObj) {
+            values.push(clientObj[property]);
+            }
+            clientArr = values;
+            
+            if(!city){
+                res.view('data-access-region', {resultArr: [], clientArr: clientArr});
+                return;
+            }else{
+                var option = {state: state, city: city, createdAt: {"<": dateTo, ">": dateFrom}};
+                if(client){
+                    option.client = client;
+                }
+                access.find(option).exec(function(err, resultArr){
+                    if(err)
+                            return res.serverError(err);
+                    res.view('data-access-region', {resultArr: resultArr, clientArr: clientArr});
+                });
+            }
+            
+            
+            
+            
+            
         });
-        }
+        
     },
     accessCategory: function(req, res){
         var state = req.param('state');
@@ -179,22 +197,42 @@ module.exports = {
         var client = req.param('client');
         dateFrom = moment(dateFromStr, "MM/DD/YYYY").startOf('day').toDate();
         dateTo = moment(dateToStr, "MM/DD/YYYY").endOf('day').toDate();
-        if(!city){
-            res.view('data-access-category', {resultArr: []});
+        advertisement.find().populate("client").exec(function(err, adArr){
+            var clientObj = {};
+            for(var i=0; i<adArr.length; i++){
+                clientObj[adArr[i].client.id] = adArr[i].client;
+            }
+            var values = [];
+            for(var property in clientObj) {
+            values.push(clientObj[property]);
+            }
+            clientArr = values;
+            
+            if(!city){
+            res.view('data-access-category', {resultArr: [], clientArr: clientArr});
             return;
-        }
-        else{
-            var option = {state: state, city: city, createdAt: {"<": dateTo, ">": dateFrom}};
-            if(client){
-                option.client = client;
+            }
+            else{
+                var option = {state: state, city: city, createdAt: {"<": dateTo, ">": dateFrom}};
+                if(client){
+                    option.client = client;
+                }
+
+                access.find(option).exec(function(err, resultArr){
+                    if(err)
+                            return res.serverError(err);
+                    res.view('data-access-category', {resultArr: resultArr, clientArr: clientArr});
+            });
             }
             
-            access.find(option).exec(function(err, resultArr){
-                if(err)
-                        return res.serverError(err);
-                res.view('data-access-category', {resultArr: resultArr});
+            
+            
+            
+            
+            
+            
         });
-        }
+        
     },
     accessRegionClient: function(req, res){
           client.find().exec(function(err, resultArr){
