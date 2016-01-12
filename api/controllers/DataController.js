@@ -102,7 +102,7 @@ module.exports = {
                     console.log(startOfMonthDate+" "+endOfMonthDate);
                     if(startOfMonthDate&&endOfMonthDate)
                         option.createdAt = {">": startOfMonthDate, "<": endOfMonthDate};
-                    access.find(option).exec(function(err, accessArr){
+                    access.find(option).populate('advertisement').exec(function(err, accessArr){
                         accessObj = _.groupBy(accessArr, function(access){
                             console.log(access.createdAt.getDate());
                             return access.createdAt.getDate();
@@ -110,6 +110,13 @@ module.exports = {
                         var accessCountMonth = {};
                         for(var property in accessObj) {
                             accessCountMonth[property] = accessObj[property].length;
+                            var sum =0;
+                            for(var i=0; i<accessObj[property].length; i++){
+                                sum = sum + accessObj[property][i].advertisement.pricePerClick;
+                                
+                            }
+                            accessCountMonth["price-"+property] = sum;
+                            console.log("sum: "+sum);
                             console.log(accessCountMonth[property]);
                             console.log("115");
                         }
@@ -128,7 +135,13 @@ module.exports = {
                         var accessCountDate = {};
                         for(var property in accessObj) {
                             accessCountDate[property] = accessObj[property].length;
-                            console.log(accessCountDate[property]);
+                            var sum =0;
+                            for(var i=0; i<accessObj[property].length; i++){
+                                sum = sum + accessObj[property][i].advertisement.pricePerClick;
+                                
+                            }
+                            accessCountDate["price-"+property] = sum;
+
                         }
                         res.view('data-access', {adArr: adArr, clientArr: clientArr, accessCountMonth: null, accessCountDate: accessCountDate, selectedClient: null, selectedAd: null});
                     });

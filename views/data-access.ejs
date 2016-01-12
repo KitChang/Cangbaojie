@@ -136,6 +136,10 @@
                 </div>
 
                 <canvas id="access-ctx" width="900" height="400"></canvas>
+                <table class="table" style="width: 900px">
+                            <tr><td><span style='background-color:#ff2a1a'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>点击</td></tr>
+                            <tr><td><span style='background-color:#a8e4f0'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>消费</td></tr>
+                </table>
                
             
 
@@ -164,38 +168,46 @@ $(document).ready(function(){
     $("#date").daterangepicker({singleDatePicker: true});
     
     var yData = []; var yLabel = [];
+    var yPrice =[];
     <% if(accessCountMonth!=null){
             var yVal = 0;
+            var yPrice = 0;
             for(var i=1; i<=31; i++){
                 if(accessCountMonth[i+""]!=undefined){
                     yVal = accessCountMonth[i+""];
+                    yPrice = accessCountMonth["price-"+i];
 
                 }   
                 else {
                     yVal = 0;
+                    yPrice = 0;
 
                 }
     %>
         yData.push(<%=yVal%>);
+        yPrice.push(<%=yPrice%>);
         yLabel.push("<%=i%>");
+        
     <%
                     
     }}
             
     %>
     <% if(accessCountDate!=null){
-            var yVal = 0;
+            var yVal = 0; var yPrice = 0;
             for(var i=1; i<=24; i++){
                 if(accessCountDate[i+""]!=undefined){
                     yVal = accessCountDate[i+""];
+                    yPrice = accessCountDate["price-"+i];
 
                 }   
                 else {
                     yVal = 0;
-
+                    yPrice = 0;
                 }
     %>
         yData.push(<%=yVal%>);
+        yPrice.push(<%=yPrice%>);
         yLabel.push("<%=i%>");
     <%
                     
@@ -235,14 +247,24 @@ $(document).ready(function(){
         labels: yLabel,
         datasets: [
             {
-                label: "My First dataset",
+                label: "Access dataset",
                 fillColor: "rgba(220,220,220,0.2)",
-                strokeColor: "rgba(220,220,220,1)",
-                pointColor: "rgba(220,220,220,1)",
+                strokeColor: "#ff2a1a",
+                pointColor: "#ff2a1a",
                 pointStrokeColor: "#fff",
                 pointHighlightFill: "#fff",
                 pointHighlightStroke: "rgba(220,220,220,1)",
                 data: yData
+            },
+            {
+                label: "Price dataset",
+                fillColor: "rgba(220,220,220,0.2)",
+                strokeColor: "#a8e4f0",
+                pointColor: "#a8e4f0",
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: "rgba(220,220,220,1)",
+                data: yPrice
             }
         ]
     };
