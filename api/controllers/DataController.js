@@ -340,7 +340,13 @@ module.exports = {
     },
     prizeWinner: function(req, res){
         var advertisementId = req.param('advertisement');
-        PrizeCoupon.find({advertisement: advertisementId}).populate('appUser').exec(function(err, resultArr){
+        var prize = req.param('prize');
+        var find = {};
+        find.advertisement = advertisementId;
+        if(prize&&prize!="")
+            find.prize = prize;
+        
+        PrizeCoupon.find(find).populate('appUser').exec(function(err, resultArr){
             if(err)
                     return res.serverError(err);
             
@@ -355,7 +361,7 @@ module.exports = {
             
             var find = {};
             find.advertisement = advertisementId;
-            if(prize!="all")
+            if(prize!="")
                 find.prize = prize;
             winner.find(find).populate('app_user').exec(function(err, resultArr){
                 if(err)
