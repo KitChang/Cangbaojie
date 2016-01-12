@@ -1253,7 +1253,7 @@ var state =
          name:"珠海市",
          region:[
             {
-                name: "香洲区",
+                name: "新香洲区",
                 street: [
                   {
                      name:"翠前北路"
@@ -1435,7 +1435,7 @@ var state =
                 ]
             },
             {
-               name:"淘宝香洲区",
+               name:"香洲区",
                street:[
                   {
                      name:"翠香街道"
