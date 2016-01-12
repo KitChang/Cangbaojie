@@ -147,7 +147,7 @@
                             <tr><td><span style='background-color:#a8e4f0'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>消费</td></tr>
                 </table>
                 <%
-                }
+            }
                 %>
                
             
@@ -196,7 +196,6 @@ $(document).ready(function(){
         yData.push(<%=yVal%>);
         yPrice.push(<%=yPrice%>);
         yLabel.push("<%=i%>");
-        
     <%
                     
     }}
@@ -218,11 +217,15 @@ $(document).ready(function(){
         yData.push(<%=yVal%>);
         yPrice.push(<%=yPrice%>);
         yLabel.push("<%=i%>");
+        
     <%
                     
     }}
             
     %>
+    for(var i=0; i<yLabel.length; i++){
+            alert(yPrice[i])
+        }
     var today = new Date();
     
     $("#accessMonth").click(function(err){
@@ -248,9 +251,7 @@ $(document).ready(function(){
               adOption = adOption + "<option value=''>所有广告</option>"
               $("#advertisement").append(adOption);
         });
-    });    
-
-    
+    }); 
     
     data = {
         labels: yLabel,

@@ -128,7 +128,7 @@ module.exports = {
                     var accessDateTo = moment(dateStr, "MM/DD/YYYY").endOf('day').toDate();
                     option.createdAt = {">": accessDateFrom, "<": accessDateTo};
                     console.log(option);
-                    access.find(option).exec(function(err, accessArr){
+                    access.find(option).populate('advertisement').exec(function(err, accessArr){
                         accessObj = _.groupBy(accessArr, function(access){
                             return moment(access.createdAt).hour();
                         });
@@ -139,8 +139,10 @@ module.exports = {
                             for(var i=0; i<accessObj[property].length; i++){
                                 sum = sum + accessObj[property][i].advertisement.pricePerClick;
                                 
+                                
                             }
                             accessCountDate["price-"+property] = sum;
+                            console.log("sum: "+sum);
 
                         }
                         res.view('data-access', {adArr: adArr, clientArr: clientArr, accessCountMonth: null, accessCountDate: accessCountDate, selectedClient: null, selectedAd: null});
