@@ -79,7 +79,7 @@
                     
                     <button class="btn btn-default">搜索</button>
                     </form>
-                    <table class="table table-striped">
+                    <table id="table" class="table table-striped">
                     <thead>
                     <tr><th>分发途径</th><th>省份</th><th>城市</th><th>地区</th><th>街道</th><th>具体位置</th><th>设备编号</th><th>分发量</th></tr>          </thead>
                     <tbody>                    
@@ -106,8 +106,12 @@
       </div>
     <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
     <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
-    <script>
+<script type="text/javascript" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+<script>
         $(document).ready(function(){
+            $("#table").DataTable({"language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.10/i18n/Chinese.json"
+            }});
             populateCity();
             populateRegion();
             populateStreet();
