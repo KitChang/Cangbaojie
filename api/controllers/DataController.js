@@ -8,69 +8,14 @@ var Device = require("../lib/device");
 var moment = require("moment");
 var _ = require("underscore");
 module.exports = {
-	access2: function(req, res){
-        var id = req.param('id');
-        advertisement.findOne({id: id}).exec(function(err, result){
-            if(err)
-                return res.serverError(err);
-            access.find({advertisement: id}).exec(function(err, resultArr){
-                if(err)
-                    return res.serverError(err);
-                res.view('data-access', {resultArr: resultArr, advertisement: result});
-            });
-        });
-        
-    },
-    access2: function(req, res){
-        var advertisementId = req.param('advertisement');
-        var clientId = req.param("client");
-        client.find().exec(function(err, clientArr){
-            if(advertisementId){
-                
-                var option = {};
-                if(advertisementId&&advertisementId!="")
-                    option.advertisement = advertisementId;
-                if(clientId&&clientId!="")
-                    option.client = clientId;
-                advertisement.findOne({id: advertisementId}).exec(function(err, result){
-                if(err)
-                    return res.serverError(err);
-                var buttonAction = req.param("buttonAction");
-                if(buttonAction=="accessMonth"){
-                    var month = req.param("month");
-                    var year = req.param("year");
-                    var startOfMonthStr = "01"+"/"+month+"/"+year;
-                    var startOfMonth = moment(startOfMonthStr, "DD/MM/YYYY").toDate();
-                    console.log(startOfMonth);
-                    var endOfMonth = moment(startOfMonthStr, "DD/MM/YYYY").endOf('month').endof('day').toDate();
-                    console.log(endOfMonth);
-                    option['createdAt'] = {"<": endOfMonth, ">": startOfMonth};
-                    access.find(option).exec(function(err, accessArr){
-                        console.log(accessArr.length);
-                    if(err)
-                        return res.serverError(err);
-                        res.view('data-access', {accessArr: accessArr, advertisement: result, clientArr: clientArr});
-                    });
-                     
-                        
-                }else if(buttonAction=="accessDate"){
-                    var date = "";
-                }
-                });
-                return;  
-                
-            }else{
-                res.view('data-access', {accessArr: [], advertisement: null, clientArr: clientArr});
-                return;
-            }
-        })
-        
-        
-        
-    },
     access: function(req, res){
         var advertisementId = req.param('advertisement');
         var clientId = req.param('client');
+        var locationType = req.param('locationType');
+        var state = req.param('state');
+        var city = req.param('city');
+        var region = req.param('region');
+        var street = req.param('street');
         advertisement.find().populate("client").exec(function(err, adArr){
             var clientObj = {};
             for(var i=0; i<adArr.length; i++){
@@ -78,7 +23,7 @@ module.exports = {
             }
             var values = [];
             for(var property in clientObj) {
-            values.push(clientObj[property]);
+                values.push(clientObj[property]);
             }
             clientArr = values;
             if(advertisementId==null){
@@ -88,6 +33,14 @@ module.exports = {
             }else{
                 console.log("88");
                 var option = {};
+                if(locationType&&locationType!="")
+                    option.locationType = locationType;
+                if(state&&state!="")
+                    option.state = state;
+                if(city&&city!="")
+                    option.city = city;
+                if(street&&street!="")
+                    option.street = street;
                 if(advertisementId!="")
                     option.advertisement = advertisementId;
                 if(clientId!="")
@@ -239,12 +192,6 @@ module.exports = {
                     res.view('data-access-category', {resultArr: resultArr, clientArr: clientArr});
             });
             }
-            
-            
-            
-            
-            
-            
             
         });
         
