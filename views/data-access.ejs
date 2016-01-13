@@ -215,8 +215,8 @@
                 
                 
                 <table class="table" style="width: 900px">
-                            <tr><td><span style='background-color:#ff2a1a'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>点击</td></tr>
-                            <tr><td><span style='background-color:#a8e4f0'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>消费</td></tr>
+                            <tr><td><span style='background-color:#ff2a1a'>&nbsp;&nbsp;&nbsp;&nbsp;</span>点击</td></tr>
+                            <tr><td><span style='background-color:#a8e4f0'>&nbsp;&nbsp;&nbsp;&nbsp;</span>消费</td></tr>
                 </table>
                 <%
             }
@@ -318,13 +318,14 @@ $(document).ready(function(){
             url: "/advertisement/json?client="+clientId
             }).done(function(data){
               var adOption = "";
+              adOption = adOption + "<option value=''>所有广告</option>";
               $("#advertisement").empty();
               while (data.length) {
                 var ad = data.pop();
                 _option = "<option value='"+ad.id+"'>"+ad.title+"</option>";
                 adOption = adOption + _option;
               }
-              adOption = adOption + "<option value=''>所有广告</option>"
+              
               $("#advertisement").append(adOption);
         });
     }); 
