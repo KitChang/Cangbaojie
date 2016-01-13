@@ -2,21 +2,22 @@
     
       <div class="container content">
         <div class="row">
-             <div class="panel panel-default">
-                 <div class="panel-heading">
-                  数据统计 /
-                  App 用户统计
-                </div>
+             <ul class="nav nav-tabs">
+              <li><a style="color: #555;" href="/data/AppUser">用戶列表</a></li>
+              <li class="active"><a style="background-color: #FFE301;" href="/data/AppUser-statistics">用户统计</a></li>
+            </ul>
+             <div class="panel panel-dashboard">
+                 
             <div class="col-md-4">
                 <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="col-md-4">
-                    <canvas id="genderChart" width="300" height="300"></canvas>
+                    <canvas id="genderChart" width="250" height="300"></canvas>
 
                     </div>
                     <table class="table">
-                            <tr><td><span style='background-color:#46BFBD'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>男</td><td><%=maleUsers%></td></tr>
-                            <tr><td><span style='background-color:#FDB45C'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>女</td><td><%=femaleUsers%></td></tr>
+                            <tr><td><span style='background-color:#46BFBD'>&nbsp;&nbsp;&nbsp;&nbsp;</span> 男</td><td><%=maleUsers%></td></tr>
+                            <tr><td><span style='background-color:#FDB45C'>&nbsp;&nbsp;&nbsp;&nbsp;</span> 女</td><td><%=femaleUsers%></td></tr>
                     </table>
                     
                    
@@ -29,14 +30,14 @@
                 <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="col-md-4">
-                    <canvas id="newOldUserChart" width="300" height="300"></canvas>
+                    <canvas id="newOldUserChart" width="250" height="300"></canvas>
                    
                         
                        
                     </div>
                     <table class="table">
-                            <tr><td><span style='background-color:#40d65d'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>新用户</td><td><%=newUsers%></td></tr>
-                            <tr><td><span style='background-color:#2137ff'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>历史用户</td><td><%=oldUsers%></td></tr>
+                            <tr><td><span style='background-color:#40d65d'>&nbsp;&nbsp;&nbsp;&nbsp;</span> 新用户</td><td><%=newUsers%></td></tr>
+                            <tr><td><span style='background-color:#2137ff'>&nbsp;&nbsp;&nbsp;&nbsp;</span> 历史用户</td><td><%=oldUsers%></td></tr>
                     </table>
                     
                     
@@ -50,12 +51,12 @@
                 <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="col-md-4">
-                    <canvas id="activeInactiveUserChart" width="300" height="300"></canvas>
+                    <canvas id="activeInactiveUserChart" width="250" height="300"></canvas>
                     
                     </div>
                     <table class="table">
-                            <tr><td><span style='background-color:#f08a75'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>活跃用户</td><td><%=activeUsers%></td></tr>
-                            <tr><td><span style='background-color:#e6b3e6'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>僵尸用户</td><td><%=inactiveUsers%></td></tr>
+                            <tr><td><span style='background-color:#f08a75'>&nbsp;&nbsp;&nbsp;&nbsp;</span> 活跃用户</td><td><%=activeUsers%></td></tr>
+                            <tr><td><span style='background-color:#e6b3e6'>&nbsp;&nbsp;&nbsp;&nbsp;</span> 僵尸用户</td><td><%=inactiveUsers%></td></tr>
                     </table>
                     
                    
