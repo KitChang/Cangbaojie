@@ -7,6 +7,7 @@
 var request = require('request');
 var Device = require('../lib/device');
 var moment = require('moment');
+var _ = require('underscore');
 module.exports = {
     
     find: function(req, res){
@@ -73,6 +74,31 @@ module.exports = {
     },
     add: function(req, res){
         
+    },
+    import: function(req, res){
+        Device.search({}, function(err, deviceArr_max){
+            if(err){
+                return res.serverError(err);
+            }else{
+                device.find().exec(function(err, deviceArr_cbj){
+                    var deviceId_max = [];
+                    var deviceId_cbj = [];
+                    var deviceId; 
+                    var deviceObj;
+                    while(deviceArr_cbj.length){
+                        deviceObj = deviceArr_cbj.pop();
+                        deviceId_cbj.push(deviceObj.id);
+                    }
+                    var filteredDeviceArr = _.reject(deviceArr_max, function(dev){
+                        return _.contains(deviceId_cbj, dev.id);
+                    });
+                    console.log(filteredDeviceArr.length);
+                    device.create(filteredDeviceArr).exec(function(err){
+                        res.redirect('/device');
+                    });
+                });
+            }
+        })
     },
     remove: function(req, res){
         

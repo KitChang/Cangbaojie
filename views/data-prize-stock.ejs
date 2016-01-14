@@ -8,33 +8,30 @@
                           <li><b>奖项数据</b></li>
                 </ol>      
                 <div class="panel-body">
-                    <form class="form-inline" action="/data/prize-stock/search" method="get">
+                    <form class="form-inline" action="/data/prize-stock" method="get">
                         <div class="form-group">
-                        <label>广告</label>
-                        <input type="hidden" name="client" value="<%=req.param('client')%>"/>
-                        <select class="form-control" name="advertisement">
-                            
-                            <%
-                            
-                            if(ads){
-                                var ad;
-                                while(ads.length){
-                                    ad = ads.pop();
-                                if(selectedAd&&ad.id==selectedAd.id){
-                            %>
-                            <option value="<%=ad.id%>" selected><%=ad.title%></option>
-                            <%
+                                <label>广告</label>
+                                <select class="form-control" id="advertisement" name="advertisement">
                                     
-                                }else{
-                            %>
-                            <option value="<%=ad.id%>"><%=ad.title%></option>
-                            <%
-                                    
-                                }
-                                }
-                            }
-                            %>
-                        </select>
+                                <%
+                                    var ad;
+                                    if(adArr){
+                                    while(adArr.length){
+                                        ad = adArr.pop();
+                                        if(req.param('advertisement')&&req.param('advertisement')==ad.id){
+                                %>
+                                    <option value="<%=ad.id%>" selected><%=ad.client.name%>-<%=ad.title%></option>
+                                <%
+                                        }else{
+                                %>
+                                    <option value="<%=ad.id%>" ><%=ad.client.name%>-<%=ad.title%></option>
+                                <%
+                                        }
+                                    }
+                                    }
+                                %>
+
+                                </select>
                         </div>
                         <button type="submit" class="btn btn-warning">搜索</button>
                     </form>

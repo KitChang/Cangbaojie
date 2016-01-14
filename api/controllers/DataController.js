@@ -225,7 +225,33 @@ module.exports = {
             });
         }
     },
+    
     accessDevice: function(req, res){
+        
+        access.find().exec(function(err, accessArr){
+            var accessDevice = _.groupBy(accessArr, function(accessOne){
+                return accessOne.device
+            });
+            Device.search({}, function(err, deviceArr){
+            if(err)
+                    return res.serverError(err);
+            var accessCount = 0;
+            for (var i=0; i<deviceArr.length; i++){
+                console.log(accessDevice[deviceArr[i].id]);
+                if(accessDevice[deviceArr[i].id]==undefined)
+                    accessCount = 0;
+                else
+                    accessCount = accessDevice[deviceArr[i].id].length;
+                deviceArr[i].accessCount = accessCount
+            }
+                
+            res.view('data-access-device', {resultArr: deviceArr});
+            });
+        });
+        
+        
+    },
+    accessDevice2: function(req, res){
         var locationType = req.param('locationType');
         var state = req.param('state');
         var city = req.param('city');
@@ -262,10 +288,19 @@ module.exports = {
             });
     },
     prizeStock: function(req, res){
-        var clientId = req.param('client');
-        advertisement.find({client: clientId}).exec(function(err, ads){
-            console.log("ads l:"+ads.length);
-            res.view('data-prize-stock', {ads: ads, selectedAd: null});
+        var advertisementId = req.param('advertisement');
+        advertisement.find().populate("client").exec(function(err, adArr){
+            if(advertisementId&&advertisementId!=""){
+                advertisement.findOne({id: advertisementId}).exec(function(err, ad){
+                    
+                    res.view('data-prize-stock', {adArr: adArr, selectedAd: ad});
+                    return;
+                })
+            }
+            else{
+                res.view('data-prize-stock', {adArr: adArr, selectedAd: null});
+                return;
+            }
         });
     },
     prizeStockSearch: function(req, res){
@@ -291,18 +326,23 @@ module.exports = {
         var advertisementId = req.param('advertisement');
         var prize = req.param('prize');
         var find = {};
-        find.advertisement = advertisementId;
-        if(prize&&prize!="")
-            find.prize = prize;
-        
-        PrizeCoupon.find(find).populate('appUser').exec(function(err, resultArr){
-            if(err)
-                    return res.serverError(err);
+        var advertisementId = req.param('advertisement');
+        advertisement.find().populate("client").exec(function(err, adArr){
+            find.advertisement = advertisementId;
+            if(prize&&prize!="")
+                find.prize = prize;
+
+            PrizeCoupon.find(find).populate('appUser').exec(function(err, resultArr){
+                if(err)
+                        return res.serverError(err);
             
-            res.view('data-prize-winner', {resultArr: resultArr, moment: moment});
+            res.view('data-prize-winner', {resultArr: resultArr, moment: moment, adArr: adArr});
         });
+            
+        });
+        
     },
-    prizeWinnerSearch: function(req, res){
+    prizeWinnerSearch: function(req, res){//to be removed
         
         advertisement.find().exec(function(err, advertisements){
             var advertisementId = req.param('advertisement');

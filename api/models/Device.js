@@ -8,10 +8,7 @@
 module.exports = {
   identity: 'device',
   attributes: {
-      deviceid: {
-        type: 'string',
-        primaryKey: true
-      },
+
       locationType: 'string',
       state: 'string',
       city: 'string',
