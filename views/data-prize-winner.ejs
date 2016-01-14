@@ -55,22 +55,7 @@
                                 </div>
                             </div>
                             <div class="panel-elem">
-                                <div class="form-group">
-                                        <select class="form-control" id="locationType" name="locationType">
-                                            <%
-                                            if(req.param("locationType")&&req.param("locationType")!=""){
-                                            %>
-                                            <option value="<%=req.param('locationType')%>" selected><%=req.param('locationType')%></option>
-                                            <%
-                                            }
-                                            %>
-                                            <option value="">所有位置类</option>
-                                            <option value="公交站">公交站</option>
-                                            <option value="公交车">公交车</option>
-                                            <option value="电梯">电梯</option>
-                                            <option value="路名牌">路名牌</option>
-                                        </select>
-                                </div>
+                                
                                 <div class="form-group">
                                     <select class="form-control" id="state" name="state">
                                         <%
