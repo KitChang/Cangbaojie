@@ -215,9 +215,12 @@
                 
                 
                 
-                <table class="table table-bordered" style="width: 400px">
-                            <tr><td><span style='background-color:#ff2a1a'>&nbsp;&nbsp;&nbsp;&nbsp;</span>点击</td></tr>
-                            <tr><td><span style='background-color:#a8e4f0'>&nbsp;&nbsp;&nbsp;&nbsp;</span>消费</td></tr>
+                <table class="table" style="width: 400px">
+                            <tr><td><span style='background-color:#ff2a1a'>&nbsp;&nbsp;&nbsp;&nbsp;</span>点击</td>
+                            <td id="totalData"></td>
+                            </tr>
+                            <tr><td><span style='background-color:#a8e4f0'>&nbsp;&nbsp;&nbsp;&nbsp;</span>消费</td>
+                            <td id="totalPrice"></td></tr>
                 </table>
                 <%
             }
@@ -247,9 +250,12 @@ $(document).ready(function(){
     var yData = []; var yLabel = [];
     var yPrice =[];
     
-    <% if(accessCountMonth!=null){
+    <% 
+        if(accessCountMonth!=null){
             var yVal = 0;
             var yPrice = 0;
+            var totalData = 0;
+            var totalPrice = 0;
             for(var i=1; i<=31; i++){
                 if(accessCountMonth[i+""]!=undefined){
                     yVal = accessCountMonth[i+""];
@@ -259,14 +265,24 @@ $(document).ready(function(){
                     yVal = 0;
                     yPrice = 0;
                 }
+                totalData += yVal;
+                totalPrice += yPrice;
     %>
-        yData.push(<%=yVal%>);
-        yPrice.push(<%=yPrice%>);
-        yLabel.push("<%=i%>");
-    <%              
+                yData.push(<%=yVal%>);
+                yPrice.push(<%=yPrice%>);
+                yLabel.push("<%=i%>");
+
+    <%       
             }
-        }      
     %>
+            $("#totalData").empty();
+            $("#totalData").append("<td><%=totalData%></td>");
+            $("#totalPrice").empty();
+            $("#totalPrice").append("<td><%=totalPrice%></td>");
+    <%
+        }    
+    %>
+    
     <% if(accessCountDate!=null){
             var yVal = 0; var yPrice = 0;
             for(var i=1; i<=24; i++){
@@ -286,6 +302,7 @@ $(document).ready(function(){
     <%              
     }}      
     %>
+
     var today = new Date();
     $("#accessMonth").click(function(err){
         $("#buttonAction").attr("value", "accessMonth");
@@ -352,7 +369,10 @@ $(document).ready(function(){
         });
     function populateCity(){
             var selectedState = $("#state option:selected").text();
-
+            if(selectedState=="所有省"||selectedState==""){
+                $("#city").append("<option value=''>所有城市</option>");
+                return;
+            }
             $.ajax({
             url: "/geo/city?state="+selectedState
             }).done(function(data){
@@ -376,6 +396,7 @@ $(document).ready(function(){
             var selectedCity = $("#city option:selected").text();
             if(selectedCity=="所有城市"||selectedCity==""){
                 $("#region").append("<option value=''>所有地区</option>");
+                return;
             }
             $.ajax({
             url: "/geo/region?state="+selectedState+"&city="+selectedCity,
@@ -397,8 +418,10 @@ $(document).ready(function(){
                 var selectedState = $("#state option:selected").text();
                 var selectedCity = $("#city option:selected").text();
                 var selectedRegion = $("#region option:selected").text();
-                if(selectedRegion=="所有地区"||selectedRegion=="")
-                    $("#street").append("<option value=''>所有街道</option>");;
+                if(selectedRegion=="所有地区"||selectedRegion=="") {
+                    $("#street").append("<option value=''>所有街道</option>");
+                    return;
+                }
 
                 $.ajax({
                 url: "/geo/street?state="+selectedState+"&city="+selectedCity+"&region="+selectedRegion,
