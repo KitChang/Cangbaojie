@@ -9,25 +9,164 @@
                   <li>获奖人</li>
                 </ol>  
                 <div class="panel-body">
-                    <form class="form-inline" action="/data/prize-winner/<%=req.param('advertisement')%>" method="get">
-                        <div class="form-group">
-                        <label>奖项</label>
-                        <select class="form-control" name="prize">
-                            <%
-                            if(req.param('prize')&&req.param('prize')!=""){
-                            %>
-                            <option value="<%=req.param('prize')%>" selected><%=req.param('prize')%></option>
-                            <%
-                            }
-                            %>
-                            <option value="">所有奖项</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </select>
-                        </div>
+                    <form class="form-inline" action="/data/prize-winner" method="get">
+                        <div class="panel-elem">
+                            <div class="form-group">
+                                <label>广告</label>
+                                <select class="form-control" id="advertisement" name="advertisement">
+                                    
+                                <%
+                                    var ad;
+                                    if(adArr){
+                                    while(adArr.length){
+                                        ad = adArr.pop();
+                                        if(req.param('advertisement')&&req.param('advertisement')==ad.id){
+                                %>
+                                    <option value="<%=ad.id%>" selected><%=ad.client.name%>-<%=ad.title%></option>
+                                <%
+                                        }else{
+                                %>
+                                    <option value="<%=ad.id%>" ><%=ad.client.name%>-<%=ad.title%></option>
+                                <%
+                                        }
+                                    }
+                                    }
+                                %>
+
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>奖项</label>
+                                <select class="form-control" name="prize">
+                                    <%
+                                    if(req.param('prize')&&req.param('prize')!=""){
+                                    %>
+                                    <option value="<%=req.param('prize')%>" selected><%=req.param('prize')%></option>
+                                    <%
+                                    }
+                                    %>
+                                    <option value="">所有奖项</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                                </div>
+                            </div>
+                            <div class="panel-elem">
+                                
+                                <div class="form-group">
+                                    <select class="form-control" id="state" name="state">
+                                        <%
+                                        if(req.param("state")&&req.param("state")!=""){
+                                        %>
+                                        <option value="<%=req.param('state')%>" selected><%=req.param('state')%></option>
+
+                                        <%
+                                        }
+                                        %>
+                                        <option value="">所有省</option>
+                                        <option value="广东省">广东省</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control" id="city" name="city">
+                                        <%
+                                        if(req.param("city")&&req.param("city")!=""){
+                                        %>
+                                        <option value="<%=req.param('city')%>" selected><%=req.param('city')%></option>
+                                        <%
+                                        }
+                                        %>
+
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control" id="region" name="region">
+                                        <%
+                                        if(req.param("region")&&req.param("region")!=""){
+                                        %>
+                                        <option value="<%=req.param('region')%>" selected><%=req.param('region')%></option>
+                                        <%
+                                        }
+                                        %>
+
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control" id="street" name="street">
+                                         <%
+                                        if(req.param("street")&&req.param("street")!=""){
+                                        %>
+                                        <option value="<%=req.param('street')%>" selected><%=req.param('street')%></option>
+                                        <%
+                                        }
+                                        %>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="panel-elem">
+                                <div class="form-group">
+                                <label>时间</label>
+                                <select class="form-control" id="duration" name="duration">
+                                    <%
+                                    if(req.param("duration")&&req.param("duration")!=""){
+                                        var durationStr = [];
+                                        durationStr["7"] = "最近7日";
+                                        durationStr["30"] = "最近1个月";
+                                        durationStr["90"] = "最近3个月";
+                                        durationStr["define"] = "自定义";
+                                        var duration = req.param("duration");
+                                        var duration2 = durationStr[duration];
+                                    %>
+
+                                    <option value="<%=req.param('duration')%>" selected><%=duration2%></option>
+                                    <%
+                                    }
+                                    %>
+                                    <option value="7">最近7日</option>
+                                    <option value="30">最近1个月</option>
+                                    <option value="90">最近3个月</option>
+                                    <option value="define">自定义</option>
+                                </select>
+                                </div>
+
+                                <div class="form-group" id="dateFromDiv">
+                                <label>日期从</label>
+                                <%
+                                    if(req.param('dateFrom')){
+                                %>
+                                    <input type="text" class="form-control" name="dateFrom" id="dateFrom" value="<%=req.param('dateFrom')%>">
+                                <%
+                                    }
+                                    else{
+                                %>
+                                    <input type="text" class="form-control" name="dateFrom" id="dateFrom">
+                                <%
+                                    }
+                                %>
+
+                                </div>
+                                <div class="form-group" id="dateToDiv">
+                                <label>至</label>
+                                <%
+                                    if(req.param('dateTo')){
+                                %>
+                                    <input type="text" class="form-control" name="dateTo" id="dateTo" value="<%=req.param('dateTo')%>">
+                                <%
+                                    }
+                                    else{
+                                %>
+                                    <input type="text" class="form-control" name="dateTo" id="dateTo">
+                                <%
+                                    }
+                                %>
+                                </div>
+                            </div>
+                            
+                        
                         
                         <button type="submit" class="btn btn-warning">搜索</button>
                     </form>
@@ -81,11 +220,130 @@
     <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
     <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+
+
     <script>
-        $("#table").DataTable(
+        
+        $(document).ready(function(){
+            populateCity();
+            populateRegion();
+            populateStreet();
+            $("#table").DataTable(
             {
                 "language": 
                 {"url": "//cdn.datatables.net/plug-ins/1.10.10/i18n/Chinese.json"},
                 "order": [[ 0, "desc" ]]
             });
+            $("#dateFrom").daterangepicker({singleDatePicker: true});
+            $("#dateTo").daterangepicker({singleDatePicker: true});
+            function populateCity(){
+            var selectedState = $("#state option:selected").text();
+
+            $.ajax({
+            url: "/geo/city?state="+selectedState
+            }).done(function(data){
+                console.log("city");
+              $("#city").append("<option value=''>所有城市</option>");
+              html = "";
+              while (data.length) {
+                var city = data.pop();
+                option = "<option value='"+city+"'>"+city+"</option>";
+                html = html + option;
+                //code
+              }
+              $("#city").append(html);
+              }).error(function(err){
+                console.log("all city");
+              $("#city").append("<option value=''>所有城市</option>");
+              });
+            }
+            function populateRegion(){
+            var selectedState = $("#state option:selected").text();
+            var selectedCity = $("#city option:selected").text();
+            if(selectedCity=="所有城市"||selectedCity==""){
+                $("#region").append("<option value=''>所有地区</option>");
+            }
+            $.ajax({
+            url: "/geo/region?state="+selectedState+"&city="+selectedCity,
+            }).done(function(data){
+              //alert(data);
+              $("#region").append("<option value=''>所有地区</option>");
+              html = "";
+              while (data.length) {
+                var region = data.pop();
+                option = "<option value='"+region+"'>"+region+"</option>";
+                html = html + option;
+                //code
+              }
+              $("#region").append(html);
+              });
+            }
+
+            function populateStreet(){
+                var selectedState = $("#state option:selected").text();
+                var selectedCity = $("#city option:selected").text();
+                var selectedRegion = $("#region option:selected").text();
+                if(selectedRegion=="所有地区"||selectedRegion=="")
+                    $("#street").append("<option value=''>所有街道</option>");;
+
+                $.ajax({
+                url: "/geo/street?state="+selectedState+"&city="+selectedCity+"&region="+selectedRegion,
+                }).done(function(data){
+                  //alert(data);
+                  $("#street").append("<option value=''>所有街道</option>");
+                  html = "";
+                  while (data.length) {
+                    var street = data.pop();
+                    option = "<option value='"+street+"'>"+street+"</option>";
+                    html = html + option;
+                    //code
+                  }
+                  $("#street").append(html);
+                });
+            }
+
+
+            $("#state").change(function(){
+                $("#city").empty();
+                $("#region").empty();
+                $("#region").append("<option value=''>所有地区</option>");
+                $("#street").empty();
+                $("#street").append("<option value=''>所有街道</option>");
+                populateCity();
+            });
+            $("#city").change(function(){
+                $("#region").empty();
+                $("#street").empty();
+                $("#street").append("<option value=''>所有街道</option>");
+                populateRegion();
+            });
+            $("#region").change(function(){
+                $("#street").empty();
+                populateStreet();
+            });
+            
+            if($("#duration").val()!="define"){
+                $("#dateFromDiv").hide();
+                $("#dateToDiv").hide();
+            }
+            
+            $("#duration").change(function(){
+                if($("#duration").val()=="define"){
+                    $("#dateFromDiv").show();
+                    $("#dateToDiv").show();
+                }else{
+                    $("#dateFromDiv").hide();
+                    $("#dateToDiv").hide();
+                }
+            })
+    
+            
+            
+            
+            
+            
+        });
+        
     </script>
