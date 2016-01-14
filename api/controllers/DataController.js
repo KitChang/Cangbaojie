@@ -228,11 +228,33 @@ module.exports = {
     
     accessDevice: function(req, res){
         
+        var locationType = req.param('locationType');
+        var state = req.param('state');
+        var city = req.param('city');
+        var region = req.param('region');
+        var street = req.param('street');
+        var option = {};
+        if(locationType&&locationType!=""){
+            option.locationType = locationType;
+        }
+        if (state&&state!="") {
+            option.state = state;
+        }
+        if (city&&city!="") {
+            option.city = city;
+        }
+        if(region&&region!=""){
+            option.region = region;
+        }
+        if(street&&street!=""){
+            option.street = street;
+        }
+        
         access.find().exec(function(err, accessArr){
             var accessDevice = _.groupBy(accessArr, function(accessOne){
                 return accessOne.device
             });
-            Device.search({}, function(err, deviceArr){
+            Device.search(option, function(err, deviceArr){
             if(err)
                     return res.serverError(err);
             var accessCount = 0;
