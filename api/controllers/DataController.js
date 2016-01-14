@@ -327,15 +327,26 @@ module.exports = {
         var prize = req.param('prize');
         var find = {};
         var advertisementId = req.param('advertisement');
+        var state = req.param('state');
+        var city = req.param('city');
+        var region = req.param('region');
+        var street = req.param('street');
         advertisement.find().populate("client").exec(function(err, adArr){
             find.advertisement = advertisementId;
             if(prize&&prize!="")
                 find.prize = prize;
+            if(state&&state!="")
+                find.state = state;
+            if(city&&city!="")
+                find.city = city;
+            if(region&&region!="")
+                find.region = region;
+            if(street&&street!="")
+                find.street = street;
 
             PrizeCoupon.find(find).populate('appUser').exec(function(err, resultArr){
                 if(err)
                         return res.serverError(err);
-            
             res.view('data-prize-winner', {resultArr: resultArr, moment: moment, adArr: adArr});
         });
             
