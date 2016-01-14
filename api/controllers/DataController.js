@@ -233,24 +233,46 @@ module.exports = {
         var city = req.param('city');
         var region = req.param('region');
         var street = req.param('street');
+        var duration = req.param('duration');
         var option = {};
+        var accessOption = {};
         if(locationType&&locationType!=""){
             option.locationType = locationType;
+            accessOption.locationType = locationType;
         }
         if (state&&state!="") {
             option.state = state;
+            accessOption.state = state;
         }
         if (city&&city!="") {
             option.city = city;
+            accessOption.city = city;
         }
         if(region&&region!=""){
             option.region = region;
+            accessOption.region = region;
         }
         if(street&&street!=""){
             option.street = street;
+            accessOption.street = street;
         }
-        
-        access.find().exec(function(err, accessArr){
+        var dateFrom, dateTo;
+        if(duration=="define"){
+            var dateFromStr = req.param('dateFrom');
+            var dateToStr = req.param('dateTo');
+            dateFrom = moment(dateFromStr, "MM/DD/YYYY").startOf('day').toDate();
+            dateTo = moment(dateToStr, "MM/DD/YYYY").endOf('day').toDate();
+        }else{
+            var dateTo = moment().toDate();
+            duration = parseInt(duration);
+            if(duration==NaN)
+                duration = 0;
+            var dateFrom = moment().subtract(duration, "days").toDate();
+
+        }
+        if(dateTo&&dateFrom)
+            accessOption.createdAt = {"<": dateTo, ">": dateFrom};
+        access.find(accessOption).exec(function(err, accessArr){
             var accessDevice = _.groupBy(accessArr, function(accessOne){
                 return accessOne.device
             });
@@ -265,8 +287,7 @@ module.exports = {
                 else
                     accessCount = accessDevice[deviceArr[i].id].length;
                 deviceArr[i].accessCount = accessCount
-            }
-                
+            }   
             res.view('data-access-device', {resultArr: deviceArr});
             });
         });

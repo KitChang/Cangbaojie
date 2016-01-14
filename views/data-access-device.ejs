@@ -10,6 +10,7 @@
                 <div class="panel-body">
                     
                     <form class="form-inline" method="get" action="/data/access-device">
+                        <div class="panel-elem">
                     <div class="form-group">
                             <select class="form-control" id="locationType" name="locationType">
                                 <%
@@ -76,8 +77,68 @@
                                 
                             </select>
                         </div>
+                        </div>
+                        <div class="panel-elem">
+                                <div class="form-group">
+                                <label>时间</label>
+                                <select class="form-control" id="duration" name="duration">
+                                    <%
+                                    if(req.param("duration")&&req.param("duration")!=""){
+                                        var durationStr = [];
+                                        durationStr["7"] = "最近7日";
+                                        durationStr["30"] = "最近1个月";
+                                        durationStr["90"] = "最近3个月";
+                                        durationStr["define"] = "自定义";
+                                        var duration = req.param("duration");
+                                        var duration2 = durationStr[duration];
+                                    %>
+
+                                    <option value="<%=req.param('duration')%>" selected><%=duration2%></option>
+                                    <%
+                                    }
+                                    %>
+                                    <option value="7">最近7日</option>
+                                    <option value="30">最近1个月</option>
+                                    <option value="90">最近3个月</option>
+                                    <option value="define">自定义</option>
+                                </select>
+                                </div>
+
+                                <div class="form-group" id="dateFromDiv">
+                                <label>日期从</label>
+                                <%
+                                    if(req.param('dateFrom')){
+                                %>
+                                    <input type="text" class="form-control" name="dateFrom" id="dateFrom" value="<%=req.param('dateFrom')%>">
+                                <%
+                                    }
+                                    else{
+                                %>
+                                    <input type="text" class="form-control" name="dateFrom" id="dateFrom">
+                                <%
+                                    }
+                                %>
+
+                                </div>
+                                <div class="form-group" id="dateToDiv">
+                                <label>至</label>
+                                <%
+                                    if(req.param('dateTo')){
+                                %>
+                                    <input type="text" class="form-control" name="dateTo" id="dateTo" value="<%=req.param('dateTo')%>">
+                                <%
+                                    }
+                                    else{
+                                %>
+                                    <input type="text" class="form-control" name="dateTo" id="dateTo">
+                                <%
+                                    }
+                                %>
+                                </div>
+                            <button class="btn btn-default">搜索</button>
+                            </div>
                     
-                    <button class="btn btn-default">搜索</button>
+                    
                     </form>
                     <table id="table" class="table table-striped">
                     <thead>
@@ -106,8 +167,10 @@
       </div>
     <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
     <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
-<script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+    <script>
         $(document).ready(function(){
             $("#table").DataTable({"language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.10/i18n/Chinese.json"
@@ -200,5 +263,23 @@
             $("#street").empty();
             populateStreet();
         });
+        if($("#duration").val()!="define"){
+            $("#dateFromDiv").hide();
+            $("#dateToDiv").hide();
+        }
+    
+        $("#dateFrom").daterangepicker({singleDatePicker: true});
+        $("#dateTo").daterangepicker({singleDatePicker: true});
+            
+        $("#duration").change(function(){
+            if($("#duration").val()=="define"){
+                $("#dateFromDiv").show();
+                $("#dateToDiv").show();
+            }else{
+                $("#dateFromDiv").hide();
+                $("#dateToDiv").hide();
+            }
+        })
+    
     </script>
 
