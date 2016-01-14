@@ -331,6 +331,21 @@ module.exports = {
         var city = req.param('city');
         var region = req.param('region');
         var street = req.param('street');
+        var duration = req.param('duration');
+        var dateFrom, dateTo;
+        if(duration=="define"){
+            var dateFromStr = req.param('dateFrom');
+            var dateToStr = req.param('dateTo');
+            dateFrom = moment(dateFromStr, "MM/DD/YYYY").startOf('day').toDate();
+            dateTo = moment(dateToStr, "MM/DD/YYYY").endOf('day').toDate();
+        }else{
+            var dateTo = moment().toDate();
+            duration = parseInt(duration);
+            if(duration==NaN)
+                duration = 0;
+            var dateFrom = moment().subtract(duration, "days").toDate();
+
+        }
         advertisement.find().populate("client").exec(function(err, adArr){
             find.advertisement = advertisementId;
             if(prize&&prize!="")
@@ -343,6 +358,10 @@ module.exports = {
                 find.region = region;
             if(street&&street!="")
                 find.street = street;
+            if(dateTo)
+                find.createdAt = {"<": dateTo};
+            if(dateFrom)
+                find.createdAt = {">": dateFrom};
 
             PrizeCoupon.find(find).populate('appUser').exec(function(err, resultArr){
                 if(err)
