@@ -2,11 +2,14 @@
     
       <div class="container content">
         <div class="row">
-            <div class="panel panel-default full-width">
-                <div class="panel-heading">
-                  数据统计 /
-                  App 用户
-                </div>
+            <ul class="nav nav-tabs">
+              <li class="active"><a style="background-color: #FFE301;" href="/data/AppUser">用户列表</a></li>
+              <li><a style="color: #555;" href="/data/AppUser-statistics">用户统计</a></li>
+            </ul>
+            
+
+            <div class="panel panel-dashboard full-width">
+                
                 
                 <div class="panel-body">
                     <form class="form-inline" action="/data/AppUser" method="get">
@@ -16,22 +19,30 @@
                             <%
                             if(req.param('sex')=="1"){
                             %>
+                            <option value="">所有性別</option>
                             <option value="1" selected>男</option>
                             <option value="2">女</option>
                             <%
-                            }else{
+                            }else if(req.param('sex')=="2") {
                             %>
+                            <option value="">所有性別</option>
                             <option value="1">男</option>
                             <option value="2" selected>女</option>
+                            <%
+                            } else {
+                            %>
+                            <option value="selected">所有性別</option>
+                            <option value="1">男</option>
+                            <option value="2">女</option>
                             <%
                             }
                             %>
                         </select>
                         </div>
                         
-                        <button type="submit" class="btn btn-warning">搜索</button>
+                        <button type="submit" class="btn btn-primary">搜索</button>
                     </form>                
-                    <button type="button" class="btn btn-default right" onClick="javascript:window.history.back()" value=""/> 取消 </button>
+                    
                     
                 </div>
                 <div class="panel-body">
@@ -39,7 +50,7 @@
                 
                 <table class="table table-striped" id="table">
                     <thead>
-                    <tr><th>用户名</th><th>用户类型</th><th>性别</th>
+                    <tr><th>用户名</th><th>性别</th>
                         <th>电话</th>
                         
                     </tr>
@@ -52,14 +63,7 @@
                 %>
                     <tr>
                         <td><%=row.username%></td>
-                        <td>
-                        <%
-                            var userType = "一般用户";
-                            if(row.authType=="wechat")
-                                userType = "微信用户";
-                        %>
-                            <%=userType%>   
-                        </td>
+                        
                         <td>
                             <%
                             var sex;
@@ -69,7 +73,14 @@
                                 sex = "女";
                             %><%=sex%>
                         </td>
-                        <td><%=row.phone%></td>
+                        <td>
+                        <%
+                            var phone = row.phone;
+                            if (row.phone=='' || row.phone==null) {
+                                phone = "微信用户";
+                            }
+                        %>
+                        <%=phone%></td>
                     </tr>
                 <%
                 }
@@ -78,6 +89,8 @@
                 </table>
                
                 </form>
+                <br>
+                <button type="button" class="btn btn-default right" onClick="javascript:window.history.back()" value=""/> 取消 </button>
                 </div>
 
             </div>
