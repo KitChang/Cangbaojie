@@ -227,7 +227,6 @@ module.exports = {
     },
     
     accessDevice: function(req, res){
-        
         var locationType = req.param('locationType');
         var state = req.param('state');
         var city = req.param('city');
@@ -387,9 +386,17 @@ module.exports = {
             if(duration==NaN)
                 duration = 0;
             var dateFrom = moment().subtract(duration, "days").toDate();
-
         }
         advertisement.find().populate("client").exec(function(err, adArr){
+            var clientObj = {};
+            for(var i=0; i<adArr.length; i++){
+                clientObj[adArr[i].client.id] = adArr[i].client;
+            }
+            var values = [];
+            for(var property in clientObj) {
+                values.push(clientObj[property]);
+            }
+            clientArr = values;
             find.advertisement = advertisementId;
             if(prize&&prize!="")
                 find.prize = prize;
@@ -409,7 +416,7 @@ module.exports = {
             PrizeCoupon.find(find).populate('appUser').exec(function(err, resultArr){
                 if(err)
                         return res.serverError(err);
-            res.view('data-prize-winner', {resultArr: resultArr, moment: moment, adArr: adArr});
+            res.view('data-prize-winner', {resultArr: resultArr, moment: moment, adArr: adArr, clientArr: clientArr});
         });
             
         });
