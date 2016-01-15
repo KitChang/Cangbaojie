@@ -177,8 +177,17 @@ module.exports = {
             clientArr = values;
             
             if(!city){
-            res.view('data-access-category', {resultArr: [], clientArr: clientArr});
-            return;
+            var option = {state: state, createdAt: {"<": dateTo, ">": dateFrom}};
+                if(client){
+                    option.client = client;
+                }
+
+                access.find(option).exec(function(err, resultArr){
+                    if(err)
+                            return res.serverError(err);
+                    console.log(resultArr);
+                    res.view('data-access-category', {resultArr: resultArr, clientArr: clientArr});
+                    });
             }
             else{
                 var option = {state: state, city: city, createdAt: {"<": dateTo, ">": dateFrom}};

@@ -126,13 +126,12 @@
 
         
     function populateCity(){
-        var selectedState = $("#state option:selected").text();
-            
+        var selectedState = $("#state option:selected").text();  
         $.ajax({
         url: "/geo/city?state="+selectedState
         }).done(function(data){
             console.log("city");
-          //$("#city").append("<option value=''>所有城市</option>");
+          $("#city").append("<option value=''>所有城市</option>");
           html = "";
           while (data.length) {
             var city = data.pop();
