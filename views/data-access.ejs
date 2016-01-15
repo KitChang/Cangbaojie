@@ -285,6 +285,8 @@ $(document).ready(function(){
     
     <% if(accessCountDate!=null){
             var yVal = 0; var yPrice = 0;
+            var totalData = 0;
+            var totalPrice = 0;
             for(var i=1; i<=24; i++){
                 if(accessCountDate[i+""]!=undefined){
                     yVal = accessCountDate[i+""];
@@ -295,12 +297,21 @@ $(document).ready(function(){
                     yVal = 0;
                     yPrice = 0;
                 }
+                totalData += yVal;
+                totalPrice += yPrice;
     %>
         yData.push(<%=yVal%>);
         yPrice.push(<%=yPrice%>);
         yLabel.push("<%=i%>");
     <%              
-    }}      
+        }
+        %>
+            $("#totalData").empty();
+            $("#totalData").append("<td><%=totalData%></td>");
+            $("#totalPrice").empty();
+            $("#totalPrice").append("<td><%=totalPrice%></td>");
+    <%
+    }      
     %>
 
     var today = new Date();
