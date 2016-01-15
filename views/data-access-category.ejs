@@ -150,7 +150,16 @@
     
     $(document).ready(function(){
         populateCity();
+        var dateFromStr = moment().subtract(7, 'day').format("MM/DD/YYYY");
         $("#dateFrom").daterangepicker({singleDatePicker: true});
+        <%
+        if(!req.param('dateFrom')){
+        %>
+        $("#dateFrom").val(dateFromStr);
+        <%
+        }
+        %>
+        
         $("#dateTo").daterangepicker({singleDatePicker: true});
         s = new Series().y(function(d){return d.sum});
         <%

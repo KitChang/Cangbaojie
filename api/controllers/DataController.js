@@ -176,15 +176,18 @@ module.exports = {
             }
             clientArr = values;
             
-            if(!city){
+            if(city==null){
             res.view('data-category-compare', {resultArr: [], clientArr: clientArr});
             return;
             }
             else{
-                var option = {state: state, city: city, createdAt: {"<": dateTo, ">": dateFrom}};
+                var option = {state: state, createdAt: {"<": dateTo, ">": dateFrom}};
                 if(client){
                     option.client = client;
                 }
+                if(city&&city!="")
+                    option.city = city;
+                console.log("city: "+city+" "+option);
 
                 access.find(option).populate('client').exec(function(err, resultArr){
                     if(err)
@@ -352,42 +355,7 @@ module.exports = {
         
         
     },
-    accessDevice2: function(req, res){
-        var locationType = req.param('locationType');
-        var state = req.param('state');
-        var city = req.param('city');
-        var region = req.param('region');
-        var street = req.param('street');
-        var option = {};
-        if(locationType&&locationType!=""){
-            option.locationType = locationType;
-        }
-        if (state&&state!="") {
-            option.state = state;
-        }
-        if (city&&city!="") {
-            option.city = city;
-        }
-        if(region&&region!=""){
-            option.region = region;
-        }
-        if(street&&street!=""){
-            option.street = street;
-        }
-        Device.search(option, function(err, resultArr){
-            if(err)
-                    return res.serverError(err);
-            res.view('data-access-device', {resultArr: resultArr});
-        });
-        
-    },
-    prizeStockClient: function(req, res){
-          client.find().exec(function(err, resultArr){
-            if(err)
-                    return res.serverError(err);
-            res.view('data-prize-stock-client', {resultArr: resultArr});
-            });
-    },
+    
     prizeStock: function(req, res){
         var advertisementId = req.param('advertisement');
         advertisement.find().populate("client").exec(function(err, adArr){
@@ -415,13 +383,6 @@ module.exports = {
         });
     },
     
-    prizeWinnerAdvertisement: function(req, res){
-          advertisement.find().populate('client').exec(function(err, resultArr){
-            if(err)
-                    return res.serverError(err);
-            res.view('data-prize-winner-advertisement', {resultArr: resultArr});
-            });
-    },
     prizeWinner: function(req, res){
         var advertisementId = req.param('advertisement');
         var prize = req.param('prize');
@@ -478,10 +439,6 @@ module.exports = {
         });
             
         });
-        
-    },
-    categoryComparison: function(req, res){
-        var category = req.param('category');
         
     },
     prizeWinnerSearch: function(req, res){//to be removed
