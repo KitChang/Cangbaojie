@@ -1,7 +1,7 @@
 <div class="container content">
     <div class="row">
-        <div class="panel panel-default full-width">
-            <div class="panel-heading"><a href="http://<%=req.host%>:<%=req.port%>/data/access/">广告点击量</a></div>                             <div class="panel-body">
+        <div id="panel" class="panel panel-dashboard full-width">
+            <div class="panel-heading panel-heading-cbj">广告点击量</div>                             <div class="panel-body">
                 <form class="form-inline" method="get"  name="form" action="/data/access">
                 <div class="panel-elem">
                 <div class="form-group">
@@ -52,9 +52,9 @@
                     
                     </select>
                 </div>
-                </div>
-                <div class="panel-elem">
+                <div class="pull-right">
                     <div class="form-group">
+                            <label>地区</label>
                             <select class="form-control" id="locationType" name="locationType">
                                 <%
                                 if(req.param("locationType")&&req.param("locationType")!=""){
@@ -120,7 +120,7 @@
 
                         </select>
                     </div>
-                    
+                </div>
     
                 </div>
                     
@@ -166,8 +166,8 @@
                 
                 <input type="hidden" name="buttonAction" id="buttonAction" class="btn btn-default" value=""/>
                 <input type="button" id="accessMonth" class="btn btn-default" value="月统计"/>
-                </div>
-                <div class="panel-elem">
+                
+                <div class="pull-right">
                 <div class="form-group">
                     <label>日期</label>
                     <%
@@ -185,6 +185,7 @@
                      
                 </div> 
                     <input type="button" class="btn btn-default" id="accessDate" value="日统计">
+                </div>
                 </div>
                 
                 <div class="panel-elem">
@@ -207,16 +208,19 @@
                 
                 </form>
 
-                <canvas id="access-ctx" width="900" height="400"></canvas>
+                <canvas id="access-ctx"></canvas>
                  <%
                 if(accessCountMonth||accessCountDate){
                 %>
                 
                 
                 
-                <table class="table" style="width: 900px">
-                            <tr><td><span style='background-color:#ff2a1a'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>点击</td></tr>
-                            <tr><td><span style='background-color:#a8e4f0'>&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>消费</td></tr>
+                <table class="table" style="width: 400px">
+                            <tr><td><span style='background-color:#ff2a1a'>&nbsp;&nbsp;&nbsp;&nbsp;</span>点击</td>
+                            <td id="totalData"></td>
+                            </tr>
+                            <tr><td><span style='background-color:#a8e4f0'>&nbsp;&nbsp;&nbsp;&nbsp;</span>消费</td>
+                            <td id="totalPrice"></td></tr>
                 </table>
                 <%
             }
@@ -241,14 +245,17 @@ $(document).ready(function(){
     populateCity();
     populateRegion();
     populateStreet();
-
+    $("#access-ctx").css({"width":$("#panel").width()*0.95, "height":"400px"});
     $("#date").daterangepicker({singleDatePicker: true});
     var yData = []; var yLabel = [];
     var yPrice =[];
     
-    <% if(accessCountMonth!=null){
+    <% 
+        if(accessCountMonth!=null){
             var yVal = 0;
             var yPrice = 0;
+            var totalData = 0;
+            var totalPrice = 0;
             for(var i=1; i<=31; i++){
                 if(accessCountMonth[i+""]!=undefined){
                     yVal = accessCountMonth[i+""];
@@ -258,14 +265,24 @@ $(document).ready(function(){
                     yVal = 0;
                     yPrice = 0;
                 }
+                totalData += yVal;
+                totalPrice += yPrice;
     %>
-        yData.push(<%=yVal%>);
-        yPrice.push(<%=yPrice%>);
-        yLabel.push("<%=i%>");
-    <%              
+                yData.push(<%=yVal%>);
+                yPrice.push(<%=yPrice%>);
+                yLabel.push("<%=i%>");
+
+    <%       
             }
-        }      
     %>
+            $("#totalData").empty();
+            $("#totalData").append("<td><%=totalData%></td>");
+            $("#totalPrice").empty();
+            $("#totalPrice").append("<td><%=totalPrice%></td>");
+    <%
+        }    
+    %>
+    
     <% if(accessCountDate!=null){
             var yVal = 0; var yPrice = 0;
             for(var i=1; i<=24; i++){
@@ -285,6 +302,7 @@ $(document).ready(function(){
     <%              
     }}      
     %>
+
     var today = new Date();
     $("#accessMonth").click(function(err){
         $("#buttonAction").attr("value", "accessMonth");
@@ -351,7 +369,10 @@ $(document).ready(function(){
         });
     function populateCity(){
             var selectedState = $("#state option:selected").text();
-
+            if(selectedState=="所有省"||selectedState==""){
+                $("#city").append("<option value=''>所有城市</option>");
+                return;
+            }
             $.ajax({
             url: "/geo/city?state="+selectedState
             }).done(function(data){
@@ -375,6 +396,7 @@ $(document).ready(function(){
             var selectedCity = $("#city option:selected").text();
             if(selectedCity=="所有城市"||selectedCity==""){
                 $("#region").append("<option value=''>所有地区</option>");
+                return;
             }
             $.ajax({
             url: "/geo/region?state="+selectedState+"&city="+selectedCity,
@@ -396,8 +418,10 @@ $(document).ready(function(){
                 var selectedState = $("#state option:selected").text();
                 var selectedCity = $("#city option:selected").text();
                 var selectedRegion = $("#region option:selected").text();
-                if(selectedRegion=="所有地区"||selectedRegion=="")
-                    $("#street").append("<option value=''>所有街道</option>");;
+                if(selectedRegion=="所有地区"||selectedRegion=="") {
+                    $("#street").append("<option value=''>所有街道</option>");
+                    return;
+                }
 
                 $.ajax({
                 url: "/geo/street?state="+selectedState+"&city="+selectedCity+"&region="+selectedRegion,
@@ -433,6 +457,10 @@ $(document).ready(function(){
             $("#region").change(function(){
                 $("#street").empty();
                 populateStreet();
+            });
+
+            $( window ).resize(function() {
+              $("#access-ctx").css({"width":$("#panel").width()*0.95, "height":"400px"});
             });
 });
 

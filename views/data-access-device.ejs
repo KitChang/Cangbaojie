@@ -2,16 +2,16 @@
     
       <div class="container content">
         <div class="row">
-            <div class="panel panel-default full-width">
-                <div class="panel-heading">
-                    数据管理
-                    / 设备分发
+            <div class="panel panel-dashboard full-width">
+                <div class="panel-heading panel-heading-cbj">
+                    设备分发数据
                 </div>
                 <div class="panel-body">
                     
                     <form class="form-inline" method="get" action="/data/access-device">
                         <div class="panel-elem">
                     <div class="form-group">
+                            <label>地区</label>
                             <select class="form-control" id="locationType" name="locationType">
                                 <%
                                 if(req.param("locationType")&&req.param("locationType")!=""){
@@ -77,8 +77,8 @@
                                 
                             </select>
                         </div>
-                        </div>
-                        <div class="panel-elem">
+                        
+                        <div class="pull-right">
                                 <div class="form-group">
                                 <label>时间</label>
                                 <select class="form-control" id="duration" name="duration">
@@ -104,6 +104,7 @@
                                 </select>
                                 </div>
 
+                                
                                 <div class="form-group" id="dateFromDiv">
                                 <label>日期从</label>
                                 <%
@@ -135,7 +136,8 @@
                                     }
                                 %>
                                 </div>
-                            <button class="btn btn-default">搜索</button>
+                                <button class="btn btn-primary">搜索</button>
+                                </div>
                             </div>
                     
                     
