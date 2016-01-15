@@ -1,21 +1,13 @@
-
-    
-      <div class="container content">
-        <div class="row">
-<<<<<<< HEAD
-            <div class="panel">
-                <div class="panel-heading panel-heading-cbj">行业比较</div>             
-=======
-            <ul class="nav nav-tabs">
-              <li><a style="color: #555;" href="/data/access-region">区域统计</a></li>
-              <li><a style="color: #555;" href="/data/access-category">行业点击</a></li>
-              <li class="active"><a style="background-color: #FFE301;" href="/data/category-compare">行业比較</a></li>
-            </ul>
-            <div class="panel panel-dashboard col-md-12">         
->>>>>>> 29e074eb39a777b4172afe598e1d3c6de24c9f1b
+<div class="container content">
+    <div class="row">
+        <ul class="nav nav-tabs">
+          <li><a href="/data/access-region">区域统计</a></li>
+          <li><a href="/data/access-category">行业点击</a></li>
+          <li class="active"><a style="background-color: #FFE301;" href="/data/category-compare">行业比較</a></li>
+        </ul>
+        <div class="panel panel-dashboard col-md-12">            
                     
-                <div class="panel-body">
-                    
+            <div class="panel-body">
                     <form class="form-inline" method="get" action="/data/category-compare">
                         <div class="form-group">
                                 <label>分类 <span class="mandatory">*</span></label>
@@ -84,7 +76,7 @@
                                         var cat = categories.pop();
                                         if(cat==req.param('category')){
                                 %>
-                                    <option value="<%=cat%>" selected><%=cat%></option>      
+                                    <option value="<%=cat%>" selected><%=cat%></option>
                                 <%
                                     }else{
                                 %>
@@ -160,19 +152,28 @@
                             client = req.param('client');
                     %>
                     
-                    <button class="btn btn-primary">统计</button>
+                    <button class="btn btn-default">统计</button>
                     </form>
                     
                     
-                </div>
-                <canvas id="myChart" width="900" height="400"></canvas>
-                <div id="legend">
-                </div>
-                
             </div>
+            <canvas id="myChart" width="900" height="400"></canvas>
+            <div id="legend">
+            </div>
+                
         </div>
+    </div>
         
-      </div>
+</div>      
+
+
+
+
+
+
+
+
+
     <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
     <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" charset="utf8" src="../../js/series.js"></script>
@@ -190,7 +191,7 @@
         url: "/geo/city?state="+selectedState
         }).done(function(data){
             console.log("city");
-          $("#city").append("<option value=''>所有城市</option>");
+          //$("#city").append("<option value=''>所有城市</option>");
           html = "";
           while (data.length) {
             var city = data.pop();
