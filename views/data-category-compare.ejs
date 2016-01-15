@@ -1,0 +1,247 @@
+
+    
+      <div class="container content">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">行业比较</div>             
+                    
+                <div class="panel-body">
+                    
+                    <form class="form-inline" method="get" action="/data/category-compare">
+                        <div class="form-group">
+                                <label>分类 <span class="mandatory">*</span></label>
+                                <select class="form-control" name="category" id="category">
+                                    <option value=""></option>
+                                <%
+                                    var categories = [
+                                     "宠物及园艺",
+                                     "汽车用品",
+                                     "银行",
+                                     "金融机构",
+                                     "地产中介",
+                                     "保险",
+                                     "餐饮业",
+                                     "娱乐业",
+                                     "电商",
+                                     "资讯科技",
+                                     "照明工业",
+                                     "服装销售",
+                                     "服饰配件，饰品",
+                                     "设计",
+                                     "影视",
+                                     "广告，传媒",
+                                     "安全，防护",
+                                     "包装",
+                                     "纸业",
+                                     "办公，文教",
+                                     "数码，电脑",
+                                     "电工电气",
+                                     "眼镜及配件",
+                                     "纺𥿗，皮革",
+                                     "箱包皮具",
+                                     "机械及行业设备",
+                                     "五金，工具",
+                                     "化工",
+                                     "精细化学品",
+                                     "橡塑",
+                                     "环保",
+                                     "仪器仪表",
+                                     "日用百货",
+                                     "母婴用品",
+                                     "家纺家饰",
+                                     "美妆日化",
+                                     "家用电器",
+                                     "家装，建材",
+                                     "交通运输",
+                                     "工艺品，礼品",
+                                     "能源",
+                                     "汽摩及配件",
+                                     "农业",
+                                     "食品，饮料",
+                                     "通信产品",
+                                     "玩具",
+                                     "冶金矿产",
+                                     "医药，保养",
+                                     "印刷",
+                                     "运动户外",
+                                     "机床",
+                                     "商务服务",
+                                     "项目合作",
+                                     "加工",
+                                     "代理",
+                                     "电子元器件",
+                                    ];
+                                    while(categories.length){
+                                        var cat = categories.pop();
+                                        if(cat==req.param('category')){
+                                %>
+                                    <option value="<%=cat%>" selected><%=cat%></option>
+                                <%
+                                    }else{
+                                %>
+                                    <option value="<%=cat%>"><%=cat%></option>
+                                <%
+                                    }
+                                    }
+                                %>  
+                                </select>
+                        </div>
+                                
+                        <div class="form-group">
+                             <label>位置</label>
+                            <select class="form-control" id="state" name="state">
+                                <%
+                                if(req.param("state")&&req.param("state")!=""){
+                                %>
+                                <option value="<%=req.param('state')%>" selected><%=req.param('state')%></option>
+
+                                <%
+                                }
+                                %>
+                                
+                                <option value="广东省">广东省</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" id="city" name="city">
+                                <%
+                                if(req.param("city")&&req.param("city")!=""){
+                                %>
+                                <option value="<%=req.param('city')%>" selected><%=req.param('city')%></option>
+                                <%
+                                }
+                                %>
+                                
+                            </select>
+                        </div>
+                    <div class="form-group" id="dateFromDiv">
+                        <label>日期从</label>
+                        <%
+                            if(req.param('dateFrom')){
+                        %>
+                            <input type="text" class="form-control" name="dateFrom" id="dateFrom" value="<%=req.param('dateFrom')%>">
+                        <%
+                            }
+                            else{
+                        %>
+                            <input type="text" class="form-control" name="dateFrom" id="dateFrom">
+                        <%
+                            }
+                        %>
+                        
+                        </div>
+                        <div class="form-group" id="dateToDiv">
+                        <label>至</label>
+                        <%
+                            if(req.param('dateTo')){
+                        %>
+                            <input type="text" class="form-control" name="dateTo" id="dateTo" value="<%=req.param('dateTo')%>">
+                        <%
+                            }
+                            else{
+                        %>
+                            <input type="text" class="form-control" name="dateTo" id="dateTo">
+                        <%
+                            }
+                        %>
+                        </div>
+                    <%
+                        var client = "";
+                        if(req.param('client'))
+                            client = req.param('client');
+                    %>
+                    
+                    <button class="btn btn-default">统计</button>
+                    </form>
+                    
+                    
+                </div>
+                <canvas id="myChart" width="900" height="400"></canvas>
+                <div id="legend">
+                </div>
+                
+            </div>
+        </div>
+        
+      </div>
+    <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="../../js/series.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js">     </script>
+
+    <script>
+
+        
+    function populateCity(){
+        var selectedState = $("#state option:selected").text();
+        $.ajax({
+        url: "/geo/city?state="+selectedState
+        }).done(function(data){
+            console.log("city");
+          //$("#city").append("<option value=''>所有城市</option>");
+          html = "";
+          while (data.length) {
+            var city = data.pop();
+            option = "<option value='"+city+"'>"+city+"</option>";
+            html = html + option;
+            //code
+          }
+          $("#city").append(html);
+          }).error(function(err){
+            console.log("all city");
+          $("#city").append("<option value=''>所有城市</option>");
+          });
+    }
+    
+    
+    $(document).ready(function(){
+        populateCity();
+        $("#dateFrom").daterangepicker({singleDatePicker: true});
+        $("#dateTo").daterangepicker({singleDatePicker: true});
+        yData = [];
+        <%
+        while(resultArr.length){
+            result = resultArr.pop();
+            item = {};
+            item.client = result.client;
+            item.accessCount = result.accessCount;
+            
+        %>
+            yData.push({client: "<%=item.client%>", accessCount: <%=item.accessCount%>});
+        <%
+        }
+        %>
+        
+        color = ["#6b1f3c", "#127690", "#a2798f", "#008b8b", "#99ccff", "#cc99ff", "#9feaae", "#40d65d", "#65ada2", "#5ee4bb", "#9ffff7", "#2412b4", "#34d491", "#da6665", "#f3d681", "#b9b9b9", "#b9b9b9", "#ffae1a", "#2137ff", "#d8941a", "#d8941a", "#ff2a1a", "#e6b3e6", "#e6b3e6", "#a8e4f0", "#6ef79c", "#5cf53d", "#d6d65c", "#adb87a", "#d6995c", "#f76e6e", "#f08a75", "#eb9947", "#ffdd33", "#cccc00", "#99eb47", "#75f075", "#85e0b3", "#33ffdd","#998cd9"];
+        
+        var total = 0;
+        yData.forEach(function(d){
+            total = total + d.accessCount;
+        })
+        var i = 0;
+        yData.forEach(function(d){
+            d.value = d.accessCount;
+            d.color = color[i];
+            var percent = (d.accessCount/total)*100;
+            percent = percent.toFixed(2);
+            d.label = d.client+" "+ percent+"% ";
+            d.highlight = "red"
+            i++;
+        });
+        var ctx = document.getElementById("myChart").getContext("2d");
+        var myPieChart = new Chart(ctx).Doughnut(yData);
+        legendHtml = "";
+        yData.forEach(function(d){
+            legendHtml_ = "<dt><span style='background-color:"+d.color+"'>&nbsp;&nbsp;&nbsp;&nbsp;</span></dt><dd>"+d.label+": "+d.value+"</dd>";
+            legendHtml += legendHtml_;
+        });
+        legendHtml = "<dl class='dl-horizontal'>"+legendHtml+"</dl>";
+        $("#legend").append(legendHtml);
+    });
+      
+    </script>
+    
+

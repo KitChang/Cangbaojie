@@ -2,17 +2,37 @@
     <div class="content">
       <div class="container">
         <div class="row">
-            <ul class="nav nav-tabs">
-              <li class="active"><a style="background-color: #FFE301;" href="/data/prize-stock">奖项统计</a></li>
-              <li><a style="color: #555;" href="/data/prize-winner">获奖统计</a></li>
-            </ul>
-            <div class="panel panel-dashboard full-width">
-                <ol style="display: none;" class="breadcrumb panel-heading">
+            <div class="panel panel-default full-width">
+                <ol style="background-color: #FFE301!important;" class="breadcrumb panel-heading">
                     <li><b><a href="/data/prize-stock-client">选择商家</a></b></li>
                           <li><b>奖项数据</b></li>
                 </ol>      
                 <div class="panel-body">
                     <form class="form-inline" action="/data/prize-stock" method="get">
+                        <div class="form-group">
+                            <label>商家客户</label>
+                            <select class="form-control" id="client" name="client">
+                                <option value="">所有客户</option>
+                            <%
+                                var client;
+                                if(clientArr){
+                                while(clientArr.length){
+                                    client = clientArr.pop();
+                                    if(req.param('client')&&req.param('client')==client.id){
+                            %>
+                                <option value="<%=client.id%>" selected><%=client.name%></option>
+                            <%
+                                    }else{
+                            %>
+                                <option value="<%=client.id%>"><%=client.name%></option>
+                            <%
+                                    }
+                                }
+
+                                }
+                            %>
+                            </select>
+                        </div>
                         <div class="form-group">
                                 <label>广告</label>
                                 <select class="form-control" id="advertisement" name="advertisement">
@@ -24,11 +44,11 @@
                                         ad = adArr.pop();
                                         if(req.param('advertisement')&&req.param('advertisement')==ad.id){
                                 %>
-                                    <option value="<%=ad.id%>" selected><%=ad.client.name%>-<%=ad.title%></option>
+                                    <option value="<%=ad.id%>" selected><%=ad.title%></option>
                                 <%
                                         }else{
                                 %>
-                                    <option value="<%=ad.id%>" ><%=ad.client.name%>-<%=ad.title%></option>
+                                    <option value="<%=ad.id%>" ><%=ad.title%></option>
                                 <%
                                         }
                                     }
@@ -154,5 +174,25 @@
 
     <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
     <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#client").change(function(){
+                var clientId = $("#client").val();
+                $.ajax({
+                    url: "/advertisement/json?client="+clientId
+                    }).done(function(data){
+                      var adOption = "";
+                      $("#advertisement").empty();
+                      while (data.length) {
+                        var ad = data.pop();
+                        _option = "<option value='"+ad.id+"'>"+ad.title+"</option>";
+                        adOption = adOption + _option;
+                      }
+                      $("#advertisement").append(adOption);
+                });
+            });
+        });
+        
+    </script>
       
 
