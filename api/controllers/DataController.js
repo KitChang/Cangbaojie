@@ -156,6 +156,57 @@ module.exports = {
         });
         
     },
+    categoryCompare: function(req, res){
+        var state = req.param('state');
+        var city = req.param('city');
+        var region = req.param('region');
+        var dateFromStr = req.param('dateFrom');
+        var dateToStr = req.param('dateTo');
+        var client = req.param('client');
+        dateFrom = moment(dateFromStr, "MM/DD/YYYY").startOf('day').toDate();
+        dateTo = moment(dateToStr, "MM/DD/YYYY").endOf('day').toDate();
+        advertisement.find().populate("client").exec(function(err, adArr){
+            var clientObj = {};
+            for(var i=0; i<adArr.length; i++){
+                clientObj[adArr[i].client.id] = adArr[i].client;
+            }
+            var values = [];
+            for(var property in clientObj) {
+            values.push(clientObj[property]);
+            }
+            clientArr = values;
+            
+            if(!city){
+            res.view('data-category-compare', {resultArr: [], clientArr: clientArr});
+            return;
+            }
+            else{
+                var option = {state: state, city: city, createdAt: {"<": dateTo, ">": dateFrom}};
+                if(client){
+                    option.client = client;
+                }
+
+                access.find(option).populate('client').exec(function(err, resultArr){
+                    if(err)
+                            return res.serverError(err);
+                    var accessClientObj = _.groupBy(resultArr, function(accessOne){
+                        return accessOne.client.name;
+                    });
+                    var accessClient = {};
+                    var accessClientArr = [];
+                    for(var property in accessClientObj) {
+                        accessClient = {};
+                        accessClient.accessCount = accessClientObj[property].length;
+                        accessClient.client = property;
+                        accessClientArr.push(accessClient);
+                    }
+                    res.view('data-category-compare', {resultArr: accessClientArr, clientArr: clientArr});
+                });
+            }
+            
+        });
+        
+    },
     accessCategory: function(req, res){
         var state = req.param('state');
         var city = req.param('city');
@@ -198,12 +249,11 @@ module.exports = {
                 access.find(option).exec(function(err, resultArr){
                     if(err)
                             return res.serverError(err);
+                    
                     res.view('data-access-category', {resultArr: resultArr, clientArr: clientArr});
             });
             }
-            
         });
-        
     },
     accessRegionClient: function(req, res){
           client.find().exec(function(err, resultArr){
@@ -341,31 +391,30 @@ module.exports = {
     prizeStock: function(req, res){
         var advertisementId = req.param('advertisement');
         advertisement.find().populate("client").exec(function(err, adArr){
+            var clientObj = {};
+            for(var i=0; i<adArr.length; i++){
+                clientObj[adArr[i].client.id] = adArr[i].client;
+            }
+            var values = [];
+            for(var property in clientObj) {
+                values.push(clientObj[property]);
+            }
+            clientArr = values;
             if(advertisementId&&advertisementId!=""){
+                
                 advertisement.findOne({id: advertisementId}).exec(function(err, ad){
                     
-                    res.view('data-prize-stock', {adArr: adArr, selectedAd: ad});
+                    res.view('data-prize-stock', {adArr: adArr, selectedAd: ad, clientArr: clientArr});
                     return;
                 })
             }
             else{
-                res.view('data-prize-stock', {adArr: adArr, selectedAd: null});
+                res.view('data-prize-stock', {adArr: adArr, selectedAd: null, clientArr: clientArr});
                 return;
             }
         });
     },
-    prizeStockSearch: function(req, res){
-        var addId = req.param('advertisement');
-        var clientId = req.param('client');
-        console.log("client: "+clientId);
-        advertisement.find({client: clientId}).exec(function(err, ads){
-            console.log("ads l:"+ads.length);
-            advertisement.findOne({id: addId}).exec(function(err, ad){
-                console.log("ads l:"+ads.length);
-                res.view('data-prize-stock', {ads: ads, selectedAd: ad});
-            })
-        });
-    },
+    
     prizeWinnerAdvertisement: function(req, res){
           advertisement.find().populate('client').exec(function(err, resultArr){
             if(err)
@@ -429,6 +478,10 @@ module.exports = {
         });
             
         });
+        
+    },
+    categoryComparison: function(req, res){
+        var category = req.param('category');
         
     },
     prizeWinnerSearch: function(req, res){//to be removed

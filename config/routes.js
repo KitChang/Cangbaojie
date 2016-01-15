@@ -88,13 +88,13 @@ module.exports.routes = {
       controller: 'DataController',
       action: 'accessCategory'
   },
+  'get /data/category-compare': {
+      controller: 'DataController',
+      action: 'categoryCompare'
+  },
   'get /data/access-region/client': {
       controller: 'DataController',
       action: 'accessRegionClient'
-  },
-  'get /data/access-category/client': {
-      controller: 'DataController',
-      action: 'accessCategoryClient'
   },
   'get /data/access-street': {
       controller: 'DataController',
