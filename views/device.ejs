@@ -125,6 +125,13 @@
         });
         function populateCity(){
         var selectedState = $("#state option:selected").text();
+<<<<<<< HEAD
+=======
+        if(selectedState=="所有省"||selectedState==""){
+                $("#city").append("<option value=''>所有城市</option>");
+                return;
+            }    
+>>>>>>> 29e074eb39a777b4172afe598e1d3c6de24c9f1b
         $.ajax({
         url: "/geo/city?state="+selectedState
         }).done(function(data){
@@ -146,6 +153,7 @@
         var selectedCity = $("#city option:selected").text();
         if(selectedCity=="所有城市"||selectedCity==""){
             $("#region").append("<option value=''>所有地区</option>");
+            return;
         }
         $.ajax({
         url: "/geo/region?state="+selectedState+"&city="+selectedCity,
@@ -164,8 +172,10 @@
             var selectedState = $("#state option:selected").text();
             var selectedCity = $("#city option:selected").text();
             var selectedRegion = $("#region option:selected").text();
-            if(selectedRegion=="所有地区"||selectedRegion=="")
-                $("#street").append("<option value=''>所有街道</option>");;
+            if(selectedRegion=="所有地区"||selectedRegion=="") {
+                $("#street").append("<option value=''>所有街道</option>");
+                return;
+            }
             
             $.ajax({
             url: "/geo/street?state="+selectedState+"&city="+selectedCity+"&region="+selectedRegion,
