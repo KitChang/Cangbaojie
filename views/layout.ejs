@@ -10,41 +10,34 @@
     <title>系统管理后台</title>
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <link href="/styles/custom.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
-    <link rel="stylesheet" href="/jQuery-File-Upload-9.11.2/css/jquery.fileupload.css"/>
     <link href="//cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css" rel="stylesheet">
     </head>
-
-  <body>
+    <body>
     <%
     if(!req.param("omitNavigation")&&req.session.user){
     %>
       
-<nav class="navbar navbar-default navbar-fixed-top">
-    
-        
-    
-      <div class="container">
-        
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-                    <li style="margin-right: 40px; padding-left:20px;">
-                      <div class="row" style="padding-top: 5px;">
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li style="margin-right: 40px;">
+                      <div style="padding-top: 5px;">
                           <center>
                           <img src="/images/logo.png" class="img-responsive" width="180px"/>
                           </center>
@@ -65,49 +58,38 @@
                         <ul class="dropdown-menu">
                           <li><a href="http://<%=req.host%>:<%=req.port%>/data/access">客户数据</a></li>
                           <li><a href="http://<%=req.host%>:<%=req.port%>/data/AppUser">用户数据</a></li>
-<<<<<<< HEAD
                           <li><a href="http://<%=req.host%>:<%=req.port%>/data/access-region">大数据－区域统计</a></li>
                           <li><a href="http://<%=req.host%>:<%=req.port%>/data/access-category">大数据－行业统计</a></li>
                           <li><a href="http://<%=req.host%>:<%=req.port%>/data/category-compare">大数据－行业比较</a></li>
-=======
-                          <li><a href="http://<%=req.host%>:<%=req.port%>/data/access-region">大数据</a></li>
->>>>>>> 8d95849cfe7aacc7103ebfea46fe086bb63204eb
                           <li><a href="http://<%=req.host%>:<%=req.port%>/data/prize-stock">奖项数据</a></li>
-                          
                           <li><a href="http://<%=req.host%>:<%=req.port%>/data/access-device">设备数据</a></li>
-
-                          
                         </ul>
                     </li>
-              <li style="margin-top: 20px;" class="dropdown">
+                    <li style="margin-top: 20px;" class="dropdown">
                       <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">账户管理 <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                           <li><a href="http://<%=req.host%>:<%=req.port%>/user">员工账户</a></li>
                           <li><a href="http://<%=req.host%>:<%=req.port%>/user_client">商家账户</a></li>
-                         
                         </ul>
                     </li>
-          </ul>
-            <%
+                </ul>
+                <%
                   var username = "";
                   if(req.session.user)
                       username = req.session.user.username;
-                  %>
-                  
-          
-          <ul class="nav navbar-nav navbar-right">
-            
-              <li style="margin-top: 20px;"><a href="/user/logout"> 退出</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            
-              <li style="margin-top: 20px;"><a href="#" style="pointer-events: none;"> <%=username%></a></li>
-          </ul>
+                %>
+              <ul class="nav navbar-nav navbar-right">
+                  <li style="margin-top: 20px;"><a href="/user/logout"> 退出</a></li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                  <li style="margin-top: 20px;"><a href="#" style="pointer-events: none;"> <%=username%></a></li>
+              </ul>
+            </div>
         </div>
-      </div>
-</nav>    <%  
-    }
-    %>
+    </nav>    
+<%  
+}
+%>
     
     <%- body %>
     <%
@@ -117,18 +99,12 @@
         <center>
             <p style="margin-top: 8px;">
                 Copyright&copy2015 珠海伯睿网络科技有限公司
-
+            </p>
         </center>
     </footer>
       
     <%
       }
-    
     %>
-    
-
-
-
-    
-  </body>
+    </body>
 </html>

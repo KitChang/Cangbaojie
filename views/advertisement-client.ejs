@@ -1,40 +1,40 @@
-      <div class="container content">
-        <div class="row">
-            <div class="panel panel-dashboard full-width">
-                <ol class="breadcrumb panel-heading-cbj">
-                  <li><a href="/advertisement">广告</a></li>
-                  <li class="active">广告创建－请选客户</li>
-                </ol>
-                
-                <div class="panel-body">
-                    <form>
-                    <table class="table table-striped" id="table">
-                        <thead>
-                        <tr><th>公司名</th><th></th></tr>
-                        </thead>
-                        <tbody>
-                    <%
-                    var row;
-                    while (resultArr.length) {
-                      row = resultArr.pop();
-                    %>
-                        <tr><td><%=row.name%></td>
-                            <td><a class="btn btn-primary" href="/advertisement/new?client=<%=row.id%>">添加广告</a></td>
-                        </tr>
-                    <%
-                    }
-                    %>
-                        </tbody>
-                    </table>
-                    </form>
-                    <br>
-                    <button class="btn btn-default right" onClick="javascript:window.history.back()">取消</button>
-                </div>
-                
+<div class="container content">
+    <div class="row">
+        <div class="panel panel-dashboard full-width">
+            <ol class="breadcrumb panel-heading-cbj">
+              <li><a href="/advertisement">广告</a></li>
+              <li class="active">广告创建－请选客户</li>
+            </ol>
+
+            <div class="panel-body">
+                <form>
+                <table class="table table-striped" id="table">
+                    <thead>
+                    <tr><th>公司名</th><th></th></tr>
+                    </thead>
+                    <tbody>
+                <%
+                var row;
+                while (resultArr.length) {
+                  row = resultArr.pop();
+                %>
+                    <tr><td><%=row.name%></td>
+                        <td><a class="btn btn-primary" href="/advertisement/new?client=<%=row.id%>">添加广告</a></td>
+                    </tr>
+                <%
+                }
+                %>
+                    </tbody>
+                </table>
+                </form>
+                <br>
+                <button class="btn btn-default right" onClick="javascript:window.history.back()">取消</button>
             </div>
+
         </div>
-       
-      </div>
+    </div>
+
+</div>
 
     <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
     <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>

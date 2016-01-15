@@ -1,7 +1,10 @@
 <div style="padding-top: 100px;" class="container content">
-        <div class="row">
-            <div class="col-md-6"><div class="panel panel-dashboard clearfix full-width">
-                <div class=" breadcrumb panel-heading panel-heading-dashboard"><li class="active"><b>昨天数据</b></li></div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-dashboard full-width">
+                <div class="panel-heading panel-heading-dashboard">
+                    昨天数据
+                </div>
                 <div class="panel-body">
                 <%
                 if(yesterdayData==null){
@@ -16,7 +19,6 @@
                 <%
                 }else{
                 %>
-                
                 <table class="table table-bordered" style="margin: 1px">
                     <tbody>
                         <tr style="background-color: #FFFFCC;">
@@ -46,87 +48,84 @@
                 }
                 %>
                 </div>
-            </div></div>
-            <div class="col-md-6">
-                <div class="panel panel-dashboard clearfix full-width">
-                <div class="panel-heading panel-heading-dashboard"><b>点击排行</b>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-dashboard full-width">
+                <div class="panel-heading panel-heading-dashboard">点击排行
                 </div>
                 <div class="panel-body">
-                <div style="margin-bottom: 5px;" class="list-group">
-                <%
-                    var clientAccess = null;
-                    while(clientsAccess.length){
-                        clientAccess = clientsAccess.pop();
-                %>
-                <li class="list-group-item">
-                    <a href="/client/<%=clientAccess.id%>"><%=clientAccess.name%></a>
-                     <span class="badge"><%=clientAccess.accessCount%></span>
-                </li>
-                    
-                <%
-                    }
-                %>
-                  
-                </div>
-                
+                    <div style="margin-bottom: 5px;" class="list-group">
+                    <%
+                        var clientAccess = null;
+                        while(clientsAccess.length){
+                            clientAccess = clientsAccess.pop();
+                    %>
+                    <li class="list-group-item">
+                        <a href="/client/<%=clientAccess.id%>"><%=clientAccess.name%></a>
+                         <span class="badge"><%=clientAccess.accessCount%></span>
+                    </li>
+                    <%
+                        }
+                    %>
+                    </div>
                     <a style="font-size: 12px;" class="fancyboxIframe right" href="/client/click-ranking?omitNavigation=omitNavigation">
                     显示所有
                     </a>
-                
-                
                 </div>
-            </div></div>
+            </div>
+        </div>
     </div>
     <div class="row">
-            <div class="col-md-6"><div class="panel panel-dashboard clearfix full-width">
-                <div class="panel-heading panel-heading-dashboard"><b>推广请求</b>
+        <div class="col-md-6">
+            <div class="panel panel-dashboard clearfix full-width">
+                <div class="panel-heading panel-heading-dashboard">推广请求
                 </div>
                 <div class="panel-body">
-                
-                <div style="margin-bottom: 5px;" class="list-group">
-                <%
-                    var request = null;
-                    while(requests.length){
-                        request = requests.pop();
-                        if(request.client){
-                        var date = request.createdAt;
-                        var date2 = date.toLocaleDateString();
-                        var location = "";
-                        if(request.state!=""){
-                            location = request.state;
-                        }
-                        if(request.city!=""){
-                            location = request.city;
-                        }
-                        if(request.region!=""){
-                            location = request.region;
-                        }
-                        if(request.street!=""){
-                            location = request.street;
-                        }
-                %>
-                    <li class="list-group-item">
-                    <a href="/client/<%=request.client.id%>"><%=request.client.name%></a>－<%=location%>
-                    <span class="badge"><%=date2%></span>
+                    <div style="margin-bottom: 5px;" class="list-group">
+                    <%
+                        var request = null;
+                        while(requests.length){
+                            request = requests.pop();
+                            if(request.client){
+                            var date = request.createdAt;
+                            var date2 = date.toLocaleDateString();
+                            var location = "";
+                            if(request.state!=""){
+                                location = request.state;
+                            }
+                            if(request.city!=""){
+                                location = request.city;
+                            }
+                            if(request.region!=""){
+                                location = request.region;
+                            }
+                            if(request.street!=""){
+                                location = request.street;
+                            }
+                    %>
+                        <li class="list-group-item">
+                        <a href="/client/<%=request.client.id%>"><%=request.client.name%></a>－<%=location%>
+                        <span class="badge"><%=date2%></span>
 
-                    </li>
-                <%
+                        </li>
+                    <%
+                            }
                         }
-                    }
-                %>
-                </div>
-                
+                    %>
+                    </div>
                     <a style="font-size: 12px;" class="right" href="/request/findFromDashboard">
                     显示所有
                     </a>
                 
                 </div>
-            </div></div>
-            <div class="col-md-6"><div class="panel panel-dashboard clearfix full-width">
-                <div class="panel-heading  panel-heading-dashboard"><b>故障提醒</b>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-dashboard clearfix full-width">
+                <div class="panel-heading  panel-heading-dashboard">故障提醒
                 </div>
                 <div class="panel-body">
-                
                 <div style="margin-bottom: 5px;" class="list-group">
                 <%
                     var faultDevice = null;
@@ -151,45 +150,44 @@
                     </a>
                 </p>
                 </div>
-            </div></div>
+            </div>
+        </div>
     </div>
     <div class="row">
-            
-            <div class="col-md-6"><div class="panel panel-dashboard clearfix full-width">
-                <div class="panel-heading panel-heading-dashboard"><b>到期提醒</b>
+        <div class="col-md-6">
+            <div class="panel panel-dashboard full-width">
+                <div class="panel-heading panel-heading-dashboard">到期提醒
                 </div>
                 <div class="panel-body">
-                
-                <div style="margin-bottom: 5px;" class="list-group">
-                <%
-                    var ad;
-                    while(advertisementsExpire.length){
-                        ad = advertisementsExpire.pop();
-                %>
-                <li class="list-group-item">
-                    <a href="/client/<%=ad.client.id%>"><%=ad.client.name%></a>
-                    - 
-                    <a href="/advertisement/<%=ad.id%>"><%=ad.title%></a>
-                    
-                    <span class="badge"><%=moment().to(moment(ad.expiredDate))%></span>
+                    <div style="margin-bottom: 5px;" class="list-group">
+                    <%
+                        var ad;
+                        while(advertisementsExpire.length){
+                            ad = advertisementsExpire.pop();
+                    %>
+                    <li class="list-group-item">
+                        <a href="/client/<%=ad.client.id%>"><%=ad.client.name%></a>
+                        - 
+                        <a href="/advertisement/<%=ad.id%>"><%=ad.title%></a>
 
-                </li>
-                <%
-                    }
-                %>
-                </div>
-                
+                        <span class="badge"><%=moment().to(moment(ad.expiredDate))%></span>
+
+                    </li>
+                    <%
+                        }
+                    %>
+                    </div>
                     <a style="font-size: 12px;" class="fancyboxIframe right" href="/advertisement/expired-date-reminder?omitNavigation=omitNavigation">
                     显示所有
                     </a>
-                
                 </div>
-            </div></div>
-            <div class="col-md-6"><div class="panel panel-dashboard clearfix full-width">
-                <div class="panel-heading panel-heading-dashboard"><b>余额提醒</b>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-dashboard full-width">
+                <div class="panel-heading panel-heading-dashboard">余额提醒
                 </div>
                 <div class="panel-body">
-                
                 <div style="margin-bottom: 5px;" class="list-group">
                 <%
                     var clientAccount = null;
@@ -205,51 +203,28 @@
                     }
                 %>
                 </div>
-                
-                    <a style="font-size: 12px;" class="fancyboxIframe right" href="/client/balance-reminder?omitNavigation=omitNavigation">
-                    显示所有
-                    </a>
+                <a style="font-size: 12px;" class="fancyboxIframe right" href="/client/balance-reminder?omitNavigation=omitNavigation">
+                显示所有
+                </a>
                 
                 </div>
-            </div></div>
-            
-            
+            </div>
         </div>
-        <div class="row">
-            
-            
-            <div class="col-md-6"><div class="panel panel-dashboard clearfix full-width" id="message">
-                
-            </div></div>
-            
-            <div class="col-md-6"><div class="panel panel-dashboard clearfix full-width" id="topupRequest">
-                
-            </div></div>
-            
-            
-        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6"><div class="panel panel-dashboard clearfix full-width" id="message">
+        </div></div>
+        <div class="col-md-6"><div class="panel panel-dashboard clearfix full-width" id="topupRequest">
+        </div></div>
+    </div>
         
 </div>
 <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
-<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
-
+<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>\
 <link rel="stylesheet" href="/fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
 <script type="text/javascript" src="/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
 
-
-<!-- Optionally add helpers - button, thumbnail and/or media -->
-<link rel="stylesheet" href="/fancybox/source/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" media="screen" />
-<script type="text/javascript" src="/fancybox/source/helpers/jquery.fancybox-buttons.js?v=1.0.5"></script>
-<script type="text/javascript" src="/fancybox/source/helpers/jquery.fancybox-media.js?v=1.0.6"></script>
-
-
-<link rel="stylesheet" href="/fancybox/source/helpers/jquery.fancybox-thumbs.css?v=1.0.7" type="text/css" media="screen" />
-<script type="text/javascript" src="/fancybox/source/helpers/jquery.fancybox-thumbs.js?v=1.0.7"></script>
 <script>
-</script>
-
-<script>
-    
     $(document).ready(function(){
         $(".fancyboxIframe").fancybox({
             type: 'iframe',
@@ -266,7 +241,6 @@
         $("#message").load("/dashboard/message?omitNavigation=omitNavigation&omitFooter=omitFooter");
         $("#topupRequest").load("/dashboard/topup-request?omitNavigation=omitNavigation&omitFooter=omitFooter");
     } );
-
 </script>
 
 

@@ -1,20 +1,18 @@
-
-    
-      <div class="container content">
-        <div class="row">
-            <div class="panel panel-dashboard full-width">
-                <ol class=" breadcrumb panel-heading panel-heading-cbj">
-                              <li>广告管理</a></li>
-                              <li class="active">广告客户商家</li>
-                </ol>
-                <div class="panel-body">
+<div class="container content">
+    <div class="row">
+        <div class="col-md-12">
+        <div class="panel full-width">
+            <ol class="breadcrumb panel-heading panel-heading-cbj">
+                  <li>广告管理</a></li>
+                  <li class="active">广告客户商家</li>
+            </ol>
+            <div class="panel-body">
                     
-                    <button type="button" class="btn btn-default right" onClick="javascript:window.history.back()" value=""/> 取消 </button>
-                    <button class="btn btn-primary right" onClick="javascript: window.location.href='/client/new'">创建</button>
-                </div>
-                <div class="panel-body">
+                <button type="button" class="btn btn-default right" onClick="javascript:window.history.back()" value=""/> 取消 </button>
+                <button class="btn btn-primary right" onClick="javascript: window.location.href='/client/new'">创建</button>
+            </div>
+            <div class="panel-body">
                 <form name="form" action="/dfd/" method="post">
-                
                 <table class="table table-striped" id="table">
                     <thead>
                     <tr><th>广告客户商家</th><th>联系人</th>
@@ -41,28 +39,32 @@
                     </tbody>
                 </table>
                 </form>
-                </div>
-
             </div>
+
         </div>
-      </div>
+    </div>
+    </div>
+</div>
     
 
 
-    <script>
-        function destroy(rowId){
-            document.form.action = "/client/destroy/"+rowId;
-            document.form.method = "post";
-            document.form.submit();
-        }
-    </script>
+<script>
+    function destroy(rowId){
+        document.form.action = "/client/destroy/"+rowId;
+        document.form.method = "post";
+        document.form.submit();
+    }
+</script>
       
-    <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
-    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
-    <script>
+<script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
+<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function(){
         $("#table").DataTable({"language": {
-                "url": "//cdn.datatables.net/plug-ins/1.10.10/i18n/Chinese.json"
-            }});
-    </script>
+            "url": "//cdn.datatables.net/plug-ins/1.10.10/i18n/Chinese.json"
+        }});
+    });
+    
+</script>
 
