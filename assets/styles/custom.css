@@ -28,9 +28,13 @@ body {
   background-color: #FFFFCC;
 }
 .panel {
-  margin-bottom: 20px;
+  margin: 20px;
   border-style: solid;
   border-color: #FFE301;
+}
+
+.panel-dashboard {
+  margin-left: 0px;
 }
 .panel-heading-dashboard {
   color: #777;

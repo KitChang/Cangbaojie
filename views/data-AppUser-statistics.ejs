@@ -6,30 +6,36 @@
               <li><a style="color: #555;" href="/data/AppUser">用戶列表</a></li>
               <li class="active"><a style="background-color: #FFE301;" href="/data/AppUser-statistics">用户统计</a></li>
             </ul>
-            <table class="table table-bordered text-center">
+            
+             <div id="panel" class="panel panel-dashboard full-width">
+                <div style="margin-top: 15px;" class="col-md-12">
+                 <table style="border-color: #FFE301;"  class="table table-bordered text-center">
+                 
                 <thead>
-                    <tr class="warning"><th class="text-center">全部用户</th><th class="text-center">新增用户</th><th class="text-center">活跃用户</th></tr>
+                    <tr class="warning">
+                    <th style="border-color: #FFE301;" class="text-center">全部用户</th>
+                    <th style="border-color: #FFE301;" class="text-center">新增用户</th>
+                    <th style="border-color: #FFE301;" class="text-center">活跃用户</th></tr>
                 </thead>
                 <tbody>
                     <tr>
                         <%
                             var allUsers = maleUsers + femaleUsers;
                         %>
-                        <td><%=allUsers%> (男:<%=(maleUsers/allUsers*100).toFixed(0)%>%)</td>
-                        <td><%=newUsers%> (<%=(newUsers/allUsers*100).toFixed(0)%>%)</td>
-                        <td><%=activeUsers%> (<%=(activeUsers/allUsers*100).toFixed(0)%>%)</td>
+                        <td style="border-color: #FFE301;"><%=allUsers%> (男:<%=(maleUsers/allUsers*100).toFixed(0)%>%)</td>
+                        <td style="border-color: #FFE301;"><%=newUsers%> (<%=(newUsers/allUsers*100).toFixed(0)%>%)</td>
+                        <td style="border-color: #FFE301;"><%=activeUsers%> (<%=(activeUsers/allUsers*100).toFixed(0)%>%)</td>
 
                     </tr>
 
                 </tbody>
                 </table>
-             <div id="panel" class="panel panel-dashboard">
-                 
+                </div>
             <div class="col-md-4">
-                <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="col-md-4">
-                    <canvas id="genderChart" width="250" height="300"></canvas>
+                <div style="margin: 0px;" class="panel panel-default full-width">
+                <div id="genderPanel" class="panel-body">
+                    <div>
+                    <canvas id="genderChart"></canvas>
 
                     </div>
                     <table class="table">
@@ -44,10 +50,10 @@
             
             </div>
             <div class="col-md-4">
-                <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="col-md-4">
-                    <canvas id="newOldUserChart" width="250" height="300"></canvas>
+                <div style="margin: 0px;" class="panel panel-default full-width">
+                <div id="newOldUserPanel" class="panel-body">
+                    <div>
+                    <canvas id="newOldUserChart" width="314" height="314"></canvas>
                    
                         
                        
@@ -64,11 +70,11 @@
                 </div>
             
             </div>
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="col-md-4">
-                    <canvas id="activeInactiveUserChart" width="250" height="300"></canvas>
+            <div style="padding-bottom: 15px;" class="col-md-4">
+                <div style="margin: 0px;" class="panel panel-default full-width">
+                <div id="activeInactiveUserPanel" class="panel-body">
+                    <div>
+                    <canvas id="activeInactiveUserChart" width="314" height="314"></canvas>
                     
                     </div>
                     <table class="table">
@@ -94,6 +100,12 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
     <script>
         $(document).ready(function(){
+            $("#genderChart").width($("#genderPanel").width());
+            $("#genderChart").height($("#genderPanel").width());
+            $("#newOldUserChart").width($("#newOldUserPanel").width());
+            $("#newOldUserChart").height($("#newOldUserPanel").width());
+            $("#activeInactiveUserChart").width($("#activeInactiveUserPanel").width());
+            $("#activeInactiveUserChart").height($("#activeInactiveUserPanel").width());
             color = ["#46BFBD", "#FDB45C", "#212121", "#64af9c", "#6b1f3c", "#127690", "#a2798f", "#008b8b", "#99ccff", "#cc99ff", "#9feaae", "#40d65d", "#65ada2", "#5ee4bb", "#9ffff7", "#2412b4", "#34d491", "#da6665", "#f3d681", "#b9b9b9", "#b9b9b9", "#ffae1a", "#2137ff", "#d8941a", "#d8941a", "#ff2a1a", "#e6b3e6", "#e6b3e6", "#a8e4f0", "#6ef79c", "#5cf53d", "#d6d65c", "#adb87a", "#d6995c", "#f76e6e", "#f08a75", "#eb9947", "#ffdd33", "#cccc00", "#99eb47", "#75f075", "#85e0b3", "#33ffdd","#998cd9",];
             genderData = [{value: "<%=maleUsers%>", color: "#46BFBD", label: "男性用户", highlight: "red"}, {value: "<%=femaleUsers%>", color: "#FDB45C", label: "女性用户", highlight: "red"}];
             newOldUserData =[{value: "<%=newUsers%>", color: "#40d65d", label: "新用户", highlight: "red"}, {value: "<%=oldUsers%>", color: "#2137ff", label: "旧用户",highlight: "red"}];
@@ -107,6 +119,14 @@
         var myPieChart2 = new Chart(ctx2).Doughnut(newOldUserData);
         var myPieChart3 = new Chart(ctx3).Doughnut(activeInactiveUserData);
 
+        $( window ).resize(function() {
+              $("#genderChart").width($("#genderPanel").width());
+            $("#genderChart").height($("#genderPanel").width());
+            $("#newOldUserChart").width($("#newOldUserPanel").width());
+            $("#newOldUserChart").height($("#newOldUserPanel").width());
+            $("#activeInactiveUserChart").width($("#activeInactiveUserPanel").width());
+            $("#activeInactiveUserChart").height($("#activeInactiveUserPanel").width());
+            });
 
             
         });
