@@ -101,12 +101,15 @@
                             client = req.param('client');
                     %>
                     
-                    <button class="btn btn-primary">统计</button>
+                    <button class="btn btn-primary" id="submit">统计</button>
                     </div>
                     </form>
                     
                     
                 </div>
+                <center>
+                <div id="message"></div>
+                </center>
                 <canvas id="myChart" width="900" height="400"></canvas>
                 <div id="legend">
                 </div>
@@ -149,6 +152,7 @@
     
     
     $(document).ready(function(){
+        
         populateCity();
         var dateFromStr = moment().subtract(7, 'day').format("MM/DD/YYYY");
         $("#dateFrom").daterangepicker({singleDatePicker: true});
@@ -161,7 +165,22 @@
         %>
         
         $("#dateTo").daterangepicker({singleDatePicker: true});
+        
+        <%
+        if(req.param('state')==null){
+        %>
+        $("#submit").trigger('click');
+        <%
+        }
+        %>
         s = new Series().y(function(d){return d.sum});
+        <% 
+            if(!resultArr.length){
+        %>
+            $("#message").append("没有可显示的数据");
+        <%
+            }
+        %>
         <%
         while(resultArr.length){
             result = resultArr.pop();
@@ -174,6 +193,7 @@
         <%
         }
         %>
+        
         var aggreData = Series.y(function(d){ return d.sum; })
                 .aggregation(Series.sum)
                 .key(function(d){ 

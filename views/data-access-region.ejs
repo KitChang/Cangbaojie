@@ -102,6 +102,9 @@
                     
                     
                 </div>
+                <center>
+                <div id="message"></div>
+                </center>
                 <canvas id="myChart" width="900" height="400"></canvas>
                 <div id="legend">
                 </div>
@@ -150,6 +153,13 @@
         $("#dateFrom").val(dateFromStr);
         $("#dateTo").daterangepicker({singleDatePicker: true});
         s = new Series().y(function(d){return d.sum});
+        <% 
+            if(!resultArr.length){
+        %>
+            $("#message").append("没有可显示的数据");
+        <%
+            }
+        %>
         <%
         while(resultArr.length){
             result = resultArr.pop();
@@ -161,6 +171,7 @@
         <%
         }
         %>
+        
         var aggreData = Series.y(function(d){ return d.sum; })
                 .aggregation(Series.sum)
                 .key(function(d){ 

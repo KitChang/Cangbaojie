@@ -163,6 +163,7 @@ module.exports = {
         var dateFromStr = req.param('dateFrom');
         var dateToStr = req.param('dateTo');
         var client = req.param('client');
+        var category = req.param('category');
         dateFrom = moment(dateFromStr, "MM/DD/YYYY").startOf('day').toDate();
         dateTo = moment(dateToStr, "MM/DD/YYYY").endOf('day').toDate();
         advertisement.find().populate("client").exec(function(err, adArr){
@@ -187,8 +188,7 @@ module.exports = {
                 }
                 if(city&&city!="")
                     option.city = city;
-                console.log("city: "+city+" "+option);
-
+                option.category = category;
                 access.find(option).populate('client').exec(function(err, resultArr){
                     if(err)
                             return res.serverError(err);
