@@ -208,7 +208,7 @@
     
     $(document).ready(function(){
         populateCity();
-        var dateFromStr = moment().subtract(7, 'day').format("MM/DD/YYYY");
+        var dateFromStr = moment().subtract(6, 'day').format("MM/DD/YYYY");
         $("#dateFrom").daterangepicker({singleDatePicker: true});
         <%
         if(!req.param('dateFrom')){
