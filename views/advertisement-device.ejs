@@ -78,7 +78,7 @@
                 <form name="add-device-form" action="/advertisement/<%=req.param('id')%>/device" method="post">
                 <table class="table table-striped" id="table">
                     <thead>
-                    <tr><th>名</th><th>位置类型</th><th>省</th><th>城市</th><th>地区</th><th>街道</th><th> 全选 <input id="check-all" type="checkbox"/></th></tr>
+                    <tr><th>名</th><th>位置类型</th><th>省</th><th>城市</th><th>地区</th><th>街道</th><th>位置</th><th> 全选 <input id="check-all" type="checkbox"/></th></tr>
                     </thead>
                     <tbody>
                 <%
@@ -87,7 +87,7 @@
                   row = resultArr.pop();
                 %>
                     <tr><td><a href="/device/<%=row.id%>"><%=row.identifier%></a></td><td><%=row.locationType%></td><td><%=row.state%></td><td><%=row.city%></td><td><%=row.region%></td>
-                    <td><%=row.street%></td>
+                    <td><%=row.street%></td><td><%=row.location%></td>
                     <td><input name="device[]" type="checkbox" value="<%=row.id%>"/></td>
                     </tr>
                 <%

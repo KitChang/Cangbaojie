@@ -306,6 +306,7 @@ module.exports = {
         var state = req.param('state');
         var city = req.param('city');
         var region = req.param('region');
+        var street = req.param('street');
         var option = {};
         if(locationType!=null&&locationType!=""){
             option.locationType = locationType;
@@ -319,10 +320,12 @@ module.exports = {
         if(region!=null&&region!=""){
             option.region = region;
         }
+        if(street!=null&&street!=""){
+            option.street = street;
+        }
         Device.search(option, function(err, resultArr){
             if(err){
                 return res.serverError(err);
-                return;
             }else{
                 res.view('advertisement-device', {resultArr: resultArr});
             }
