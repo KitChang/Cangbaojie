@@ -3,177 +3,181 @@
 <div class="container-fluid content">
     <div class="row">
         <div class="col-md-12">
-        <div class="panel panel-default-cbj" style="width: 45%">
+            <div class="col-md-5 no-l-padding">
+                <div class="panel panel-dashboard full-width">
 
-            <ol class="breadcrumb panel-heading panel-heading-cbj">
-              <li><a href="/advertisement">广告</a></li>
-              <li class="active">编辑</li>
-            </ol>
-            <div class="panel-body">
-                <form id="form" name="form" action="../advertisement/<%=result.id%>" method="post">                
-                <div class="form-group">
-                <label>广告标题 <span class="mandatory">*</span></label>
-                <input type="text" name="title" id="title" class="form-control" value="<%=result.title%>" style="width: 100%;">
-                </div>
-                <div class="form-group">
-                <label>详细描述 <span class="mandatory">*</span></label>
-                    <textarea style="text-align:left; width: 100%; height: 150px;" name="description" id="description" class="form-control"><%=result.description%></textarea>
-                </div>
-                <div class="form-group">
-                <label>分类 <span class="mandatory">*</span></label>
-                <select class="form-control" name="category" id="category">
-                    <option value=""></option>
-                <%
-                    var categories = [
-                     "宠物及园艺",
-                     "汽车用品",
-                     "银行",
-                     "金融机构",
-                     "地产中介",
-                     "保险",
-                     "餐饮业",
-                     "娱乐业",
-                     "电商",
-                     "资讯科技",
-                     "照明工业",
-                     "服装销售",
-                     "服饰配件，饰品",
-                     "设计",
-                     "影视",
-                     "广告，传媒",
-                     "安全，防护",
-                     "包装",
-                     "纸业",
-                     "办公，文教",
-                     "数码，电脑",
-                     "电工电气",
-                     "眼镜及配件",
-                     "纺𥿗，皮革",
-                     "箱包皮具",
-                     "机械及行业设备",
-                     "五金，工具",
-                     "化工",
-                     "精细化学品",
-                     "橡塑",
-                     "环保",
-                     "仪器仪表",
-                     "日用百货",
-                     "母婴用品",
-                     "家纺家饰",
-                     "美妆日化",
-                     "家用电器",
-                     "家装，建材",
-                     "交通运输",
-                     "工艺品，礼品",
-                     "能源",
-                     "汽摩及配件",
-                     "农业",
-                     "食品，饮料",
-                     "通信产品",
-                     "玩具",
-                     "冶金矿产",
-                     "医药，保养",
-                     "印刷",
-                     "运动户外",
-                     "机床",
-                     "商务服务",
-                     "项目合作",
-                     "加工",
-                     "代理",
-                     "电子元器件",
-                     "其他"
-                    ];
-                    while(categories.length){
-                        var cat = categories.pop();
-                        if(cat==result.category){
-                %>
-                    <option value="<%=cat%>" selected><%=cat%></option>
-                <%
-                    }else{
-                %>
-                    <option value="<%=cat%>"><%=cat%></option>
-                <%
-                    }
-                    }
+                    <ol class="breadcrumb panel-heading panel-heading-cbj">
+                      <li><a href="/advertisement">广告</a></li>
+                      <li class="active">编辑</li>
+                    </ol>
+                    <div class="panel-body">
 
-                %>
+                        <form id="form" name="form" action="../advertisement/<%=result.id%>" method="post">                
+                            <div class="form-group">
+                                <label>广告标题 <span class="mandatory">*</span></label>
+                                <input type="text" name="title" id="title" class="form-control" value="<%=result.title%>" style="width: 100%;">
+                            </div>
+                            <div class="form-group">
+                                <label>详细描述 <span class="mandatory">*</span></label>
+                                <textarea style="text-align:left; width: 100%; height: 150px;" name="description" id="description" class="form-control"><%=result.description%></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>分类 <span class="mandatory">*</span></label>
+                                <select class="form-control" name="category" id="category">
+                                    <option value=""></option>
+                                <%
+                                    var categories = [
+                                     "宠物及园艺",
+                                     "汽车用品",
+                                     "银行",
+                                     "金融机构",
+                                     "地产中介",
+                                     "保险",
+                                     "餐饮业",
+                                     "娱乐业",
+                                     "电商",
+                                     "资讯科技",
+                                     "照明工业",
+                                     "服装销售",
+                                     "服饰配件，饰品",
+                                     "设计",
+                                     "影视",
+                                     "广告，传媒",
+                                     "安全，防护",
+                                     "包装",
+                                     "纸业",
+                                     "办公，文教",
+                                     "数码，电脑",
+                                     "电工电气",
+                                     "眼镜及配件",
+                                     "纺𥿗，皮革",
+                                     "箱包皮具",
+                                     "机械及行业设备",
+                                     "五金，工具",
+                                     "化工",
+                                     "精细化学品",
+                                     "橡塑",
+                                     "环保",
+                                     "仪器仪表",
+                                     "日用百货",
+                                     "母婴用品",
+                                     "家纺家饰",
+                                     "美妆日化",
+                                     "家用电器",
+                                     "家装，建材",
+                                     "交通运输",
+                                     "工艺品，礼品",
+                                     "能源",
+                                     "汽摩及配件",
+                                     "农业",
+                                     "食品，饮料",
+                                     "通信产品",
+                                     "玩具",
+                                     "冶金矿产",
+                                     "医药，保养",
+                                     "印刷",
+                                     "运动户外",
+                                     "机床",
+                                     "商务服务",
+                                     "项目合作",
+                                     "加工",
+                                     "代理",
+                                     "电子元器件",
+                                     "其他"
+                                    ];
+                                    while(categories.length){
+                                        var cat = categories.pop();
+                                        if(cat==result.category){
+                                %>
+                                    <option value="<%=cat%>" selected><%=cat%></option>
+                                <%
+                                    }else{
+                                %>
+                                    <option value="<%=cat%>"><%=cat%></option>
+                                <%
+                                    }
+                                    }
 
-                </select>
-                </div>
-                <div class="form-inline">
-                <div class="form-group">
-                <label>广告有效日期 <span class="mandatory">*</span></label><br>
-                <input type="text" name="effectiveDate" id="effectiveDate" class="form-control" value="<%=moment(result.effectiveDate).format("MM/DD/YYYY")%>" >
-                </div>
-                <div class="form-group">
-                <label>广告失效日期 <span class="mandatory">*</span></label><br>
-                <input type="text" name="expiredDate" id="expiredDate" class="form-control" value="<%=moment(result.expiredDate).format("MM/DD/YYYY")%>">
-                </div>
-                </div>
-                <div class="form-group">
-                <div class="form-inline">
-                    <label>抽奖劵保存时间 <span class="mandatory">*</span></label></br>
-                <input type="number" name="drawCouponExpiredTime_day" id="drawCouponExpiredTime_day" class="form-control" value="<%=result.drawCouponExpiredTime_day%>"> <label> 天</label>
-                <input type="number" name="drawCouponExpiredTime_hour" id="drawCouponExpiredTime_hour" class="form-control" value="<%=result.drawCouponExpiredTime_hour%>"> <label> 小时</label>
-                <input type="number" name="drawCouponExpiredTime_minute" id="drawCouponExpiredTime_minute" class="form-control" value="<%=result.drawCouponExpiredTime_minute%>" > <label> 分钟</label>                   
-                <input type="number" name="drawCouponExpiredTime_second" id="drawCouponExpiredTime_second" class="form-control" value="<%=result.drawCouponExpiredTime_second%>"> <label> 秒</label>
-                </div>
-                </div>
-                <div class="form-group">
-                <div class="form-inline">
-                <label>抽奖间隔 <span class="mandatory">*</span></label></br>
+                                %>
 
-                <input type="number" name="drawPerformInterval_day" id="drawPerformInterval_day" class="form-control" value="<%=result.drawPerformInterval_day%>"> <label> 天</label>
+                                </select>
+                            </div>
+                        
+                            <div class="form-inline">
+                                <div class="col-md-6 form-group no-l-padding">
+                                    <label>广告有效日期 <span class="mandatory">*</span></label><br>
+                                    <input type="text" name="effectiveDate" id="effectiveDate" class="form-control" value="<%=moment(result.effectiveDate).format("MM/DD/YYYY")%>" >
+                                </div>
+                                <div class="col-md-6 form-group no-l-padding">
+                                    <label>广告失效日期 <span class="mandatory">*</span></label><br>
+                                    <input type="text" name="expiredDate" id="expiredDate" class="form-control" style="margin-bottom: 15px;" value="<%=moment(result.expiredDate).format("MM/DD/YYYY")%>">
+                                </div>
+                            </div>    
+                    
+                            <div class="form-inline">
+                                <label>抽奖劵保存时间 <span class="mandatory">*</span></label></br>
+                                <input type="number" name="drawCouponExpiredTime_day" id="drawCouponExpiredTime_day" class="form-control" value="<%=result.drawCouponExpiredTime_day%>"> <label> 天</label>
+                                <input type="number" name="drawCouponExpiredTime_hour" id="drawCouponExpiredTime_hour" class="form-control" value="<%=result.drawCouponExpiredTime_hour%>"> <label> 小时</label>
+                                <input type="number" name="drawCouponExpiredTime_minute" id="drawCouponExpiredTime_minute" class="form-control" value="<%=result.drawCouponExpiredTime_minute%>" > <label> 分钟</label>                   
+                                <input type="number" name="drawCouponExpiredTime_second" id="drawCouponExpiredTime_second" class="form-control" value="<%=result.drawCouponExpiredTime_second%>"> <label> 秒</label>
+                            </div>
 
-                <input type="number" name="drawPerformInterval_hour" id="drawPerformInterval_hour" class="form-control" value="<%=result.drawPerformInterval_hour%>"> <label> 小时</label>
+                            <div class="form-inline" style="margin-top:15px;margin-bottom: 15px;">
+                                <label>抽奖间隔 <span class="mandatory">*</span></label></br>
 
-                <input type="number" name="drawPerformInterval_minute" id="drawPerformInterval_minute" class="form-control" value="<%=result.drawPerformInterval_minute%>" > <label> 分钟</label>                       
-                <input type="number" name="drawPerformInterval_second" id="drawPerformInterval_second" class="form-control" value="<%=result.drawPerformInterval_second%>"> <label> 秒</label>
+                                <input type="number" name="drawPerformInterval_day" id="drawPerformInterval_day" class="form-control" value="<%=result.drawPerformInterval_day%>"> <label> 天</label>
+
+                                <input type="number" name="drawPerformInterval_hour" id="drawPerformInterval_hour" class="form-control" value="<%=result.drawPerformInterval_hour%>"> <label> 小时</label>
+
+                                <input type="number" name="drawPerformInterval_minute" id="drawPerformInterval_minute" class="form-control" value="<%=result.drawPerformInterval_minute%>" > <label> 分钟</label>                       
+                                <input type="number" name="drawPerformInterval_second" id="drawPerformInterval_second" class="form-control" value="<%=result.drawPerformInterval_second%>"> <label> 秒</label>
+                            </div>
+                        
+
+                            <input type="hidden" name="drawCouponExpiredTime" id="drawCouponExpiredTime" class="form-control" value="<%=result.drawCouponExpiredTime%>">
+                            <input type="hidden" name="drawPerformInterval" id="drawPerformInterval" class="form-control" value="<%=result.drawPerformInterval%>">
+                            <div class="form-inline">
+                                <div class="col-md-6 form-group no-l-padding">
+                                    <label>点击价格 <span class="mandatory">*</span></label>
+                                    <input type="text" name="pricePerClick" id="pricePerClick" class="form-control" value="<%=result.pricePerClick%>">
+                                </div>
+                                <div class="col-md-6 form-group no-l-padding">
+                                    <label>奖项数量</label>
+                                    <input type="text" name="drawType" id="drawType" class="form-control" value="<%=result.numberOfPrize%>" readonly>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="form-inline">
+                                <div class="col-md-6 form-group no-l-padding">
+                                    <label>状态</label>
+                                    <br>
+                                    <input type="text" name="status" id="status" class="form-control" value="<%=req.__(result.status)%>" readonly>
+
+
+                                </div>
+                                <div class="col-md-6 form-group no-l-padding">
+                                    <label>抽奖类型 <span class="mandatory">*</span></label>
+                                    <% 
+                                        var drawType;
+                                        if(result.drawType=="probability")
+                                            drawType = "概率抽奖";
+                                        else
+                                            drawType = "排序抽奖";
+                                    %>
+                                    <input type="text" name="drawType" id="drawType" class="form-control" value="<%=drawType%>" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>外部主页连结</label>
+                                <input type="text" name="indexUrl" id="indexUrl" class="form-control full-width" value="<%=result.indexUrl%>">
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                </div>
-
-                <input type="hidden" name="drawCouponExpiredTime" id="drawCouponExpiredTime" class="form-control" value="<%=result.drawCouponExpiredTime%>">
-                <input type="hidden" name="drawPerformInterval" id="drawPerformInterval" class="form-control" value="<%=result.drawPerformInterval%>">
-
-                <div class="form-group">
-                <label>点击价格 <span class="mandatory">*</span></label>
-                <input type="text" name="pricePerClick" id="pricePerClick" class="form-control" value="<%=result.pricePerClick%>">
-                </div>
-                <div class="form-group">
-                <label>奖项数量</label>
-
-                <input type="text" name="drawType" id="drawType" class="form-control" value="<%=result.numberOfPrize%>" readonly>
-
-                </div>
-                <div class="form-group">
-                <label>状态</label>
-
-                <input type="text" name="status" id="status" class="form-control" value="<%=req.__(result.status)%>" readonly>
-
-
-                </div>
-                <div class="form-group">
-                <label>抽奖类型 <span class="mandatory">*</span></label>
-                <% 
-                    var drawType;
-                    if(result.drawType=="probability")
-                        drawType = "概率抽奖";
-                    else
-                        drawType = "排序抽奖";
-                %>
-                <input type="text" name="drawType" id="drawType" class="form-control" value="<%=drawType%>" readonly>
-
-                </div>
-                <div class="form-group">
-                <label>外部主页连结</label>
-                <input type="text" name="indexUrl" id="indexUrl" class="form-control full-width" value="<%=result.indexUrl%>">
-                </div>
-                </form>
             </div>
-        </div>
 
-
-        <div class="panel panel-default-cbj" style="width:50%" >
+        <div class="col-md-4 no-l-padding">
+        <div class="panel panel-dashboard full-width">
             <div class="panel-heading panel-heading-cbj">奖品设定</div>
             <div class="panel-body">    
                     <div class="form-inline panel-elem">
@@ -183,107 +187,123 @@
                         </div>
                         <div class="form-group">
                         <label>数量</label>
-                        <input type="number" name="firstPrizeQuantity" id="firstPrizeQuantity" class="form-control" value="<%=result.firstPrizeQuantity%>">
+                        <input type="number" name="firstPrizeQuantity" id="firstPrizeQuantity" style="width: 80px;" class="form-control" value="<%=result.firstPrizeQuantity%>">
                         </div>
 
                     </div>
                     <div class="form-inline panel-elem">
                         <div class="form-group">
-                        <label>二等奖</label>
+                        <label>二等奖&nbsp;&nbsp;</label>
                         <input type="text" name="secondPrize" id="secondPrize" class="form-control" value="<%=result.secondPrize%>">
                         </div>
                         <div class="form-group">
                         <label>数量</label>
 
-                        <input type="number" name="secondPrizeQuantity" id="secondPrizeQuantity" class="form-control" value="<%=result.secondPrizeQuantity%>">
+                        <input type="number" name="secondPrizeQuantity" id="secondPrizeQuantity" style="width: 80px;" class="form-control" value="<%=result.secondPrizeQuantity%>">
                         </div>
 
                     </div>
                     <div class="form-inline panel-elem">
                         <div class="form-group">
-                        <label>三等奖</label>
+                        <label>三等奖&nbsp;&nbsp;</label>
                         <input type="text" name="thirdPrize" id="thirdPrize" class="form-control" value="<%=result.thirdPrize%>">
                         </div>
                         <div class="form-group">
                         <label>数量</label>
-                        <input type="number" name="thirdPrizeQuantity" id="thirdPrizeQuantity" class="form-control" value="<%=result.thirdPrizeQuantity%>">
+                        <input type="number" name="thirdPrizeQuantity" id="thirdPrizeQuantity" style="width: 80px;" class="form-control" value="<%=result.thirdPrizeQuantity%>">
                         </div>
 
                     </div>
                     <div class="form-inline panel-elem">
                         <div class="form-group">
-                        <label>四等奖</label>
+                        <label>四等奖&nbsp;&nbsp;</label>
                         <input type="text" name="fourthPrize" id="fourthPrize" class="form-control" value="<%=result.fourthPrize%>">
                         </div>
                         <div class="form-group">
 
                         <label>数量</label>
-                        <input type="number" name="fourthPrizeQuantity" id="fourthPrizeQuantity" class="form-control" value="<%=result.fourthPrizeQuantity%>">
+                        <input type="number" name="fourthPrizeQuantity" id="fourthPrizeQuantity" style="width: 80px;" class="form-control" value="<%=result.fourthPrizeQuantity%>">
                         </div>
 
                     </div>
                     <div class="form-inline panel-elem">
                         <div class="form-group">
-                        <label>五等奖</label>
+                        <label>五等奖&nbsp;&nbsp;</label>
                         <input type="text" name="fifthPrize" id="fifthPrize" class="form-control" value="<%=result.fifthPrize%>">
                         </div>
                         <div class="form-group">
                         <label>数量</label>
-                        <input type="number" name="fifthPrizeQuantity" id="fifthPrizeQuantity" class="form-control" value="<%=result.fifthPrizeQuantity%>">
+                        <input type="number" name="fifthPrizeQuantity" id="fifthPrizeQuantity" style="width: 80px;" class="form-control" value="<%=result.fifthPrizeQuantity%>">
                         </div>
 
                     </div>
+                    <hr>
+                    <div class="form-inline panel-elem">
+                        <% 
+                            if(result.drawType=="probability"){
+                                var prob_draw = "";
+                                if(result.probabilityDraw)
+                                    prob_draw = "&probabilityDraw="+result.probabilityDraw.id;
+                        %>
+                        <span><a class="col-md-4 btn btn-info" role="button" href="/ProbabilityDraw/edit?advertisement=<%=result.id%><%=prob_draw%>">机率抽奖</a></span>
+                        <%
+                            }else if (result.drawType=="order"){
+                        %>
+                        <span><a class="col-md-4 btn btn-info" role="button"> href="/OrderDraw?advertisement=<%=result.id%>">排序抽奖</a></span>
+                        <%
+                            }
+                        %>
+                        <span><a class="col-md-4 btn btn-info" role="button" href="../advertisement/<%=result.id%>/prize">奖劵</a></span>
+                        <span><a class="col-md-4 btn btn-info" role="button" href="../advertisement/<%=result.id%>/quiz">问答抽奖</a></span>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="panel panel-default" >
-        <%
-        if(result.advertisementImage){
-            var image = result.advertisementImage;
-        %>
-        <div class="panel-body">                  
-        <img class="img-thumbnail" height="140px" width="257px" src="http://res.cloudinary.com/djdts3tqq/image/upload/v<%=image.imageVersion%>/<%=image.imagePublicId%>.<%=image.imageFormat%>">
-        </div>
-
-        <%
-            }
-        %>
-        <div class="panel-body">
-            <form id="form" name="form" action="/advertisement/<%=req.param('id')%>/image" method="post" enctype="multipart/form-data">
-            <div class="form-group">
-            <span class="btn btn-success fileinput-button">
-            <i class="glyphicon glyphicon-plus"></i>
-            <span>上载广告图</span>
-            <input type="file" id="fileupload" name="advertisementImage" >
-            </span>
-            <div><span id="file-info"></span></div>
-            </div>
-            <button type="submit" class="btn btn-primary">提交</button>
-            </form>
-        </div></div>
-
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <% 
-                if(result.drawType=="probability"){
-                    var prob_draw = "";
-                    if(result.probabilityDraw)
-                        prob_draw = "&probabilityDraw="+result.probabilityDraw.id;
-                %>
-                <span><a href="/ProbabilityDraw/edit?advertisement=<%=result.id%><%=prob_draw%>">机率抽奖</a></span>
+        <div class="col-md-3 no-l-padding">
+            <div class="panel panel-dashboard full-width" >
+            <div class="panel-heading panel-heading-cbj">广告图</div>
                 <%
-                }else if (result.drawType=="order"){
+                if(result.advertisementImage){
+                    var image = result.advertisementImage;
                 %>
-                <span><a href="/OrderDraw?advertisement=<%=result.id%>">排序抽奖</a></span>
-                <%
+                <div class="panel-body full-width">                  
+                    <img class="img-thumbnail" height="140px" width="295px" src="http://res.cloudinary.com/djdts3tqq/image/upload/v<%=image.imageVersion%>/<%=image.imagePublicId%>.<%=image.imageFormat%>">
+                </div>
+
+            <%
                 }
-                %>
-                <span><a href="../advertisement/<%=result.id%>/prize">奖劵</a></span>
-                <span><a href="../advertisement/<%=result.id%>/quiz">问答抽奖</a></span><br><br>                            <button type="button" id="publish" class="btn btn-success right">推出</button>
-                <button type="button" id="submit" class="btn btn-primary right">更新</button>
-                <button type="button" class="btn btn-default right" onClick="javascript: window.history.back();">取消</button>
-           </div>
-        </div>
+            %>
+                <div class="panel-body">
+                    <form id="form" name="form" action="/advertisement/<%=req.param('id')%>/image" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <div>
+                            <span class="btn btn-success fileinput-button">
+                                <i class="glyphicon glyphicon-plus"></i>
+                                <span>上载广告图</span>
+                                <input type="file" id="fileupload" name="advertisementImage" >
+                            </span>
+                            <button type="submit" class="btn btn-primary right">提交</button>
+                            </div>
+                            <div>
+                                <span id="file-info"></span>
+                            </div>
+                            
 
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="col-md-5 panel panel-default right" style="padding:0px;">
+                <div class="panel-body">          
+                    <button type="button" id="publish" class="col-md-4 btn btn-success right" style="margin: 0px;">推出</button>
+                    <button type="button" id="submit" class="col-md-4 btn btn-primary right" style="margin: 0px;">更新</button>
+                    <button type="button" style="margin: 0px;"class="col-md-4 btn btn-default right" onClick="javascript: window.history.back();">取消</button>
+               </div>
+            </div>
+        </div>
     </div>
     </div>
 

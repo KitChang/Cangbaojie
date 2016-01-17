@@ -15,6 +15,9 @@ body {
 .breadcrumb {
   border-radius: 0px;
 }
+.no-l-padding {
+  padding-left: 0px;
+}
 .panel
 {
   float: left;
