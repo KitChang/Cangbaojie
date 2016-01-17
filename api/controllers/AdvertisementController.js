@@ -283,11 +283,13 @@ module.exports = {
             option = {};
             var deviceId_concat = "";
             if(deviceArr!=null && deviceArr instanceof Array){
+                console.log("length"+deviceArr.length);
                 if(deviceArr.length==0)
                     deviceArr = "-1";
             }else{
                 deviceArr = "-1";
             }
+
             Device.search({id: deviceArr}, function(err, devices){
                 res.view('advertisement-deploy', {devices: devices, result: result});
             });

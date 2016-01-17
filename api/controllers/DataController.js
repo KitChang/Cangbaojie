@@ -297,6 +297,10 @@ module.exports = {
         var duration = req.param('duration');
         var option = {};
         var accessOption = {};
+        if(locationType==null){
+            res.view('data-access-device', {resultArr: []});
+            return;
+        }
         if(locationType&&locationType!=""){
             option.locationType = locationType;
             accessOption.locationType = locationType;
@@ -333,6 +337,7 @@ module.exports = {
         }
         if(dateTo&&dateFrom)
             accessOption.createdAt = {"<": dateTo, ">": dateFrom};
+        
         access.find(accessOption).exec(function(err, accessArr){
             var accessDevice = _.groupBy(accessArr, function(accessOne){
                 return accessOne.device
