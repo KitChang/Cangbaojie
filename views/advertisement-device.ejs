@@ -75,6 +75,7 @@
                     
                 </div>
                 <div class="panel-body">
+                    
                 <form name="add-device-form" action="/advertisement/<%=req.param('id')%>/device" method="post">
                 <table class="table table-striped" id="table">
                     <thead>
@@ -111,7 +112,12 @@
 <script>
     $("#table").DataTable({"language": {
             "url": "//cdn.datatables.net/plug-ins/1.10.10/i18n/Chinese.json"
-        }});
+        },
+       "aoColumnDefs" : [ {
+            'bSortable' : false,
+            'aTargets' : [ 7 ]
+        } ]
+      });
 </script>
     <script>
     $('#check-all').change(function () {
