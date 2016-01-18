@@ -471,7 +471,7 @@ module.exports = {
             option.sex = sex;
         }
         AppUser.find(option).exec(function(err, appUserArr){
-            res.view('data-AppUser', {appUserArr: appUserArr});
+            res.view('data-AppUser', {appUserArr: appUserArr, moment: moment});
         });
     }, 
     appUserStatistics: function (req, res){
