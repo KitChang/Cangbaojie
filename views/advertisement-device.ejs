@@ -75,6 +75,7 @@
                     
                 </div>
                 <div class="panel-body">
+                    
                 <form name="add-device-form" action="/advertisement/<%=req.param('id')%>/device" method="post">
                 <table class="table table-striped" id="table">
                     <thead>
@@ -110,15 +111,16 @@
 <script type="text/javascript" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="http://datatables.net/release-datatables/extensions/TableTools/js/dataTables.tableTools.js"></script>
 <script>
-    var table = $("#table").DataTable({
-
-        "language": 
-            {
-                "url": "//cdn.datatables.net/plug-ins/1.10.10/i18n/Chinese.json"
-            }
-        
-    });
-
+    $("#table").DataTable({"language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.10/i18n/Chinese.json"
+        },
+       "aoColumnDefs" : [ {
+            'bSortable' : false,
+            'aTargets' : [ 7 ]
+        } ]
+      });
+</script>
+    <script>
     $('#check-all').change(function () {
         var rows = table.rows({ 'search': 'applied' }).nodes();
         $('input[type="checkbox"]', rows).prop('checked', this.checked);
