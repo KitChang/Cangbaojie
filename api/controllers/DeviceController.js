@@ -8,7 +8,7 @@ var request = require('request');
 var Device = require('../lib/device');
 var moment = require('moment');
 var _ = require('underscore');
-var sync = require('synchronize');
+//var sync = require('synchronize');
 module.exports = {
     
     find: function(req, res){
@@ -133,7 +133,8 @@ module.exports = {
             
         });
         
-    },
+    }
+    /*,
     addAdvertisement: function(req, res){
         var advertisementId = req.param('advertisement');
         var adDevices = req.param('device');
@@ -219,7 +220,7 @@ module.exports = {
             }
             
         });
-    },
+    },*/
     
 };
 
