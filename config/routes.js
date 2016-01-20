@@ -80,6 +80,10 @@ module.exports.routes = {
       controller: 'AdvertisementController',
       action: 'addDevice'
   },
+  'post /device/:id/pushmsg': {
+      controller: 'DeviceController',
+      action: 'pushmsg'
+  },
   'post /device/add-advertisement': {
       controller: 'DeviceController',
       action: 'addAdvertisement'
