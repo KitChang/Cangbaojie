@@ -28,12 +28,25 @@ module.exports = {
             if(!result){
                 
             }
-            advertisement.find({device: id}).populate('advertisementImage').exec(function(err, ads){
-                var accessDateBefore = moment().subtract(30, 'days').toDate();
-                DeviceMonitor.findOne({device: id, accessDate: {'<': accessDateBefore} }).exec(function(err, faultDeviceFound){
-                    res.view('device-one', {result: result, ads: ads, faultDeviceFound: faultDeviceFound});
-                });
+            devicePushMsg.findOne({device: id}).exec(function (err, pushmsg) {
+                if (err) { return;};
+                if (pushmsg) {
+                    advertisement.find({device: id}).populate('advertisementImage').exec(function(err, ads){
+                        var accessDateBefore = moment().subtract(30, 'days').toDate();
+                        DeviceMonitor.findOne({device: id, accessDate: {'<': accessDateBefore} }).exec(function(err, faultDeviceFound){
+                            res.view('device-one', {result: result, ads: ads, faultDeviceFound: faultDeviceFound, pushmsg: pushmsg.message});
+                        });
+                    });
+                } else {
+                    advertisement.find({device: id}).populate('advertisementImage').exec(function(err, ads){
+                        var accessDateBefore = moment().subtract(30, 'days').toDate();
+                        DeviceMonitor.findOne({device: id, accessDate: {'<': accessDateBefore} }).exec(function(err, faultDeviceFound){
+                            res.view('device-one', {result: result, ads: ads, faultDeviceFound: faultDeviceFound});
+                        });
+                    });
+                }
             });
+            
         });
     },
     new: function(req, res){
@@ -133,7 +146,44 @@ module.exports = {
             
         });
         
+    },
+    pushmsg: function (req, res) {
+        var id = req.param("id");
+        var message = req.param('message');
+        devicePushMsg.findOne({device: id}).exec(function (err, pushMsg) {
+           if (err) {return;};
+           if (!pushMsg) {
+                devicePushMsg.create({device: id, message: message}).exec(function (err, devicePushMsg) {
+                    Device.findOne(id, function(err, result){
+                        if(!result){
+                            
+                        }
+                        advertisement.find({device: id}).populate('advertisementImage').exec(function(err, ads){
+                            var accessDateBefore = moment().subtract(30, 'days').toDate();
+                            DeviceMonitor.findOne({device: id, accessDate: {'<': accessDateBefore} }).exec(function(err, faultDeviceFound){
+                                res.view('device-one', {result: result, ads: ads, faultDeviceFound: faultDeviceFound, pushmsg: message});
+                            });
+                        });
+                    });
+                });
+            } else {
+                devicePushMsg.update({device: id} ,{message: message}).exec(function (err, devicePushMsg) {
+                    Device.findOne(id, function(err, result){
+                        if(!result){
+                            
+                        }
+                        advertisement.find({device: id}).populate('advertisementImage').exec(function(err, ads){
+                            var accessDateBefore = moment().subtract(30, 'days').toDate();
+                            DeviceMonitor.findOne({device: id, accessDate: {'<': accessDateBefore} }).exec(function(err, faultDeviceFound){
+                                res.view('device-one', {result: result, ads: ads, faultDeviceFound: faultDeviceFound, pushmsg: message});
+                            });
+                        });
+                    });
+                });
+            } 
+        });
     }
+
     /*,
     addAdvertisement: function(req, res){
         var advertisementId = req.param('advertisement');
