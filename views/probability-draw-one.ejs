@@ -11,23 +11,23 @@
                                 <form id="form" name="form" action="/ProbabilityDraw/<%=req.param('probabilityDraw')%>?advertisement=<%=req.param('advertisement')%>" method="post">                
                                 
                                 <div class="form-group">
-                                <label>一等奖机率 (0~100%)</label>
+                                <label>一等奖机率 (0~100%)<span class="mandatory">*</span></label>
                                 <input type="text" name="firstPrizeProbability" id="firstPrizeProbability" class="form-control" value="<%=result.firstPrizeProbability%>">
                                 </div>
                                 <div class="form-group">
-                                <label>二等奖机率 (0~100%)</label>
+                                <label>二等奖机率 (0~100%)<span class="mandatory">*</span></label>
                                 <input type="text" name="secondPrizeProbability" id="secondPrizeProbability" class="form-control" value="<%=result.secondPrizeProbability%>">
                                 </div>
                                 <div class="form-group">
-                                <label>三等奖机率 (0~100%)</label>
+                                <label>三等奖机率 (0~100%)<span class="mandatory">*</span></label>
                                 <input type="text" name="thirdPrizeProbability" id="thirdPrizeProbability" class="form-control" value="<%=result.thirdPrizeProbability%>">
                                 </div>
                                 <div class="form-group">
-                                <label>四等奖机率 (0~100%)</label>
+                                <label>四等奖机率 (0~100%)<span class="mandatory">*</span></label>
                                 <input type="text" name="fourthPrizeProbability" id="fourthPrizeProbability" class="form-control" value="<%=result.fourthPrizeProbability%>">
                                 </div>
                                 <div class="form-group">
-                                <label>五等奖机率 (0~100%)</label>
+                                <label>五等奖机率 (0~100%)<span class="mandatory">*</span></label>
                                 <input type="text" name="fifthPrizeProbability" id="fifthPrizeProbability" class="form-control" value="<%=result.fifthPrizeProbability%>">
                                 </div>
                                 <input type="hidden" name="advertisement" class="form-control" value="<%=req.param('advertisement')%>">
