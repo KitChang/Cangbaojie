@@ -6,7 +6,12 @@
                   <li class="active">广告发送</li>
                 </ol>
                 <div class="panel-body">
+<<<<<<< HEAD
                     <button onClick="javascript: window.location.href='/advertisement/<%=req.param('id')%>/device'" class="btn btn-primary">设备发送</button>
+=======
+                <div class="panel-elem">
+                    <button onClick="javascript: window.location.href='/advertisement/<%=result.id%>/device'" class="btn btn-primary">设备发送</button>
+>>>>>>> 3d8be59b9f3ac6e58cfd8277de3f4e7ee9617c41
                     <button onClick="javascript: window.history.back();" class="btn btn-default">取消</button>
                 </div>
                 <form name="form" method="post" action="/advertisement/remove-device?id=<%=req.param('id')%>">
@@ -41,6 +46,7 @@
                 </table>
                 
                 </form>
+                </div>
             </div>
         </div>
       </div>

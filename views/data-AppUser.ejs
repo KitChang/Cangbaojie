@@ -50,7 +50,7 @@
                 
                 <table class="table table-striped" id="table">
                     <thead>
-                    <tr><th>用户名</th><th>性别</th>
+                    <tr><th>注册日期</th><th>用户名</th><th>性别</th>
                         <th>电话</th>
                         
                     </tr>
@@ -60,8 +60,11 @@
                 var row;
                 while (appUserArr.length) {
                   row = appUserArr.pop();
+                  var date = row.createdAt;
+                  var date2 = moment(date).format("YYYY-MM-DD HH:mm:ss");
                 %>
                     <tr>
+                        <td><%=date2%></td>
                         <td><%=row.username%></td>
                         
                         <td>
@@ -112,7 +115,9 @@
     <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
     <script>
-        $("#table").DataTable({"language": {
+        $("#table").DataTable({
+            "order": [[ 0, "desc" ]],
+            "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.10/i18n/Chinese.json"
             }});
     </script>

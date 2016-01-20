@@ -109,20 +109,27 @@
 <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
 <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="http://datatables.net/release-datatables/extensions/TableTools/js/dataTables.tableTools.js"></script>
 <script>
+<<<<<<< HEAD
     $("#table").DataTable({"language": {
             "url": "//cdn.datatables.net/plug-ins/1.10.10/i18n/Chinese.json"},
         "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "全部"]],
         
+=======
+    var table = $("#table").DataTable({"language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.10/i18n/Chinese.json"
+        },
+>>>>>>> 3d8be59b9f3ac6e58cfd8277de3f4e7ee9617c41
        "aoColumnDefs" : [ {
             'bSortable' : false,
             'aTargets' : [ 7 ]
         } ]
       });
-</script>
-    <script>
+
     $('#check-all').change(function () {
-    $("input:checkbox").prop('checked', $(this).prop("checked"));
+        var rows = table.rows({ 'search': 'applied' }).nodes();
+        $('input[type="checkbox"]', rows).prop('checked', this.checked);
     });
     $(document).ready(function(){
 
