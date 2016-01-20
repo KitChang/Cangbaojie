@@ -238,10 +238,9 @@
                 <div class="panel-body full-width">                  
                     <img class="img-thumbnail" height="140px" width="295px" src="http://res.cloudinary.com/djdts3tqq/image/upload/v<%=image.imageVersion%>/<%=image.imagePublicId%>.<%=image.imageFormat%>">
                 </div>
-
-            <%
+                <%
                 }
-            %>
+                %>
                 <div class="panel-body">
                     <form id="form" name="form" action="/advertisement/<%=req.param('id')%>/image" method="post" enctype="multipart/form-data">
                         <div class="form-group">
