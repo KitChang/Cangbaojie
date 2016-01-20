@@ -6,14 +6,21 @@
                   <li class="active">广告发送</li>
                 </ol>
                 <div class="panel-body">
+<<<<<<< HEAD
+                    <button onClick="javascript: window.location.href='/advertisement/<%=req.param('id')%>/device'" class="btn btn-primary">设备发送</button>
+=======
                 <div class="panel-elem">
                     <button onClick="javascript: window.location.href='/advertisement/<%=result.id%>/device'" class="btn btn-primary">设备发送</button>
+>>>>>>> 3d8be59b9f3ac6e58cfd8277de3f4e7ee9617c41
                     <button onClick="javascript: window.history.back();" class="btn btn-default">取消</button>
                 </div>
-                <form name="form" method="post">
+                <form name="form" method="post" action="/advertisement/remove-device?id=<%=req.param('id')%>">
+                <div class="panel-body">
+                    <button class="btn btn-default right">删除</button>
+                </div>
                 <table class="table table-striped" id="table">
                     <thead>
-                    <tr><th>已发送的设备</th><th>省</th><th>城市</th><th>地区</th><th>街道</th><th>位置</th><th>位置类</th></tr>
+                    <tr><th>已发送的设备</th><th>省</th><th>城市</th><th>地区</th><th>街道</th><th>位置</th><th>位置类</th><th></th></tr>
                     </thead>
                     <tbody>
                 <%
@@ -30,12 +37,14 @@
                     <td><%=row.street%></td>
                     <td><%=row.location%></td>
                     <td><%=row.locationType%></td>
+                    <td><input name="device[]" type="checkbox" value="<%=row.id%>"/></td>
                     </tr>
                 <%
                 }
                 %>
                     </tbody>
                 </table>
+                
                 </form>
                 </div>
             </div>

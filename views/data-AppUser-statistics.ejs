@@ -79,6 +79,7 @@
                     </div>
                     <table class="table">
                             <tr><td><span style='background-color:#f08a75'>&nbsp;&nbsp;&nbsp;&nbsp;</span> 活跃用户</td><td><%=activeUsers%></td></tr>
+                            <tr><td><span style='background-color:#2137ff'>&nbsp;&nbsp;&nbsp;&nbsp;</span> 一般用户</td><td><%=normalUsers%></td></tr>
                             <tr><td><span style='background-color:#e6b3e6'>&nbsp;&nbsp;&nbsp;&nbsp;</span> 僵尸用户</td><td><%=inactiveUsers%></td></tr>
                     </table>
                     
@@ -109,7 +110,7 @@
             color = ["#46BFBD", "#FDB45C", "#212121", "#64af9c", "#6b1f3c", "#127690", "#a2798f", "#008b8b", "#99ccff", "#cc99ff", "#9feaae", "#40d65d", "#65ada2", "#5ee4bb", "#9ffff7", "#2412b4", "#34d491", "#da6665", "#f3d681", "#b9b9b9", "#b9b9b9", "#ffae1a", "#2137ff", "#d8941a", "#d8941a", "#ff2a1a", "#e6b3e6", "#e6b3e6", "#a8e4f0", "#6ef79c", "#5cf53d", "#d6d65c", "#adb87a", "#d6995c", "#f76e6e", "#f08a75", "#eb9947", "#ffdd33", "#cccc00", "#99eb47", "#75f075", "#85e0b3", "#33ffdd","#998cd9",];
             genderData = [{value: "<%=maleUsers%>", color: "#46BFBD", label: "男性用户", highlight: "red"}, {value: "<%=femaleUsers%>", color: "#FDB45C", label: "女性用户", highlight: "red"}];
             newOldUserData =[{value: "<%=newUsers%>", color: "#40d65d", label: "新用户", highlight: "red"}, {value: "<%=oldUsers%>", color: "#2137ff", label: "旧用户",highlight: "red"}];
-            activeInactiveUserData =[{value: "<%=activeUsers%>", color: "#f08a75", label: "活跃用户",highlight: "red"}, {value: "<%=inactiveUsers%>", label: "僵尸用户", color: "#e6b3e6", highlight: "red"}];
+            activeInactiveUserData =[{value: "<%=activeUsers%>", color: "#f08a75", label: "活跃用户",highlight: "red"}, {value: "<%=inactiveUsers%>", label: "僵尸用户", color: "#e6b3e6", highlight: "red"},{value: "<%=normalUsers%>", color: "#2137ff", label: "一般用户",highlight: "red"}];
         var ctx = document.getElementById("genderChart").getContext("2d");
         var ctx2 = document.getElementById("newOldUserChart").getContext("2d");
         var ctx3 = document.getElementById("activeInactiveUserChart").getContext("2d");

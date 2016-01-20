@@ -478,30 +478,41 @@ module.exports = {
         AppUser.find().exec(function(err, appUserArr){
             AppUser.find({sex: "1"}).exec(function(err, maleAppUserArr){
                 var monthAgo = moment().subtract(30, 'days').toDate();
+                var threeMonthsAgo = moment().subtract(90, 'days').toDate();
+                var todayStart = moment().startOf('day').toDate();
+                var todayEnd = moment().endOf('day').toDate();
                 AppUser.find({createdAt: {">": monthAgo}}).exec(function(err, newAppUserArr){
-                    access.find({createdAt: {">": monthAgo}}).exec(function(err, accessArr){
-                        var activeAppUserArr = [];
-                        while(accessArr.length){
-                            var accessOne = accessArr.pop();
-                            var appUserId = accessOne.appUser;
-                            activeAppUserArr[appUserId] = null;
-                            var activeAppUserKeys = Object.keys(activeAppUserArr);
-                        }
-                        var totalUsers = appUserArr.length;
-                        var maleUsers = maleAppUserArr.length;
-                        var femaleUsers = totalUsers - maleUsers;
-                        var newUsers = newAppUserArr.length;
-                        var oldUsers = totalUsers - newUsers;
-                        var activeUsers = activeAppUserKeys.length;
-                        var inactiveUsers = totalUsers - activeUsers;
+                    access.find({createdAt: {">": threeMonthsAgo, "<": todayStart}}).exec(function(err, accessArr){
                         
-                        res.view('data-AppUser-statistics', {totalUsers: totalUsers, maleUsers: maleUsers, femaleUsers: femaleUsers, newUsers: newUsers, oldUsers: oldUsers, activeUsers: activeUsers, inactiveUsers: inactiveUsers});
-                        
-                        
-                        
-                        
-                        
-                    })
+                        access.find({createdAt: {">=": todayStart, "<": todayEnd}}).exec(function(err, accessTodayArr){
+                            var activeAppUserArr = [];
+                            var normalAppUserArr = [];
+                            while(accessArr.length){
+                                var accessOne = accessArr.pop();
+                                var appUserId = accessOne.appUser;
+                                normalAppUserArr[appUserId] = null;
+                                var normalAppUserKeys = Object.keys(normalAppUserArr);
+                            }
+                            while(accessTodayArr.length){
+                                var accessOne = accessArr.pop();
+                                var appUserId = accessOne.appUser;
+                                activeAppUserArr[appUserId] = null;
+                                var activeAppUserKeys = Object.keys(activeAppUserArr);
+                            }
+                            var totalUsers = appUserArr.length;
+                            var maleUsers = maleAppUserArr.length;
+                            var femaleUsers = totalUsers - maleUsers;
+                            var newUsers = newAppUserArr.length;
+                            var oldUsers = totalUsers - newUsers;
+                            var normalUsers = normalAppUserKeys.length;
+                            var activeUsers = activeAppUserKeys.length;
+                            var inactiveUsers = totalUsers - normalUsers - activeUsers;
+                            
+
+                            res.view('data-AppUser-statistics', {totalUsers: totalUsers, maleUsers: maleUsers, femaleUsers: femaleUsers, newUsers: newUsers, oldUsers: oldUsers, activeUsers: activeUsers, inactiveUsers: inactiveUsers, normalUsers: normalUsers});
+                        })
+                    });
+                    
                 })
                 
             })
