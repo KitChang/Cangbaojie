@@ -80,7 +80,8 @@ module.exports = {
         user.findOne({username: username, password: password}).exec(function(err, doc) {
             
             if(doc==null){
-                res.redirect('/login');
+                var message = "用户名或密码错误";
+                res.redirect('/login?omitNavigation=omitNavigation&message='+encodeURIComponent(message));
                 return;
             }
             

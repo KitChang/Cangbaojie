@@ -451,6 +451,13 @@
                 });
                 form.submit();
             });
+            <%
+            if(req.param('message')){
+            %>
+            alert("<%=req.param('message')%>");
+            <%
+            }
+            %>
             
         });
         

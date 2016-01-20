@@ -63,7 +63,6 @@ module.exports = {
         var drawCouponExpiredTime = req.param('drawCouponExpiredTime');
         var drawPerformInterval = req.param('drawPerformInterval');
         var numberOfPrize = req.param('numberOfPrize');
-        var indexUrl = req.param('indexUrl');
         advertisement.create({
             client: client,
             title: title,
@@ -99,8 +98,7 @@ module.exports = {
             secondPrizeQuantityRemain: secondPrizeQuantity,
             thirdPrizeQuantityRemain: thirdPrizeQuantity,
             fourthPrizeQuantityRemain: fourthPrizeQuantity,
-            fifthPrizeQuantityRemain: fifthPrizeQuantity,
-            indexUrl: indexUrl
+            fifthPrizeQuantityRemain: fifthPrizeQuantity
         }).exec(function(err, result){
             if(err){
                 res.serverError(err);
@@ -145,7 +143,6 @@ module.exports = {
             var drawPerformInterval_second = req.param("drawPerformInterval_second");
             var drawCouponExpiredTime = req.param('drawCouponExpiredTime');
             var drawPerformInterval = req.param('drawPerformInterval');
-            var indexUrl = req.param('indexUrl');
             option = 
             {
                 title: title,
@@ -164,8 +161,7 @@ module.exports = {
                 drawPerformInterval_day: drawPerformInterval_day,
                 drawPerformInterval_hour: drawPerformInterval_hour,
                 drawPerformInterval_minute: drawPerformInterval_minute,
-                drawPerformInterval_second: drawPerformInterval_second,
-                indexUrl: indexUrl
+                drawPerformInterval_second: drawPerformInterval_second
             };
             if(ad.status=="draft"){
                 option.firstPrize = firstPrize;
@@ -427,6 +423,7 @@ module.exports = {
             var numberOfPrize = ad.numberOfPrize;
             var option = {};
             var checkFail = false;
+            var message = [];
             if(numberOfPrize == 2){
                 if(ad.firstPrizeQuantity <= 0 || ad.firstPrizeQuantityRemain <= 0 || ad.firstPrize.trim() == "")
                     checkFail = true;
@@ -463,8 +460,30 @@ module.exports = {
                 if(ad.fifthPrizeQuantity <= 0 || ad.fifthPrizeQuantityRemain <= 0 || ad.fifthPrize.trim() == "")
                     checkFail = true;
             };
-            if(checkFail){
-                res.redirect('/advertisement/'+id);
+            if(checkFail == true){
+                message.push("奖项数据有误");
+            }
+            var prizeCouponExpiredType = ad.prizeCouponExpiredType;
+            var highCode = ad.highCode;
+            var lowCode = ad.lowCode;
+            if(prizeCouponExpiredType==""){
+                checkFail = true;
+                message.push("领奖有效日期未设");
+            }
+            if(numberOfPrize==3||numberOfPrize==4||numberOfPrize==5){
+                if(lowCode == ""){
+                    checkFail = true;
+                    message.push("一般领奖码未设");
+                }   
+            }
+            if(highCode==""){
+                checkFail = true
+                message.push("高级领奖码未设");
+            }if(checkFail){
+                //console.log(message.join(','));
+                var messageStr = message.join(',')+"";
+                console.log(messageStr);
+                res.redirect('/advertisement/'+id+"?message="+encodeURIComponent(messageStr));
                 return;
             }
             if(numberOfPrize == 2){
@@ -489,7 +508,9 @@ module.exports = {
                 option.fifthPrizeQuantityRemain = 0;
                 option.fifthPrize = "";
             }
+            
             option.status = "publish";
+            
             advertisement.update({id: id}, option).exec(function(err){
                 res.redirect('/advertisement/'+id);
             })
