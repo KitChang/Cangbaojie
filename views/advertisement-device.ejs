@@ -12,7 +12,7 @@
                             <%
                                 if(req.param("locationType")&&req.param("locationType")!=""){
                                 %>
-                                <option value="<%=req.param('locationType')%>" selected><%=req.param('locationType')%></option>
+                            <option value="<%=req.param('locationType')%>" selected><%=req.param('locationType')%>                                                      </option>
                                 <%
                                 }
                                 %>
@@ -111,8 +111,9 @@
 <script type="text/javascript" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
 <script>
     $("#table").DataTable({"language": {
-            "url": "//cdn.datatables.net/plug-ins/1.10.10/i18n/Chinese.json"
-        },
+            "url": "//cdn.datatables.net/plug-ins/1.10.10/i18n/Chinese.json"},
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "全部"]],
+        
        "aoColumnDefs" : [ {
             'bSortable' : false,
             'aTargets' : [ 7 ]
@@ -201,28 +202,7 @@
               $("#street").append(html);
             });
         }
-    /*
-    $("#state").change(function(){
-        var selectedState = $("#state option:selected").text();
-        $("#city").empty();
-        $("#region").empty();
-        $("#street").empty();
-        $.ajax({
-        url: "/geo/city?state="+selectedState
-        }).done(function(data){
-          $("#city").empty();
-          $("#city").append("<option value=''>所有城市</option>");
-          html = "";
-          while (data.length) {
-            var city = data.pop();
-            option = "<option value='"+city+"'>"+city+"</option>";
-            html = html + option;
-            //code
-          }
-          $("#city").append(html);
-          });
-      });
-    */
+    
     $("#state").change(function(){
             $("#city").empty();
             $("#region").empty();

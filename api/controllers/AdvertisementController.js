@@ -6,6 +6,7 @@
  */
 var Device = require("../lib/device");
 var moment = require("moment");
+var _ = require("underscore");
 module.exports = {
 	find: function(req, res){
             advertisement.find({deleted: false}).populate('client').populate('advertisementImage').exec (function(err, resultArr){
@@ -15,7 +16,6 @@ module.exports = {
             res.view('advertisement', {resultArr: resultArr});
             });
     },
-    
     findOne: function(req, res){
         var id = req.param("id");
         advertisement.findOne({id: id, deleted: false}).populate('advertisementImage').populate('probabilityDraw').exec(function(err, result)          {
@@ -295,6 +295,7 @@ module.exports = {
             });
         });
     },
+    
     device: function(req, res){
         Device.search({}, function(err, resultArr){
             if(err){
@@ -358,9 +359,24 @@ module.exports = {
             })
         });
     },
-    remove: function(req, res){
-        
+    removeDevice: function(req, res){
+        var id = req.param('id');
+        var deviceIds = req.param('device');
+        advertisement.findOne({id: id}).exec(function(err, ad){
+            var deviceArr = ad.device;
+            if(!deviceArr||deviceArr==undefined)
+                deviceArr = [];
+            if(deviceIds!=null)
+                while(deviceIds.length){
+                    deviceArr = _.without(deviceArr, deviceIds.pop());
+                }
+            advertisement.update({id: id}, {device: deviceArr}).exec(function(err){
+                res.redirect('/advertisement/'+id+"/deploy");
+                res.end();
+            })
+        });
     },
+
     client: function(req, res){
         client.find().exec(function(err, resultArr){
             if(err){

@@ -72,9 +72,17 @@ module.exports.routes = {
       controller: 'AdvertisementController',
       action: 'searchDevice'
   },
+  'post /advertisement/remove-device': {
+      controller: 'AdvertisementController',
+      action: 'removeDevice'
+  },
   'post /advertisement/:id/device': {
       controller: 'AdvertisementController',
       action: 'addDevice'
+  },
+  'post /device/add-advertisement': {
+      controller: 'DeviceController',
+      action: 'addAdvertisement'
   },
   'get /data/access': {
       controller: 'DataController',

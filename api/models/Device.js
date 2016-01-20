@@ -8,12 +8,7 @@
 module.exports = {
   identity: 'device',
   attributes: {
-
-      locationType: 'string',
-      state: 'string',
-      city: 'string',
-      region: 'string',
-      street: 'string'
+advertisement: { type: 'array', defaultsTo: []}
       
   }
 };
