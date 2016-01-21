@@ -1,3 +1,4 @@
+var passwordHash = require('password-hash');
 module.exports = {
 	find: function(req, res){
         
@@ -28,6 +29,7 @@ module.exports = {
         
         var username = req.param('username');
         var password = req.param('password');
+        var hashedPassword = passwordHash.generate(password);
         var email = req.param('email');
         var client = req.param("client");
         
@@ -38,7 +40,7 @@ module.exports = {
                 return res.serverError("用户名已经存在");
             }
             
-            user_client.create({username: username, password: password, email: email, client}).exec(function(err, doc){
+            user_client.create({username: username, password: hashedPassword, email: email, client}).exec(function(err, doc){
                 
                 res.redirect('/user_client/'+doc.id);
             });
@@ -50,10 +52,11 @@ module.exports = {
         var email = req.param("email");
         var changePassword = req.param('changePassword');
         var password = req.param('password');
+        var hashedPassword = passwordHash.generate(password);
         option = {};
         option.email = email;
         if(changePassword=='change'){
-            option.password = password;
+            option.password = hashedPassword;
             console.log("password change");
         }
         user_client.update({id: id}, option

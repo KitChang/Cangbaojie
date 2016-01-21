@@ -29,7 +29,8 @@
     "underscore": "*",
     "random-js": "*",
     "i18n": "0.5.0",
-    "underscore": "*"
+    "underscore": "*",
+    "password-hash": "1.2.2"
     
   },
   "scripts": {

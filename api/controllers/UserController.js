@@ -4,7 +4,7 @@
  * @description :: Server-side logic for managing users
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
-
+var passwordHash = require('password-hash');
 module.exports = {
 	find: function(req, res) {
         user.find({deleted: false}).exec(function(err, resultArr){
@@ -27,8 +27,10 @@ module.exports = {
         
         var username = req.param('username');
         var password = req.param('password');
+        
         var role = req.param('role');
         var client = req.param('client');
+        var hashedPassword = passwordHash.generate(password);
         
         user.findOne({username: username}).exec(function(err, doc){
             
@@ -36,8 +38,7 @@ module.exports = {
                 return res.serverError(err);
             }
             
-            user.create({username: username, password: password, role: role}).exec(function(err, doc){
-                
+            user.create({username: username, password: hashedPassword, role: role}).exec(function(err, doc){
                 res.redirect('/user/'+doc.id);
             });
         });
@@ -48,10 +49,11 @@ module.exports = {
         var role = req.param('role');
         var changePassword = req.param('changePassword');
         var password = req.param('password');
+        var hashedPassword = passwordHash.generate(password);
         option = {};
         option.role = role;
         if(changePassword=='change')
-            option.password = password;
+            option.password = hashedPassword;
         
         user.update({id: id}, option).exec(function(err, doc){
             
@@ -75,11 +77,8 @@ module.exports = {
         
         var username = req.param('username');
         var password = req.param('password');
-        
-        
-        user.findOne({username: username, password: password}).exec(function(err, doc) {
-            
-            if(doc==null){
+        user.findOne({username: username}).exec(function(err, doc) {
+            if(doc==null||!passwordHash.verify(password, doc.password)){
                 var message = "用户名或密码错误";
                 res.redirect('/login?omitNavigation=omitNavigation&message='+encodeURIComponent(message));
                 return;
