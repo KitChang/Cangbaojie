@@ -428,7 +428,7 @@ module.exports = {
             var prob;
             if(drawType==""||(drawType!="probability"&&drawType!="order"))
                 checkFail = true;
-            if(drawType=="probability"&&!ad.probability){
+            if(drawType=="probability"&&!ad.probabilityDraw){
                 checkFail = true;
                 message.push("几率抽奖未设");
             }
@@ -468,7 +468,7 @@ module.exports = {
                         checkFail = true;
                     if(ad.secondPrizeQuantity <= 0 || ad.secondPrizeQuantityRemain <= 0 || ad.secondPrize.trim() == "")
                         checkFail = true;
-                    if(drawType=="probability"){
+                    if(drawType=="probability"&&prob){
                         if(prob.firstPrizeProbability < 0 || prob.secondPrizeProbability < 0)
                             checkFail = true;
                         if(prob.firstPrizeProbability > 100 || prob.secondPrizeProbability > 100)
@@ -482,7 +482,7 @@ module.exports = {
                         checkFail = true;
                     if(ad.thirdPrizeQuantity <= 0 || ad.thirdPrizeQuantityRemain <= 0 || ad.thirdPrize.trim() == "")
                         checkFail = true;
-                    if(drawType=="probability"){
+                    if(drawType=="probability"&&prob){
                         if(prob.firstPrizeProbability < 0 || prob.secondPrizeProbability < 0 || prob.thirdPrizeProbability < 0)
                             checkFail = true;
                         if(prob.firstPrizeProbability > 100 || prob.secondPrizeProbability > 100 || prob.thirdPrizeProbability > 100)
@@ -498,7 +498,7 @@ module.exports = {
                         checkFail = true;
                     if(ad.fourthPrizeQuantity <= 0 || ad.fourthPrizeQuantityRemain <= 0 || ad.fourthPrize.trim() == "")
                         checkFail = true;
-                    if(drawType=="probability"){
+                    if(drawType=="probability"&&prob){
                         if(prob.firstPrizeProbability < 0 || prob.secondPrizeProbability < 0 || prob.thirdPrizeProbability < 0 || prob.fourthPrizeProbability < 0)
                             checkFail = true;
                         if(prob.firstPrizeProbability > 100 || prob.secondPrizeProbability > 100 || prob.thirdPrizeProbability > 100 || prob.fourthPrizeProbability > 100)
@@ -516,7 +516,7 @@ module.exports = {
                         checkFail = true;
                     if(ad.fifthPrizeQuantity <= 0 || ad.fifthPrizeQuantityRemain <= 0 || ad.fifthPrize.trim() == "")
                         checkFail = true;
-                    if(drawType=="probability"){
+                    if(drawType=="probability"&&prob){
                         if(prob.firstPrizeProbability < 0 || prob.secondPrizeProbability < 0 || prob.thirdPrizeProbability < 0 || prob.fourthPrizeProbability < 0 || prob.fifthPrizeProbability < 0)
                             checkFail = true;
                         if(prob.firstPrizeProbability > 100 || prob.secondPrizeProbability > 100 || prob.thirdPrizeProbability > 100 || prob.fourthPrizeProbability > 100 || prob.fifthPrizeProbability > 100)
