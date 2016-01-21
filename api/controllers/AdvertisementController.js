@@ -542,8 +542,8 @@ module.exports = {
                 if(highCode==""){
                     checkFail = true
                     message.push("高级领奖码未设");
-                }if(checkFail){
-                    //console.log(message.join(','));
+                }
+                if(checkFail){
                     var messageStr = message.join(',')+"";
                     console.log(messageStr);
                     res.redirect('/advertisement/'+id+"?message="+encodeURIComponent(messageStr));

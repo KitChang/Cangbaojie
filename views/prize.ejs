@@ -13,15 +13,15 @@
                               <li class="active">奖劵</li>
                             </ol>
                             <div class="panel-body">
-                                <form class="form-horizontal" id="form" name="form" action="/advertisement/<%=result.id%>/prize" method="post">   
+                                <form class="form-horizontal" id="form" name="form" action="/advertisement/<%=result.id%>/prize" method="post" onSubmit="return onSubmit();">   
                                 <div class="form-group" id="radio">
                                 <label class="control-label col-sm-2">奖劵有效类型 <span class="mandatory">*</span></label>
                                 <div class="col-sm-10 form-inline"> 
                                 <label>奖劵有效天数</label>
-                                <input type="radio" id="prizeCouponExpiredDuration_radio" value="duration" name="prizeCouponExpiredType" class="form-control">
+                                <input type="radio" id="prizeCouponExpiredDurationRadio" value="duration" name="prizeCouponExpiredType" class="form-control">
                                 <br>
                                 <label>奖劵有效日期</label>
-                                 <input type="radio" id="prizeCouponExpiredDate_radio" value="date" name="prizeCouponExpiredType" class="form-control">
+                                 <input type="radio" id="prizeCouponExpiredDateRadio" value="date" name="prizeCouponExpiredType" class="form-control">
                                  </div>
                                 </div>
                                 <div class="form-group" id="prizeCouponExpiredDuration_div">
@@ -39,13 +39,13 @@
                                 <div class="form-group">
                                 <label class="control-label col-sm-2">领奖地点 <span class="mandatory">*</span></label>
                                 <div  class="col-sm-10"> 
-                                    <input type="text" name="redeemLocation" class="form-control full-width">
+                                    <input type="text" name="redeemLocation" id="redeemLocation" class="form-control full-width">
                                 </div>
                                 </div>
                                 <div class="form-group">
                                 <label class="control-label col-sm-2">商家介绍 <span class="mandatory">*</span></label>
                                 <div  class="col-sm-10"> 
-                                    <textarea style="height: 150px; " name="companyIntroduction" class="form-control full-width">
+                                    <textarea style="height: 150px; " name="companyIntroduction" id="companyIntroduction" class="form-control full-width">
                                 <%
                                     if(!result.companyIntroduction){
                                 %>
@@ -64,13 +64,13 @@
                                 <div class="form-group">
                                 <label class="control-label col-sm-2">高级领奖码 <span class="mandatory">*</span></label>
                                 <div  class="col-sm-10"> 
-                                    <input type="text" name="highCode" class="form-control full-width">
+                                    <input type="text" name="highCode" class="form-control full-width" id="highCode">
                                 </div>
                                 </div>
                                 <div class="form-group">
                                 <label class="control-label col-sm-2">一般领奖码 <span class="mandatory">*</span></label>
                                 <div  class="col-sm-10"> 
-                                    <input type="text" name="lowCode" class="form-control full-width">
+                                    <input type="text" name="lowCode" id="lowCode" class="form-control full-width">
                                 </div>
                                 </div>
                                     
@@ -173,7 +173,45 @@
         <%
         }
         %>
-                                                                                                       $("#prizeCouponExpiredDate").daterangepicker({singleDatePicker: true});
+    
+        $("#prizeCouponExpiredDate").daterangepicker({singleDatePicker: true});
+        function onSubmit(){
+            var prizeCouponExpiredType = $("input[name='prizeCouponExpiredType']").val();
+            var prizeCouponExpiredDuration = $("#prizeCouponExpiredDuration").val();
+            var prizeCouponExpiredDate = $("#prizeCouponExpiredDate").val();
+            var redeemLocation = $("#redeemLocation").val();
+            var companyIntroduction = $("#companyIntroduction").val();
+            var highCode = $("#highCode").val();
+            var lowCode = $("#lowCode").val();
+            var message = [];
+            if(($.trim(prizeCouponExpiredType)=="")){
+                message.push("奖劵有效类型不为空");
+            }
+            if(prizeCouponExpiredType=="duration"&&$.trim(prizeCouponExpiredDuration)==""){
+                message.push("奖劵有效天数不为空");
+            }
+            if(prizeCouponExpiredType=="date"&&$.trim(prizeCouponExpiredDate)==""){
+                message.push("奖劵有效日期不为空");
+            }
+            if(($.trim(companyIntroduction)=="")){
+                message.push("商家介绍不为空");
+            }
+            if(($.trim(redeemLocation)=="")){
+                message.push("领奖地点不为空");
+            }
+            if(($.trim(highCode)=="")){
+                message.push("高级领奖码不为空");
+            }
+            if(($.trim(lowCode)=="")){
+                message.push("一般领奖码不为空");
+            }
+            if(message.length){
+                alert(message.join('\n'));
+                return false;
+            }
+                
+            return true;
+        }
         
         
     </script>
