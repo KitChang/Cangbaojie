@@ -435,7 +435,7 @@ module.exports = {
             OrderDraw.find({advertisement: id}).exec(function(err, orderArr){
                 if(drawType=="order"&&!orderArr.length){
                     checkFail = true;
-                    message.push("排序抽奖未设")；
+                    message.push("排序抽奖未设");
                 }
                 if(drawType=="order"){
                     var order;
