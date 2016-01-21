@@ -1,40 +1,57 @@
-    <div class="container content">
-        <div class="row">
-                <div class="panel panel-dashboard full-width" >
-                    <ol class="breadcrumb panel-heading panel-heading-cbj">
-                        <li><a href='/user_client'>商家账户</a></li>
-                        <li>账户创建</li>
-                    </ol>  
-                    <div class="panel-body">
-                        <form class="form-horizontal" id="form" name="form" action="/user_client/" method="post">                
-                        <div class="form-group">
-                        <label class="control-label col-sm-2" for="username">用户名 <span class="mandatory">*</span></label>
-                        <div class="col-sm-10">
-                        <input type="text" name="username" class="form-control">
-                        </div>
-                        </div>
-                        <div class="form-group">
-                        <label class="control-label col-sm-2" for="password">密码 <span class="mandatory">*</span></label>
-                        <div class="col-sm-10">
-                        <input type="text" name="password" class="form-control">
-                        </div>
-                        </div>
-                        <div class="form-group">
-                        <label class="control-label col-sm-2" for="email">电子邮箱 <span class="mandatory">*</span></label>
-                        <div class="col-sm-10">
-                        <input type="text" name="email" class="form-control">
-                        </div>
-                        </div>
-                        <input type="hidden" name="client" value="<%=req.param('client')%>">
-                        
-                        <input type="button" class="btn btn-default right" onClick="javascript:window.history.back()" value="取消"/>  
-                        <input type="button" class="btn btn-primary right" value="创建" onClick="javascript:document.form.submit();"/>
-                        </form>
+<div class="container content">
+    <div class="row">
+            <div class="panel panel-dashboard full-width" >
+                <ol class="breadcrumb panel-heading panel-heading-cbj">
+                    <li><a href='/user_client'>商家账户</a></li>
+                    <li>账户创建</li>
+                </ol>  
+                <div class="panel-body">
+                    <form class="form-horizontal" id="form" name="form" action="/user_client/" method="post" onSubmit="return onSubmit()">                
+                    <div class="form-group">
+                    <label class="control-label col-sm-2" for="username">用户名 <span class="mandatory">*</span></label>
+                    <div class="col-sm-10">
+                    <input type="text" name="username" id="username" class="form-control">
                     </div>
-                </div>              
-        </div>
-        
+                    </div>
+                    <div class="form-group">
+                    <label class="control-label col-sm-2" for="password">密码 <span class="mandatory">*</span></label>
+                    <div class="col-sm-10">
+                    <input type="text" name="password" id="password" class="form-control">
+                    </div>
+                    </div>
+                    <div class="form-group">
+                    <label class="control-label col-sm-2" for="email">电子邮箱 <span class="mandatory">*</span></label>
+                    <div class="col-sm-10">
+                    <input type="text" name="email" id="email" class="form-control">
+                    </div>
+                    </div>
+                    <input type="hidden" name="client" value="<%=req.param('client')%>">
+
+                    <input type="button" class="btn btn-default right" onClick="javascript:window.history.back()" value="取消"/>  
+                    <input type="submit" class="btn btn-primary right" value="创建"/>
+                    </form>
+                </div>
+            </div>              
     </div>
-    <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
-    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+
+</div>
+<script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
+<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+<script>
+    function onSubmit(){
+        var username = $("#username").val();
+        var password = $("#password").val();
+        var email = $("#email").val();
+        var message = [];
+        if($.trim(username)==""||$.trim(password)==""||$.trim(email)=="")
+            message.push("输入不完整");
+        if(message.length){
+            alert(message.join("\n"));
+            return false;
+        }
+        return true;
+            
+    }
+
+</script>
 
