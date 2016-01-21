@@ -424,96 +424,162 @@ module.exports = {
             var option = {};
             var checkFail = false;
             var message = [];
-            if(numberOfPrize == 2){
-                if(ad.firstPrizeQuantity <= 0 || ad.firstPrizeQuantityRemain <= 0 || ad.firstPrize.trim() == "")
-                    checkFail = true;
-                if(ad.secondPrizeQuantity <= 0 || ad.secondPrizeQuantityRemain <= 0 || ad.secondPrize.trim() == "")
-                    checkFail = true;
-            }
-            if(numberOfPrize == 3){
-                if(ad.firstPrizeQuantity <= 0 || ad.firstPrizeQuantityRemain <= 0 || ad.firstPrize.trim() == "")
-                    checkFail = true;
-                if(ad.secondPrizeQuantity <= 0 || ad.secondPrizeQuantityRemain <= 0 || ad.secondPrize.trim() == "")
-                    checkFail = true;
-                if(ad.thirdPrizeQuantity <= 0 || ad.thirdPrizeQuantityRemain <= 0 || ad.thirdPrize.trim() == "")
-                    checkFail = true;
-            }
-            if(numberOfPrize == 4){
-                if(ad.firstPrizeQuantity <= 0 || ad.firstPrizeQuantityRemain <= 0 || ad.firstPrize.trim() == "")
-                    checkFail = true;
-                if(ad.secondPrizeQuantity <= 0 || ad.secondPrizeQuantityRemain <= 0 || ad.secondPrize.trim() == "")
-                    checkFail = true;
-                if(ad.thirdPrizeQuantity <= 0 || ad.thirdPrizeQuantityRemain <= 0 || ad.thirdPrize.trim() == "")
-                    checkFail = true;
-                if(ad.fourthPrizeQuantity <= 0 || ad.fourthPrizeQuantityRemain <= 0 || ad.fourthPrize.trim() == "")
-                    checkFail = true;
-            }
-            if(numberOfPrize == 5){
-                if(ad.firstPrizeQuantity <= 0 || ad.firstPrizeQuantityRemain <= 0 || ad.firstPrize.trim() == "")
-                    checkFail = true;
-                if(ad.secondPrizeQuantity <= 0 || ad.secondPrizeQuantityRemain <= 0 || ad.secondPrize.trim() == "")
-                    checkFail = true;
-                if(ad.thirdPrizeQuantity <= 0 || ad.thirdPrizeQuantityRemain <= 0 || ad.thirdPrize.trim() == "")
-                    checkFail = true;
-                if(ad.fourthPrizeQuantity <= 0 || ad.fourthPrizeQuantityRemain <= 0 || ad.fourthPrize.trim() == "")
-                    checkFail = true;
-                if(ad.fifthPrizeQuantity <= 0 || ad.fifthPrizeQuantityRemain <= 0 || ad.fifthPrize.trim() == "")
-                    checkFail = true;
-            };
-            if(checkFail == true){
-                message.push("奖项数据有误");
-            }
-            var prizeCouponExpiredType = ad.prizeCouponExpiredType;
-            var highCode = ad.highCode;
-            var lowCode = ad.lowCode;
-            if(prizeCouponExpiredType==""){
+            var drawType = ad.drawType;
+            var prob;
+            if(drawType==""||(drawType!="probability"&&drawType!="order"))
                 checkFail = true;
-                message.push("领奖有效日期未设");
+            if(drawType=="probability"&&!ad.probability){
+                checkFail = true;
+                message.push("几率抽奖未设");
             }
-            if(numberOfPrize==3||numberOfPrize==4||numberOfPrize==5){
-                if(lowCode == ""){
+            OrderDraw.find({advertisement: id}).exec(function(err, orderArr){
+                if(drawType=="order"&&!orderArr.length){
                     checkFail = true;
-                    message.push("一般领奖码未设");
-                }   
-            }
-            if(highCode==""){
-                checkFail = true
-                message.push("高级领奖码未设");
-            }if(checkFail){
-                //console.log(message.join(','));
-                var messageStr = message.join(',')+"";
-                console.log(messageStr);
-                res.redirect('/advertisement/'+id+"?message="+encodeURIComponent(messageStr));
-                return;
-            }
-            if(numberOfPrize == 2){
-                option.thirdPrizeQuantityRemain = 0;
-                option.thirdPrizeQuantity = 0;
-                option.thirdPrize = "";
-                option.fourthPrizeQuantityRemain = 0;
-                option.fourthPrizeQuantity = 0;
-                option.fourthPrize = "";
-                option.fifthPrizeQuantity = 0;
-                option.fifthPrizeQuantityRemain = 0;
-                option.fifthPrize = "";
-            }else if(numberOfPrize == 3){
-                option.fourthPrizeQuantityRemain = 0;
-                option.fourthPrizeQuantity = 0;
-                option.fourthPrize = "";
-                option.fifthPrizeQuantity = 0;
-                option.fifthPrizeQuantityRemain = 0;
-                option.fifthPrize = "";
-            }else if(numberOfPrize == 4){
-                option.fifthPrizeQuantity = 0;
-                option.fifthPrizeQuantityRemain = 0;
-                option.fifthPrize = "";
-            }
+                    message.push("排序抽奖未设")；
+                }
+                if(drawType=="order"){
+                    var order;
+                    while(orderArr.length){
+                        order = orderArr.pop();
+                        if(order.drawCountLowerBound<0 || order.drawCountUpperBound<0 || order.drawCountLowerBound > order.drawCountUpperBound){
+                            checkFail = true;
+                            message.push("排序数据设定有误");
+                        }
+                        if(order.firstPrizeRange<0 || order.secondPrizeRange < 0 || order.thirdPrizeRange <0 || order.fourthPrizeRange < 0 || order.fifthPrizeRange < 0){
+                            checkFail = true;
+                            message.push("排序数据设定有误");
+                        }
+                        var sum = order.firstPrizeRange + order.secondPrizeRange + order.thirdPrizeRange + order.fourthPrizeRange + order.fifthPrizeRange;
+                        var dif = order.drawCountUpperBound - order.drawCountLowerBound;
+                        if(sum > dif){
+                            checkFail = true;
+                            message.push("排序数据设定有误");
+                        }
+                        if(checkFail==true){
+                            break;
+                        }   
+                    }
+                }
+                if(ad.probabilityDraw)
+                    prob = ad.probabilityDraw;
+
+                if(numberOfPrize == 2){
+                    if(ad.firstPrizeQuantity <= 0 || ad.firstPrizeQuantityRemain <= 0 || ad.firstPrize.trim() == "")
+                        checkFail = true;
+                    if(ad.secondPrizeQuantity <= 0 || ad.secondPrizeQuantityRemain <= 0 || ad.secondPrize.trim() == "")
+                        checkFail = true;
+                    if(drawType=="probability"){
+                        if(prob.firstPrizeProbability < 0 || prob.secondPrizeProbability < 0)
+                            checkFail = true;
+                        if(prob.firstPrizeProbability > 100 || prob.secondPrizeProbability > 100)
+                            checkFail = true;
+                    }
+                }
+                if(numberOfPrize == 3){
+                    if(ad.firstPrizeQuantity <= 0 || ad.firstPrizeQuantityRemain <= 0 || ad.firstPrize.trim() == "")
+                        checkFail = true;
+                    if(ad.secondPrizeQuantity <= 0 || ad.secondPrizeQuantityRemain <= 0 || ad.secondPrize.trim() == "")
+                        checkFail = true;
+                    if(ad.thirdPrizeQuantity <= 0 || ad.thirdPrizeQuantityRemain <= 0 || ad.thirdPrize.trim() == "")
+                        checkFail = true;
+                    if(drawType=="probability"){
+                        if(prob.firstPrizeProbability < 0 || prob.secondPrizeProbability < 0 || prob.thirdPrizeProbability < 0)
+                            checkFail = true;
+                        if(prob.firstPrizeProbability > 100 || prob.secondPrizeProbability > 100 || prob.thirdPrizeProbability > 100)
+                            checkFail = true;
+                    }
+                }
+                if(numberOfPrize == 4){
+                    if(ad.firstPrizeQuantity <= 0 || ad.firstPrizeQuantityRemain <= 0 || ad.firstPrize.trim() == "")
+                        checkFail = true;
+                    if(ad.secondPrizeQuantity <= 0 || ad.secondPrizeQuantityRemain <= 0 || ad.secondPrize.trim() == "")
+                        checkFail = true;
+                    if(ad.thirdPrizeQuantity <= 0 || ad.thirdPrizeQuantityRemain <= 0 || ad.thirdPrize.trim() == "")
+                        checkFail = true;
+                    if(ad.fourthPrizeQuantity <= 0 || ad.fourthPrizeQuantityRemain <= 0 || ad.fourthPrize.trim() == "")
+                        checkFail = true;
+                    if(drawType=="probability"){
+                        if(prob.firstPrizeProbability < 0 || prob.secondPrizeProbability < 0 || prob.thirdPrizeProbability < 0 || prob.fourthPrizeProbability < 0)
+                            checkFail = true;
+                        if(prob.firstPrizeProbability > 100 || prob.secondPrizeProbability > 100 || prob.thirdPrizeProbability > 100 || prob.fourthPrizeProbability > 100)
+                            checkFail = true;
+                    }
+                }
+                if(numberOfPrize == 5){
+                    if(ad.firstPrizeQuantity <= 0 || ad.firstPrizeQuantityRemain <= 0 || ad.firstPrize.trim() == "")
+                        checkFail = true;
+                    if(ad.secondPrizeQuantity <= 0 || ad.secondPrizeQuantityRemain <= 0 || ad.secondPrize.trim() == "")
+                        checkFail = true;
+                    if(ad.thirdPrizeQuantity <= 0 || ad.thirdPrizeQuantityRemain <= 0 || ad.thirdPrize.trim() == "")
+                        checkFail = true;
+                    if(ad.fourthPrizeQuantity <= 0 || ad.fourthPrizeQuantityRemain <= 0 || ad.fourthPrize.trim() == "")
+                        checkFail = true;
+                    if(ad.fifthPrizeQuantity <= 0 || ad.fifthPrizeQuantityRemain <= 0 || ad.fifthPrize.trim() == "")
+                        checkFail = true;
+                    if(drawType=="probability"){
+                        if(prob.firstPrizeProbability < 0 || prob.secondPrizeProbability < 0 || prob.thirdPrizeProbability < 0 || prob.fourthPrizeProbability < 0 || prob.fifthPrizeProbability < 0)
+                            checkFail = true;
+                        if(prob.firstPrizeProbability > 100 || prob.secondPrizeProbability > 100 || prob.thirdPrizeProbability > 100 || prob.fourthPrizeProbability > 100 || prob.fifthPrizeProbability > 100)
+                            checkFail = true;
+                    }
+                };
+                if(checkFail == true){
+                    message.push("奖项数据有误");
+                }
+                var prizeCouponExpiredType = ad.prizeCouponExpiredType;
+                var highCode = ad.highCode;
+                var lowCode = ad.lowCode;
+                if(prizeCouponExpiredType==""){
+                    checkFail = true;
+                    message.push("领奖有效日期未设");
+                }
+                if(numberOfPrize==3||numberOfPrize==4||numberOfPrize==5){
+                    if(lowCode == ""){
+                        checkFail = true;
+                        message.push("一般领奖码未设");
+                    }   
+                }
+                if(highCode==""){
+                    checkFail = true
+                    message.push("高级领奖码未设");
+                }if(checkFail){
+                    //console.log(message.join(','));
+                    var messageStr = message.join(',')+"";
+                    console.log(messageStr);
+                    res.redirect('/advertisement/'+id+"?message="+encodeURIComponent(messageStr));
+                    return;
+                }
+                if(numberOfPrize == 2){
+                    option.thirdPrizeQuantityRemain = 0;
+                    option.thirdPrizeQuantity = 0;
+                    option.thirdPrize = "";
+                    option.fourthPrizeQuantityRemain = 0;
+                    option.fourthPrizeQuantity = 0;
+                    option.fourthPrize = "";
+                    option.fifthPrizeQuantity = 0;
+                    option.fifthPrizeQuantityRemain = 0;
+                    option.fifthPrize = "";
+                }else if(numberOfPrize == 3){
+                    option.fourthPrizeQuantityRemain = 0;
+                    option.fourthPrizeQuantity = 0;
+                    option.fourthPrize = "";
+                    option.fifthPrizeQuantity = 0;
+                    option.fifthPrizeQuantityRemain = 0;
+                    option.fifthPrize = "";
+                }else if(numberOfPrize == 4){
+                    option.fifthPrizeQuantity = 0;
+                    option.fifthPrizeQuantityRemain = 0;
+                    option.fifthPrize = "";
+                }
+
+                option.status = "publish";
+
+                advertisement.update({id: id}, option).exec(function(err){
+                    res.redirect('/advertisement/'+id);
+                })                    
+            });
             
-            option.status = "publish";
             
-            advertisement.update({id: id}, option).exec(function(err){
-                res.redirect('/advertisement/'+id);
-            })
         });
     },
     destroy: function(req, res){
