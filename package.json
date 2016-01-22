@@ -30,7 +30,10 @@
     "random-js": "*",
     "i18n": "0.5.0",
     "underscore": "*",
-    "password-hash": "1.2.2"
+    "password-hash": "1.2.2",
+    "fs": "0.0.2",
+    "path": "0.12.7",
+    "node-uuid": "1.4.7"
     
   },
   "scripts": {

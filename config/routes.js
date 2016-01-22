@@ -36,6 +36,10 @@ module.exports.routes = {
     controller: 'DashboardController',
       action: 'dashboard'
   },
+  'get /uploads/:uri': {
+      controller: 'FileController',
+      action: 'get'
+  },
   'get /advertisement/:id/prize': {
     view: 'prize'  
   },
