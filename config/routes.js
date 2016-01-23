@@ -36,7 +36,7 @@ module.exports.routes = {
     controller: 'DashboardController',
       action: 'dashboard'
   },
-  'get /uploads/:uri': {
+  'get /upload/:uri': {
       controller: 'FileController',
       action: 'get'
   },
