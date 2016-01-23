@@ -236,7 +236,7 @@
                     var image = result.advertisementImage;
                 %>
                 <div class="panel-body full-width">                  
-                    <img class="img-thumbnail" height="140px" width="295px" src="http://res.cloudinary.com/djdts3tqq/image/upload/v<%=image.imageVersion%>/<%=image.imagePublicId%>.<%=image.imageFormat%>">
+                    <img class="img-thumbnail" height="140px" width="295px" src="http://<%=req.host%>:<%=req.port%>/upload/<%=image.imagePublicId%>.<%=image.imageFormat%>">
                 </div>
                 <%
                 }
@@ -255,10 +255,7 @@
                             <div>
                                 <span id="file-info"></span>
                             </div>
-                            
-
                         </div>
-                        
                     </form>
                 </div>
             </div>

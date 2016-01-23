@@ -7,6 +7,9 @@
 var Device = require("../lib/device");
 var moment = require("moment");
 var _ = require("underscore");
+var fs = require("fs");
+var path = require('path');
+var uuid = require('node-uuid');
 module.exports = {
 	find: function(req, res){
             advertisement.find({deleted: false}).populate('client').populate('advertisementImage').exec (function(err, resultArr){
@@ -386,36 +389,35 @@ module.exports = {
         })
     },
     advertisementImage: function(req, res){
-        var cloudinary = sails.config.cloudinary.get();
         req.file('advertisementImage').upload(function (err, files) {
         var advertisementId = req.param("id");
         if(!files[0]){
             return res.serverError(err);
         }
         image_path = files[0].fd;            
-        var imageVersion = null;
         var imagePublicId = null;
         var imageFormat = null;
-        cloudinary.uploader.upload(image_path,
-        function(result) {
-            imageVersion=result.version;
-            imagePublicId = result.public_id;
-            imageFormat = result.format;
-            AdvertisementImage.update({advertisement: advertisementId}, {replaced: true}).exec(function(err){
-                AdvertisementImage.create({imageVersion: imageVersion, imagePublicId: imagePublicId, imageFormat: imageFormat, advertisement: advertisementId}).exec(function(err, doc){
-                    advertisement.update({id: advertisementId}, {advertisementImage: doc.id}).exec(function(err){
-                        if(err){
-                return res.serverError(err);
-            }
-                        res.redirect("/advertisement/"+advertisementId);
-                    });
-                })                    
-                
+        fs.readFile(image_path, function (err, data) {
+            var imageUUID = uuid.v1();
+            var ext = path.extname(image_path).split(".")[1];
+            var uploadPath = "/uploads/"+imageUUID+"."+ext;
+            var filename = path.join(process.cwd(), uploadPath);
+            fs.writeFile(filename, data, function (err) {
+                imagePublicId = imageUUID;
+                imageFormat = ext;
+                AdvertisementImage.update({advertisement: advertisementId}, {replaced: true}).exec(function(err){
+                    AdvertisementImage.create({imagePublicId: imagePublicId, imageFormat: imageFormat, advertisement: advertisementId}).exec(function(err, doc){
+                        advertisement.update({id: advertisementId}, {advertisementImage: doc.id}).exec(function(err){
+                            if(err){
+                                return res.serverError(err);
+                            }
+                            res.redirect("/advertisement/"+advertisementId);
+                        });
+                    })
+                });
             });
-            ;
         });
         });
-    
     },
     publish: function(req, res){
         var id = req.param("id");
