@@ -58,14 +58,21 @@
                 <div class="row">
                   
                 <%
+                var i = 0; var clear = "";
                 while(ads.length){
                     var ad = ads.pop();
                     if(ad.advertisementImage!=null){
                     var image = ad.advertisementImage;
+                    i++;
+                    if(i%6==0)
+                        clear = "clear: left";
+                    else
+                        clear = "";
+                        
                 %>
-                    <div class="col-xs-6 col-md-2" style="text-align: center;">
+                    <div class="col-md-2" style="text-align: center; <%=clear%>;">
                     <a href="/advertisement/<%=ad.id%>" class="thumbnail">
-                      <img src="http://<%=req.host%>:<%=req.port%>/upload/<%=image.imagePublicId%>.<%=image.imageFormat%>">
+                      <img height="250px" src="http://<%=req.host%>:<%=req.port%>/upload/<%=image.imagePublicId%>.<%=image.imageFormat%>">
                     </a>
                     <span style="align: right;"><%=ad.title%></span>
                     </div>
