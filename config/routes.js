@@ -87,11 +87,13 @@ module.exports.routes = {
   'post /device/:id/pushmsg': {
       controller: 'DeviceController',
       action: 'pushmsg'
-  },
+  }
+  /*,
   'post /device/add-advertisement': {
       controller: 'DeviceController',
       action: 'addAdvertisement'
-  },
+  }*/
+  ,
   'get /data/access': {
       controller: 'DataController',
       action: 'access'
