@@ -27,7 +27,20 @@
                   row = resultArr.pop();
                 %>
                     <tr>
-                        <td><img src="<%=row.logoUrl%>" class="img-rounded" width="50" height="50" style="margin-right: 10px;"></img><a href="/client/<%=row.id%>"><%=row.name%></a></td>
+                        <td>
+                        <%
+                            if(row.clientImage){
+                                var image = row.clientImage;
+                        %>
+                                          
+                                <img class="img-thumbnail" height="50px" width="50px" src="http://<%=req.host%>:<%=req.port%>/upload/<%=image.imagePublicId%>.<%=image.imageFormat%>">
+                            
+                            
+                        <%
+                            }
+                        %>
+                        <a href="/client/<%=row.id%>"><%=row.name%></a>
+                            
                         <td><%=row.contactPerson%></td>
                         <td><%=row.mobilePhone%></td>
                         <td><%=row.email%></td>

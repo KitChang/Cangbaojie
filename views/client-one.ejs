@@ -67,6 +67,16 @@
                     <button type="submit" class="btn btn-primary right">提交</button>
                     </form>
                 </div>
+                <%
+                if(result.clientImage){
+                    var image = result.clientImage;
+                %>
+                <div class="panel-body full-width">                  
+                    <img class="img-thumbnail" height="80px" width="80px" src="http://<%=req.host%>:<%=req.port%>/upload/<%=image.imagePublicId%>.<%=image.imageFormat%>">
+                </div>
+                <%
+                }
+                %>
                 <div class="panel-body">
                     <form id="form" name="form" action="/client/<%=req.param('id')%>/image" method="post" enctype="multipart/form-data">
                         <div class="form-group">
@@ -74,7 +84,7 @@
                             <span class="btn btn-success fileinput-button">
                                 <i class="glyphicon glyphicon-plus"></i>
                                 <span>上载商标图</span>
-                                <input type="file" id="fileupload" name="advertisementImage" >
+                                <input type="file" id="fileupload" name="clientImage" >
                             </span>
                             <button type="submit" class="btn btn-primary right">提交</button>
                             </div>
@@ -111,6 +121,9 @@
                 return;
             }
             $("#form").submit();
+        })
+        $("#fileupload").change(function(){
+            $("#file-info").append($(this).val());
         })
     })
 

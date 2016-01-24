@@ -174,6 +174,10 @@ module.exports.routes = {
       controller: 'ClientController',
       action: 'balance'
   },
+  'post /client/:id/image': {
+      controller: 'ClientController',
+      action: 'clientImage'
+  },
   'post /client/:id/addToBalance': {
       controller: 'ClientController',
       action: 'addToBalance'
