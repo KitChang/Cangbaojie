@@ -95,6 +95,9 @@ module.exports.policies = {
     AdvertisementImageController: {
         '*': 'sessionAuth'
     },
+    SystemMsgController: {
+        '*': 'sessionAuth'
+    }
     
     
 };
