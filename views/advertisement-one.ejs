@@ -146,9 +146,9 @@
             </div>
 
         <div class="col-md-4 no-l-padding">
-        <div class="panel panel-dashboard full-width">
-            <div class="panel-heading panel-heading-cbj">奖品设定</div>
-            <div class="panel-body">    
+            <div class="panel panel-dashboard full-width">
+                <div class="panel-heading panel-heading-cbj">奖品设定</div>
+                <div class="panel-body">    
                     <div class="form-inline panel-elem">
                         <div class="form-group">
                         <label>一等奖 <span class="mandatory">*</span></label>
@@ -227,6 +227,26 @@
                     </div>
                 </div>
             </div>
+            <div class="panel panel-dashboard full-width">
+                <div class="panel-heading panel-heading-cbj">分享设定</div>
+                <div class="col-md-8 panel-body">    
+                    <div class="form-group">
+                        <label>分享标题 <span class="mandatory">*</span></label>
+                        <input type="text" name="shareTitle" id="shareTitle" class="form-control full-width" value="<%=result.shareTitle%>">
+                    </div>
+                    <div class="form-group">
+                        <label>分享內容 <span class="mandatory">*</span></label>
+                        <textarea style="text-align:left; height: 150px;" name="shareContent" id="shareContent" class="form-control full-width"><%=result.shareContent%></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>分享连结 <span class="mandatory">*</span></label>
+                        <input type="text" name="shareLink" id="shareLink" class="form-control full-width" value="<%=result.shareLink%>">
+                    </div>
+                </div>
+                <div class="col-md-4 panel-body">
+                    <label>分享图片 <span class="mandatory">*</span></label>
+                </div>
+            </div>
         </div>
         <div class="col-md-3 no-l-padding">
             <div class="panel panel-dashboard full-width" >
@@ -235,7 +255,7 @@
                 if(result.advertisementImage){
                     var image = result.advertisementImage;
                 %>
-                <div class="panel-body full-width">                  
+                <div class="panel-body full-width" style="margin: auto;" >                  
                     <img class="img-thumbnail" height="140px" width="295px" src="http://<%=req.host%>:<%=req.port%>/upload/<%=image.imagePublicId%>.<%=image.imageFormat%>">
                 </div>
                 <%
@@ -259,16 +279,17 @@
                     </form>
                 </div>
             </div>
-        </div>
-        <div class="col-md-7">
-            <div class="col-md-5 panel panel-default right" style="padding:0px;">
-                <div class="panel-body">          
-                    <button type="button" id="publish" class="col-md-4 btn btn-success right" style="margin: 0px;">推出</button>
-                    <button type="button" id="submit" class="col-md-4 btn btn-primary right" style="margin: 0px;">更新</button>
-                    <button type="button" style="margin: 0px;"class="col-md-4 btn btn-default right" onClick="javascript: window.history.back();">取消</button>
-               </div>
+            <div class="full-width">
+                <div class="full-width panel panel-default right" style="padding:0px;">
+                    <div class="panel-body">          
+                        <button type="button" id="publish" class="col-md-4 btn btn-success right" style="margin: 0px;">推出</button>
+                        <button type="button" id="submit" class="col-md-4 btn btn-primary right" style="margin: 0px;">更新</button>
+                        <button type="button" style="margin: 0px;"class="col-md-4 btn btn-default right" onClick="javascript: window.history.back();">取消</button>
+                   </div>
+                </div>
             </div>
         </div>
+        
     </div>
     </div>
 
@@ -443,6 +464,21 @@
                     el.type = "text";
                     el.name = inputName+"Quantity";
                     el.value = $("input[name='"+inputName+"Quantity']:visible").val();
+                    form.appendChild(el);
+                });
+                inputNames = ['shareTitle', 'shareLink'];
+                $.each(inputNames, function(i, inputName){
+                    var el = document.createElement("input");
+                    el.type = "text";
+                    el.name = inputName;
+                    el.value = $("input[name='"+inputName+"']:visible").val();
+                    form.appendChild(el);
+                });
+                inputNames = ['shareContent'];
+                $.each(inputNames, function(i, inputName){
+                    var el = document.createElement("textarea");
+                    el.name = inputName;
+                    el.value = $("textarea[name='"+inputName+"']:visible").val();
                     form.appendChild(el);
                 });
                 form.submit();
