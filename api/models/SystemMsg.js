@@ -10,7 +10,13 @@ module.exports = {
   attributes: {
       title: {type: 'string', required: true},
       content: {type: 'string', required: true},
-      expiredAt: {type: 'date'}
+      expiredAt: {type: 'date'},
+      effectiveAt: {type: 'date'},
+      deleted: {
+          type: 'boolean',
+          required: true,
+          defaultsTo: false
+      }
   }
 };
 

@@ -7,7 +7,7 @@
 moment = require('moment');
  module.exports = {
     find: function(req, res){
-        SystemMsg.find().exec(function(err, resultArr){
+        SystemMsg.find({deleted: false}).exec(function(err, resultArr){
             if(err)
                 return res.serverError(err);
             res.view('system-msg', {resultArr: resultArr});
@@ -30,12 +30,15 @@ moment = require('moment');
         var expiredAt = req.param('expiredAt');
         expiredAt = expiredAt.replace(/\//g, "");
         expiredAt = moment(expiredAt, "MMDDYYYY").startOf('day').toDate();
+        var effectiveAt = req.param('effectiveAt');
+        effectiveAt = effectiveAt.replace(/\//g, "");
+        effectiveAt = moment(effectiveAt, "MMDDYYYY").startOf('day').toDate();
         
         SystemMsg.create({
             title: title,
             content: content,
             expiredAt: expiredAt,
-            
+            effectiveAt: effectiveAt
         }).exec(function(err, result){
             if(err){
                 res.serverError(err);
@@ -44,6 +47,37 @@ moment = require('moment');
             res.redirect("/SystemMsg");
         });
         
+    },
+     update: function(req, res){
+        var id = req.param("id");
+        var title = req.param('title');
+        var content = req.param('content');
+        var expiredAt = req.param('expiredAt');
+        expiredAt = expiredAt.replace(/\//g, "");
+        expiredAt = moment(expiredAt, "MMDDYYYY").startOf('day').toDate();
+        var effectiveAt = req.param('effectiveAt');
+        effectiveAt = effectiveAt.replace(/\//g, "");
+        effectiveAt = moment(effectiveAt, "MMDDYYYY").startOf('day').toDate();
+       
+        SystemMsg.update({id: id}, 
+        {
+            title: title,
+            content: content,
+            expiredAt: expiredAt,
+            effectiveAt: effectiveAt
+        }).exec(function(err, result){
+            if(err){
+                return res.serverError(err);
+            }
+            res.redirect('/SystemMsg/'+id);
+        });
+    },
+    destroy: function(req, res){
+        
+        var id = req.param("id");
+        SystemMsg.update({id: id}, {deleted: true}).exec(function(err, result){
+            res.redirect('/SystemMsg');
+        })
     },
      /*
  	getMsg: function (req, res) {
