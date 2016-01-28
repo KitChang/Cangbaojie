@@ -175,7 +175,7 @@
         %>
         $("#prizeCouponExpiredDate").daterangepicker({singleDatePicker: true});
         function onSubmit(){
-            var prizeCouponExpiredType = $("input[name='prizeCouponExpiredType']").val();
+            var prizeCouponExpiredType = $("input[name='prizeCouponExpiredType']:check").val();
             var prizeCouponExpiredDuration = $("#prizeCouponExpiredDuration").val();
             var prizeCouponExpiredDate = $("#prizeCouponExpiredDate").val();
             var redeemLocation = $("#redeemLocation").val();
