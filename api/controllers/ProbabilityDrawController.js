@@ -25,7 +25,7 @@ module.exports = {
         var firstPrizeProbability = req.param('firstPrizeProbability');
         var secondPrizeProbability = req.param('secondPrizeProbability');
         var thirdPrizeProbability = req.param('thirdPrizeProbability');
-        var fourthPrizeProbability = req.param('thirdPrizeProbability');
+        var fourthPrizeProbability = req.param('fourthPrizeProbability');
         var fifthPrizeProbability = req.param('fifthPrizeProbability');
         
         ProbabilityDraw.create({advertisement: advertisementId, firstPrizeProbability: firstPrizeProbability, secondPrizeProbability: secondPrizeProbability, thirdPrizeProbability: thirdPrizeProbability, fourthPrizeProbability: fourthPrizeProbability, fifthPrizeProbability: fifthPrizeProbability }).exec(function(err, probDraw){
@@ -47,7 +47,7 @@ module.exports = {
         var firstPrizeProbability = req.param('firstPrizeProbability');
         var secondPrizeProbability = req.param('secondPrizeProbability');
         var thirdPrizeProbability = req.param('thirdPrizeProbability');
-        var fourthPrizeProbability = req.param('thirdPrizeProbability');
+        var fourthPrizeProbability = req.param('fourthPrizeProbability');
         var fifthPrizeProbability = req.param('fifthPrizeProbability');
         ProbabilityDraw.update({id: probabilityDrawId}, { firstPrizeProbability: firstPrizeProbability, secondPrizeProbability: secondPrizeProbability, thirdPrizeProbability: thirdPrizeProbability, fourthPrizeProbability: fourthPrizeProbability, fifthPrizeProbability: fifthPrizeProbability }).exec(function(err, probDraw){
             if(err){

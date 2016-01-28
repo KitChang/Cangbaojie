@@ -240,8 +240,22 @@ module.exports = {
       },
       indexUrl : {
           type: 'string'
+      },
+      shareContent: {
+          type: 'string',
+          defaultsTo: ''
+      },
+      shareLink: {
+          type: 'string',
+          defaultsTo: ''
+      },
+      shareTitle: {
+          type: 'string',
+          defaultsTo: ''
+      },
+      shareImage: {
+          model: 'ShareImage'
       }
-      
   }
     
 };

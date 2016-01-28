@@ -21,7 +21,7 @@ module.exports = {
     },
     findOne: function(req, res){
         var id = req.param("id");
-        advertisement.findOne({id: id, deleted: false}).populate('advertisementImage').populate('probabilityDraw').exec(function(err, result)          {
+        advertisement.findOne({id: id, deleted: false}).populate('advertisementImage').populate('probabilityDraw').populate('shareImage').exec(function(err, result)          {
             if(err){
                 return res.serverError(err);
             }
@@ -146,6 +146,9 @@ module.exports = {
             var drawPerformInterval_second = req.param("drawPerformInterval_second");
             var drawCouponExpiredTime = req.param('drawCouponExpiredTime');
             var drawPerformInterval = req.param('drawPerformInterval');
+            var shareTitle = req.param('shareTitle');
+            var shareContent = req.param('shareContent');
+            var shareLink = req.param('shareLink');
             option = 
             {
                 title: title,
@@ -182,6 +185,9 @@ module.exports = {
                 option.thirdPrizeQuantityRemain = thirdPrizeQuantity;
                 option.fourthPrizeQuantityRemain = fourthPrizeQuantity;
                 option.fifthPrizeQuantityRemain = fifthPrizeQuantity;
+                option.shareTitle = shareTitle;
+                option.shareContent = shareContent;
+                option.shareLink = shareLink;
             }
             advertisement.update({id: id}, option
             ).exec(function(err, result){
@@ -605,6 +611,37 @@ module.exports = {
             res.json(ads);
 
         })
-    }
+    },
+    shareImage: function(req, res){
+        req.file('shareImage').upload(function (err, files) {
+        var advertisementId = req.param("id");
+        if(!files[0]){
+            return res.serverError(err);
+        }
+        image_path = files[0].fd;            
+        var imagePublicId = null;
+        var imageFormat = null;
+        fs.readFile(image_path, function (err, data) {
+            var imageUUID = uuid.v1();
+            var ext = path.extname(image_path).split(".")[1];
+            var uploadPath = "/uploads/"+imageUUID+"."+ext;
+            var filename = path.join(process.cwd(), uploadPath);
+            fs.writeFile(filename, data, function (err) {
+                imagePublicId = imageUUID;
+                imageFormat = ext;
+                ShareImage.update({advertisement: advertisementId}, {replaced: true}).exec(function(err){
+                    ShareImage.create({imagePublicId: imagePublicId, imageFormat: imageFormat, advertisement: advertisementId}).exec(function(err, doc){
+                        advertisement.update({id: advertisementId}, {shareImage: doc.id}).exec(function(err){
+                            if(err){
+                                return res.serverError(err);
+                            }
+                            res.redirect("/advertisement/"+advertisementId);
+                        });
+                    })
+                });
+            });
+        });
+        });
+    },
 }
 
