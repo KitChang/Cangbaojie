@@ -29,7 +29,7 @@ module.exports = {
     create: function(req, res){
         var name = req.param('name');
         var contactPerson = req.param('contactPerson');
-        var mobilePhone = req.param('mobilePhone');
+        //var mobilePhone = req.param('mobilePhone');
         var phone = req.param('phone');
         var fax = req.param('fax');
         var email = req.param('email');
@@ -38,7 +38,7 @@ module.exports = {
         client.create({
             name: name,
             contactPerson: contactPerson,
-            mobilePhone: mobilePhone,
+            //mobilePhone: mobilePhone,
             phone: phone,
             fax: fax,
             email: email,
@@ -57,7 +57,7 @@ module.exports = {
         var id = req.param("id");
         var name = req.param('name');
         var contactPerson = req.param('contactPerson');
-        var mobilePhone = req.param('mobilePhone');
+        //var mobilePhone = req.param('mobilePhone');
         var phone = req.param('phone');
         var fax = req.param('fax');
         var email = req.param('email');
@@ -67,7 +67,7 @@ module.exports = {
         {
             name: name,
             contactPerson: contactPerson,
-            mobilePhone: mobilePhone,
+            //mobilePhone: mobilePhone,
             phone: phone,
             fax: fax,
             email: email,
@@ -122,13 +122,11 @@ module.exports = {
         })
     },
     clientImage: function(req, res){
-        console.log("123");
         req.file('clientImage').upload(function (err, files) {
         var clientId = req.param("id");
         if(!files[0]){
             return res.serverError(err);
         }
-            console.log("128");
         image_path = files[0].fd;            
         var imagePublicId = null;
         var imageFormat = null;
@@ -136,20 +134,16 @@ module.exports = {
             var imageUUID = uuid.v1();
             var ext = path.extname(image_path).split(".")[1];
             var uploadPath = "/uploads/"+imageUUID+"."+ext;
-            console.log("135");
             var filename = path.join(process.cwd(), uploadPath);
             fs.writeFile(filename, data, function (err) {
                 imagePublicId = imageUUID;
                 imageFormat = ext;
-                console.log("142");
                 ClientImage.update({client: clientId}, {replaced: true}).exec(function(err){
                     ClientImage.create({imagePublicId: imagePublicId, imageFormat: imageFormat, client: clientId}).exec(function(err, doc){
-                        console.log("145");
                         client.update({id: clientId}, {clientImage: doc.id}).exec(function(err){
                             if(err){
                                 return res.serverError(err);
                             }
-                            console.log("150");
                             res.redirect("/client/"+clientId);
                         });
                     })

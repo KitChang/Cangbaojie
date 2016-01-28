@@ -42,7 +42,12 @@
                         <a href="/client/<%=row.id%>"><%=row.name%></a>
                             
                         <td><%=row.contactPerson%></td>
-                        <td><%=row.mobilePhone%></td>
+                        <%
+                        var phone = "";
+                        if(row.phone!=null&&row.phone!="")
+                            phone = row.phone;
+                        %>
+                        <td><%=phone%></td>
                         <td><%=row.email%></td>
                         <td><a style="display: none;" class="btn btn-danger" onClick="javascript: destroy('<%=row.id%>');">删除</a></td>
                     </tr>
