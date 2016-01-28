@@ -157,12 +157,13 @@ module.exports.routes = {
       controller: 'AdvertisementController',
       action: 'publish'
   },
-  'get /advertisement/:id/image': {
-      view: 'advertisement-image'
-  },
   'post /advertisement/:id/image': {
       controller: 'AdvertisementController',
       action: 'advertisementImage'
+  },
+  'post /advertisement/:id/shareImage': {
+      controller: 'AdvertisementController',
+      action: 'shareImage'
   },
   'get /PrizeCoupon/advertisement': {
       controller: 'PrizeCouponController',
@@ -175,6 +176,10 @@ module.exports.routes = {
   'get /client/:id/balance': {
       controller: 'ClientController',
       action: 'balance'
+  },
+  'post /client/:id/image': {
+      controller: 'ClientController',
+      action: 'clientImage'
   },
   'post /client/:id/addToBalance': {
       controller: 'ClientController',

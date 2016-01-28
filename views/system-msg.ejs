@@ -3,20 +3,19 @@
         <div class="col-md-12">
         <div class="panel full-width">
             <ol class="breadcrumb panel-heading panel-heading-cbj">
-                  <li>广告管理</a></li>
-                  <li class="active">广告客户商家</li>
+                  <li>账户管理</a></li>
+                  <li class="active">系统信息</li>
             </ol>
             <div class="panel-body">
                     
                 <button type="button" class="btn btn-default right" onClick="javascript:window.history.back()" value=""/> 取消 </button>
-                <button class="btn btn-primary right" onClick="javascript: window.location.href='/client/new'">创建</button>
+                <button class="btn btn-primary right" onClick="javascript: window.location.href='/SystemMsg/new'">创建</button>
             </div>
             <div class="panel-body">
-                <form name="form" action="/dfd/" method="post">
+                <form name="form" action="/" method="post">
                 <table class="table table-striped" id="table">
                     <thead>
-                    <tr><th>广告客户商家</th><th>联系人</th>
-                        <th>电话</th><th>邮箱</th>
+                    <tr><th>题目</th><th>内容</th>
                     <th></th></tr>
 
                     </thead>
@@ -28,23 +27,11 @@
                 %>
                     <tr>
                         <td>
-                        <%
-                            if(row.clientImage){
-                                var image = row.clientImage;
-                        %>
-                                          
-                                <img class="img-thumbnail" height="50px" width="50px" src="http://<%=req.host%>:<%=req.port%>/upload/<%=image.imagePublicId%>.<%=image.imageFormat%>">
+                        <%=row.title%>
+                        </td>
                             
-                            
-                        <%
-                            }
-                        %>
-                        <a href="/client/<%=row.id%>"><%=row.name%></a>
-                            
-                        <td><%=row.contactPerson%></td>
-                        <td><%=row.mobilePhone%></td>
-                        <td><%=row.email%></td>
-                        <td><a style="display: none;" class="btn btn-danger" onClick="javascript: destroy('<%=row.id%>');">删除</a></td>
+                        <td><%=row.content%></td>
+                        
                     </tr>
                 <%
                 }
@@ -63,7 +50,7 @@
 
 <script>
     function destroy(rowId){
-        document.form.action = "/client/destroy/"+rowId;
+        document.form.action = "/SystemMsg/destroy/"+rowId;
         document.form.method = "post";
         document.form.submit();
     }

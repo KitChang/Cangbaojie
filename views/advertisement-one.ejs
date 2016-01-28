@@ -243,11 +243,115 @@
                         <input type="text" name="shareLink" id="shareLink" class="form-control full-width" value="<%=result.shareLink%>">
                     </div>
                 </div>
-                <div class="col-md-4 panel-body">
+                <div class="col-md-4 panel-body" style="padding: 0px;">
                     <label>分享图片 <span class="mandatory">*</span></label>
+                    <div class="panel full-width" style="margin: 0px;">
+
+                        <%
+                        if(result.shareImage){
+                            var image = result.shareImage;
+                        %>
+                        <div class="panel-body full-width" style="padding: 0px;">                  
+                            <img class="img-thumbnail" height="100px" width="150px" src="http://<%=req.host%>:<%=req.port%>/upload/<%=image.imagePublicId%>.<%=image.imageFormat%>">
+                        </div>
+                        <%
+                        }
+                        %>
+                        
+                        <div class="panel-body">
+                            <form id="form" name="form" action="/advertisement/<%=req.param('id')%>/shareImage" method="post" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <div>
+                                    <span class="btn btn-success fileinput-button">
+                                        <i class="glyphicon glyphicon-plus"></i>
+                                        <span>上载图片</span>
+                                        <input type="file" id="fileupload" name="shareImage" >
+                                    </span>
+                                    <p>
+                                        <br>
+                                    <button type="submit" class="btn btn-primary right">提交</button>
+                                    </p>
+                                    </div>
+                                    <div>
+                                        <span id="file-info"></span>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="col-md-4 no-l-padding" style="display: none;">
+        <div class="panel panel-dashboard full-width">
+            <div class="panel-heading panel-heading-cbj">分享设定</div>
+            <div class="panel-body"> 
+                
+                
+                <table>
+                <tr><td style="width:50%">
+                <div class="form-group">
+                <label>分享标题 <span class="mandatory">*</span></label>
+                <input type="text" name="shareTitle" id="shareTitle" class="form-control" value="<%=result.shareTitle%>">
+                </div>
+                <div class="form-group">
+                <label>分享内容 <span class="mandatory">*</span></label>
+                <textarea style="text-align:left; width: 100%; height: 150px;" name="shareContent" id="shareContent" class="form-control"><%=result.shareContent%></textarea>
+                </div>
+                <div class="form-group">
+                <label>分享链接 <span class="mandatory">*</span></label>
+                <input type="text" name="shareLink" id="shareLink" class="form-control" value="<%=result.shareLink%>">
+                </div>
+                </td><td>
+                    <div class="panel full-width" >
+
+                        <%
+                        if(result.shareImage){
+                            var image = result.shareImage;
+                        %>
+                        <div class="panel-body full-width">                  
+                            <img class="img-thumbnail" height="100px" width="150px" src="http://<%=req.host%>:<%=req.port%>/upload/<%=image.imagePublicId%>.<%=image.imageFormat%>">
+                        </div>
+                        <%
+                        }
+                        %>
+                        
+                        <div class="panel-body">
+                            <form id="form" name="form" action="/advertisement/<%=req.param('id')%>/shareImage" method="post" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <div>
+                                    <span class="btn btn-success fileinput-button">
+                                        <i class="glyphicon glyphicon-plus"></i>
+                                        <span>上载分享图片</span>
+                                        <input type="file" id="fileupload" name="shareImage" >
+                                    </span>
+                                    <p>
+                                        <br>
+                                    <button type="submit" class="btn btn-primary right">提交</button>
+                                    </p>
+                                    </div>
+                                    <div>
+                                        <span id="file-info"></span>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    
+                    
+                </td></tr>
+                
+                    
+                
+                </table>
+                </div>
+
+
+                </div>
+        </div>
+
+
         <div class="col-md-3 no-l-padding">
             <div class="panel panel-dashboard full-width" >
             <div class="panel-heading panel-heading-cbj">广告图</div>
@@ -410,6 +514,20 @@
                 if(isNaN(drawPerformInterval_second)||parseInt(drawPerformInterval_second)<0 || parseInt(drawPerformInterval_second)>=60 ){
                     errMsg.push("抽奖有效秒数为数字且0至59");
                 }
+                if($("#shareTitle").val().trim()=="")
+                    errMsg.push("分享标题不为空");
+                if($("#shareContent").val().trim()=="")
+                    errMsg.push("分享内容不为空");
+                if($("#shareLink").val().trim()=="")
+                    errMsg.push("分享链接不为空");
+                <%
+                if(!result.shareImage){
+                %>
+                    errMsg.push("分享图片不为空");
+                <%
+                }
+                %>
+                
                 
                 var inputNames = ['firstPrizeQuantity', 'secondPrizeQuantity', 'thirdPrizeQuantity', 'fourthPrizeQuantity', 'fifthPrizeQuantity'];
                 var err = false;
@@ -474,13 +592,19 @@
                     el.value = $("input[name='"+inputName+"']:visible").val();
                     form.appendChild(el);
                 });
-                inputNames = ['shareContent'];
-                $.each(inputNames, function(i, inputName){
-                    var el = document.createElement("textarea");
-                    el.name = inputName;
-                    el.value = $("textarea[name='"+inputName+"']:visible").val();
-                    form.appendChild(el);
-                });
+                // inputNames = ['shareContent'];
+                // $.each(inputNames, function(i, inputName){
+                //     var el = document.createElement("textarea");
+                //     el.name = inputName;
+                //     el.value = $("textarea[name='"+inputName+"']:visible").val();
+                //     form.appendChild(el);
+                // });
+
+                var el = document.createElement("input");
+                el.type = "text";
+                el.name = "shareContent";
+                el.value = $("#shareContent").val();
+                form.appendChild(el);
                 form.submit();
             });
             <%

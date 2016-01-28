@@ -4,10 +4,12 @@
  * @description :: Server-side logic for managing advertisingcompanies
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
-
+var fs = require("fs");
+var path = require('path');
+var uuid = require('node-uuid');
 module.exports = {
 	find: function(req, res){
-        client.find({deleted: false}).exec(function(err, resultArr){
+        client.find({deleted: false}).populate('clientImage').exec(function(err, resultArr){
             if(err)
                 return res.serverError(err);
             res.view('client', {resultArr: resultArr});
@@ -15,7 +17,7 @@ module.exports = {
     },
     findOne: function(req, res){
         var id = req.param("id");
-        client.findOne({id: id}).exec(function(err, result){
+        client.findOne({id: id}).populate("clientImage").exec(function(err, result){
             if(err)
                 return res.serverError(err);
             res.view('client-one', {result: result});
@@ -118,6 +120,43 @@ module.exports = {
         client.find({sort: 'accessCount ASC'}).exec(function(err, clients){
             res.view('client-click-ranking', {clients: clients});
         })
+    },
+    clientImage: function(req, res){
+        console.log("123");
+        req.file('clientImage').upload(function (err, files) {
+        var clientId = req.param("id");
+        if(!files[0]){
+            return res.serverError(err);
+        }
+            console.log("128");
+        image_path = files[0].fd;            
+        var imagePublicId = null;
+        var imageFormat = null;
+        fs.readFile(image_path, function (err, data) {
+            var imageUUID = uuid.v1();
+            var ext = path.extname(image_path).split(".")[1];
+            var uploadPath = "/uploads/"+imageUUID+"."+ext;
+            console.log("135");
+            var filename = path.join(process.cwd(), uploadPath);
+            fs.writeFile(filename, data, function (err) {
+                imagePublicId = imageUUID;
+                imageFormat = ext;
+                console.log("142");
+                ClientImage.update({client: clientId}, {replaced: true}).exec(function(err){
+                    ClientImage.create({imagePublicId: imagePublicId, imageFormat: imageFormat, client: clientId}).exec(function(err, doc){
+                        console.log("145");
+                        client.update({id: clientId}, {clientImage: doc.id}).exec(function(err){
+                            if(err){
+                                return res.serverError(err);
+                            }
+                            console.log("150");
+                            res.redirect("/client/"+clientId);
+                        });
+                    })
+                });
+            });
+        });
+        });
     }
     
 };
