@@ -66,6 +66,7 @@ module.exports = {
         var drawCouponExpiredTime = req.param('drawCouponExpiredTime');
         var drawPerformInterval = req.param('drawPerformInterval');
         var numberOfPrize = req.param('numberOfPrize');
+        var indexUrl = req.param('indexUrl');
         advertisement.create({
             client: client,
             title: title,
@@ -101,7 +102,8 @@ module.exports = {
             secondPrizeQuantityRemain: secondPrizeQuantity,
             thirdPrizeQuantityRemain: thirdPrizeQuantity,
             fourthPrizeQuantityRemain: fourthPrizeQuantity,
-            fifthPrizeQuantityRemain: fifthPrizeQuantity
+            fifthPrizeQuantityRemain: fifthPrizeQuantity,
+            indexUrl: indexUrl
         }).exec(function(err, result){
             if(err){
                 res.serverError(err);
@@ -146,6 +148,7 @@ module.exports = {
             var drawPerformInterval_second = req.param("drawPerformInterval_second");
             var drawCouponExpiredTime = req.param('drawCouponExpiredTime');
             var drawPerformInterval = req.param('drawPerformInterval');
+            var indexUrl = req.param('indexUrl');
             var shareTitle = req.param('shareTitle');
             var shareContent = req.param('shareContent');
             var shareLink = req.param('shareLink');
@@ -167,7 +170,11 @@ module.exports = {
                 drawPerformInterval_day: drawPerformInterval_day,
                 drawPerformInterval_hour: drawPerformInterval_hour,
                 drawPerformInterval_minute: drawPerformInterval_minute,
-                drawPerformInterval_second: drawPerformInterval_second
+                drawPerformInterval_second: drawPerformInterval_second,
+                indexUrl: indexUrl,
+                shareTitle: shareTitle,
+                shareContent: shareContent,
+                shareLink: shareLink
             };
             if(ad.status=="draft"){
                 option.firstPrize = firstPrize;
