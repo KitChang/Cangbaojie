@@ -17,6 +17,10 @@ module.exports = {
         var region = req.param('region');
         var street = req.param('street');
         advertisement.find().populate("client").exec(function(err, adArr){
+            if(err){
+                res.serverError(err);
+                return;
+            }
             var clientObj = {};
             for(var i=0; i<adArr.length; i++){
                 clientObj[adArr[i].client.id] = adArr[i].client;
@@ -27,11 +31,9 @@ module.exports = {
             }
             clientArr = values;
             if(advertisementId==null){
-                console.log("85");
                 res.view('data-access', {adArr: adArr, clientArr: clientArr, accessCountMonth: null, accessCountDate: null, selectedClient: null, selectedAd: null});
                 return;
             }else{
-                console.log("88");
                 var option = {};
                 if(locationType&&locationType!="")
                     option.locationType = locationType;
@@ -52,10 +54,13 @@ module.exports = {
                     var startOfMonthStr = month+"/"+"01"+"/"+year;
                     var startOfMonthDate = moment(startOfMonthStr, "MM/DD/YYYY").startOf('day').toDate();
                     var endOfMonthDate = moment(startOfMonthStr, "MM/DD/YYYY").endOf('month').toDate();
-                    console.log(startOfMonthDate+" "+endOfMonthDate);
                     if(startOfMonthDate&&endOfMonthDate)
                         option.createdAt = {">": startOfMonthDate, "<": endOfMonthDate};
                     access.find(option).populate('advertisement').exec(function(err, accessArr){
+                        if(err){
+                            res.serverError(err);
+                            return;
+                        }
                         accessObj = _.groupBy(accessArr, function(access){
                             console.log(access.createdAt.getDate());
                             return access.createdAt.getDate();
@@ -69,9 +74,7 @@ module.exports = {
                                 
                             }
                             accessCountMonth["price-"+property] = sum;
-                            console.log("sum: "+sum);
-                            console.log(accessCountMonth[property]);
-                            console.log("115");
+                            
                         }
                         res.view('data-access', {adArr: adArr, clientArr: clientArr, accessCountMonth: accessCountMonth, accessCountDate: null, selectedClient: null, selectedAd: null});
                     });
@@ -80,8 +83,11 @@ module.exports = {
                     var accessDateFrom = moment(dateStr, "MM/DD/YYYY").startOf('day').toDate();
                     var accessDateTo = moment(dateStr, "MM/DD/YYYY").endOf('day').toDate();
                     option.createdAt = {">": accessDateFrom, "<": accessDateTo};
-                    console.log(option);
                     access.find(option).populate('advertisement').exec(function(err, accessArr){
+                        if(err){
+                            res.serverError(err);
+                            return;
+                        }
                         accessObj = _.groupBy(accessArr, function(access){
                             return moment(access.createdAt).hour();
                         });
@@ -91,12 +97,8 @@ module.exports = {
                             var sum =0;
                             for(var i=0; i<accessObj[property].length; i++){
                                 sum = sum + accessObj[property][i].advertisement.pricePerClick;
-                                
-                                
                             }
                             accessCountDate["price-"+property] = sum;
-                            console.log("sum: "+sum);
-
                         }
                         res.view('data-access', {adArr: adArr, clientArr: clientArr, accessCountMonth: null, accessCountDate: accessCountDate, selectedClient: null, selectedAd: null});
                     });
@@ -124,6 +126,10 @@ module.exports = {
         dateFrom = moment(dateFromStr, "MM/DD/YYYY").startOf('day').toDate();
         dateTo = moment(dateToStr, "MM/DD/YYYY").endOf('day').toDate();
         advertisement.find().populate("client").exec(function(err, adArr){
+            if(err){
+                res.serverError(err);
+                return;
+            }
             var clientObj = {};
             for(var i=0; i<adArr.length; i++){
                 clientObj[adArr[i].client.id] = adArr[i].client;
@@ -167,6 +173,10 @@ module.exports = {
         dateFrom = moment(dateFromStr, "MM/DD/YYYY").startOf('day').toDate();
         dateTo = moment(dateToStr, "MM/DD/YYYY").endOf('day').toDate();
         advertisement.find().populate("client").exec(function(err, adArr){
+            if(err){
+                res.serverError(err);
+                return;
+            }
             var clientObj = {};
             for(var i=0; i<adArr.length; i++){
                 clientObj[adArr[i].client.id] = adArr[i].client;
@@ -220,6 +230,10 @@ module.exports = {
         dateFrom = moment(dateFromStr, "MM/DD/YYYY").startOf('day').toDate();
         dateTo = moment(dateToStr, "MM/DD/YYYY").endOf('day').toDate();
         advertisement.find().populate("client").exec(function(err, adArr){
+            if(err){
+                res.serverError(err);
+                return;
+            }
             var clientObj = {};
             for(var i=0; i<adArr.length; i++){
                 clientObj[adArr[i].client.id] = adArr[i].client;
@@ -339,6 +353,10 @@ module.exports = {
             accessOption.createdAt = {"<": dateTo, ">": dateFrom};
         
         access.find(accessOption).exec(function(err, accessArr){
+            if(err){
+                res.serverError(err);
+                return;
+            }
             var accessDevice = _.groupBy(accessArr, function(accessOne){
                 return accessOne.device
             });
@@ -364,6 +382,10 @@ module.exports = {
     prizeStock: function(req, res){
         var advertisementId = req.param('advertisement');
         advertisement.find().populate("client").exec(function(err, adArr){
+            if(err){
+                res.serverError(err);
+                return;
+            }
             var clientObj = {};
             for(var i=0; i<adArr.length; i++){
                 clientObj[adArr[i].client.id] = adArr[i].client;
@@ -376,7 +398,10 @@ module.exports = {
             if(advertisementId&&advertisementId!=""){
                 
                 advertisement.findOne({id: advertisementId}).exec(function(err, ad){
-                    
+                    if(err){
+                        res.serverError(err);
+                        return;
+                    }
                     res.view('data-prize-stock', {adArr: adArr, selectedAd: ad, clientArr: clientArr});
                     return;
                 })
@@ -412,6 +437,10 @@ module.exports = {
             var dateFrom = moment().subtract(duration, "days").toDate();
         }
         advertisement.find().populate("client").exec(function(err, adArr){
+            if(err){
+                res.serverError(err);
+                return;
+            }
             var clientObj = {};
             for(var i=0; i<adArr.length; i++){
                 clientObj[adArr[i].client.id] = adArr[i].client;
@@ -449,6 +478,10 @@ module.exports = {
     prizeWinnerSearch: function(req, res){//to be removed
         
         advertisement.find().exec(function(err, advertisements){
+            if(err){
+                res.serverError(err);
+                return;
+            }
             var advertisementId = req.param('advertisement');
             var prize = req.param('prize');
             
@@ -471,33 +504,58 @@ module.exports = {
             option.sex = sex;
         }
         AppUser.find(option).exec(function(err, appUserArr){
+            if(err){
+                res.serverError(err);
+                return;
+            }
             res.view('data-AppUser', {appUserArr: appUserArr, moment: moment});
         });
     }, 
     appUserStatistics: function (req, res){
         AppUser.find().exec(function(err, appUserArr){
+            if(err){
+                    res.serverError(err);
+                    return;
+            }
             AppUser.find({sex: "1"}).exec(function(err, maleAppUserArr){
+                if(err){
+                    res.serverError(err);
+                    return;
+                }
                 var monthAgo = moment().subtract(30, 'days').toDate();
                 var threeMonthsAgo = moment().subtract(90, 'days').toDate();
                 var todayStart = moment().startOf('day').toDate();
                 var todayEnd = moment().endOf('day').toDate();
                 AppUser.find({createdAt: {">": monthAgo}}).exec(function(err, newAppUserArr){
+                    if(err){
+                        res.serverError(err);
+                        return;
+                    }
                     access.find({createdAt: {">": threeMonthsAgo, "<": todayStart}}).exec(function(err, accessArr){
-                        
+                        if(err){
+                            res.serverError(err);
+                            return;
+                        }
                         access.find({createdAt: {">=": todayStart, "<": todayEnd}}).exec(function(err, accessTodayArr){
+                            if(err){
+                                res.serverError(err);
+                                return;
+                            }
                             var activeAppUserArr = [];
                             var normalAppUserArr = [];
+                            var normalAppUserKeys = [];
                             while(accessArr.length){
                                 var accessOne = accessArr.pop();
                                 var appUserId = accessOne.appUser;
                                 normalAppUserArr[appUserId] = null;
-                                var normalAppUserKeys = Object.keys(normalAppUserArr);
+                                normalAppUserKeys = Object.keys(normalAppUserArr);
                             }
+                            var activeAppUserKeys = [];
                             while(accessTodayArr.length){
-                                var accessOne = accessArr.pop();
+                                var accessOne = accessTodayArr.pop();
                                 var appUserId = accessOne.appUser;
                                 activeAppUserArr[appUserId] = null;
-                                var activeAppUserKeys = Object.keys(activeAppUserArr);
+                                activeAppUserKeys = Object.keys(activeAppUserArr);
                             }
                             var totalUsers = appUserArr.length;
                             var maleUsers = maleAppUserArr.length;
@@ -507,8 +565,6 @@ module.exports = {
                             var normalUsers = normalAppUserKeys.length;
                             var activeUsers = activeAppUserKeys.length;
                             var inactiveUsers = totalUsers - normalUsers - activeUsers;
-                            
-
                             res.view('data-AppUser-statistics', {totalUsers: totalUsers, maleUsers: maleUsers, femaleUsers: femaleUsers, newUsers: newUsers, oldUsers: oldUsers, activeUsers: activeUsers, inactiveUsers: inactiveUsers, normalUsers: normalUsers});
                         })
                     });

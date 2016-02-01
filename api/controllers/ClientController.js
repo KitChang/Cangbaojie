@@ -84,6 +84,10 @@ module.exports = {
         
         var id = req.param("id");
         client.update({id: id}, {deleted: true}).exec(function(err, result){
+            if(err){
+                res.serverError(err);
+                return;
+            }
             res.redirect('client');
         })
     },
@@ -96,6 +100,10 @@ module.exports = {
     balance: function(req, res){
         var clientId = req.param('id');
         client.findOne({id: clientId}).exec(function(err, result){
+            if(err){
+                res.serverError(err);
+                return;
+            }
             res.view('client-balance', {result: result});
         })
     },
@@ -103,26 +111,46 @@ module.exports = {
         var clientId = req.param('id');
         var addValue = req.param('addValue');
         client.findOne({id: clientId}).exec(function(err, result){
+            if(err){
+                res.serverError(err);
+                return;
+            }
             var account = result.account;
             addValue = parseInt(addValue);
             account = account + addValue;
             client.update({id: clientId}, {account: account}).exec(function(err){
+                if(err){
+                    res.serverError(err);
+                    return;
+                }
                 res.redirect('/client/'+clientId+"/balance");
             });
         });
     },
     balanceReminder: function(req, res){
         client.find({sort: 'account DESC'}).exec(function(err, clients){
+            if(err){
+                res.serverError(err);
+                return;
+            }
             res.view('client-balance-reminder', {clients: clients});
         });
     },
     clickRanking: function(req, res){
         client.find({sort: 'accessCount ASC'}).exec(function(err, clients){
+            if(err){
+                res.serverError(err);
+                return;
+            }
             res.view('client-click-ranking', {clients: clients});
         })
     },
     clientImage: function(req, res){
         req.file('clientImage').upload(function (err, files) {
+        if(err){
+            res.serverError(err);
+            return;
+        }
         var clientId = req.param("id");
         if(!files[0]){
             return res.serverError(err);
@@ -131,11 +159,19 @@ module.exports = {
         var imagePublicId = null;
         var imageFormat = null;
         fs.readFile(image_path, function (err, data) {
+            if(err){
+                res.serverError(err);
+                return;
+            }
             var imageUUID = uuid.v1();
             var ext = path.extname(image_path).split(".")[1];
             var uploadPath = "/uploads/"+imageUUID+"."+ext;
             var filename = path.join(process.cwd(), uploadPath);
             fs.writeFile(filename, data, function (err) {
+                if(err){
+                    res.serverError(err);
+                    return;
+                }
                 imagePublicId = imageUUID;
                 imageFormat = ext;
                 ClientImage.update({client: clientId}, {replaced: true}).exec(function(err){
