@@ -494,7 +494,7 @@ module.exports = {
                                 var normalAppUserKeys = Object.keys(normalAppUserArr);
                             }
                             while(accessTodayArr.length){
-                                var accessOne = accessArr.pop();
+                                var accessOne = accessTodayArr.pop();
                                 var appUserId = accessOne.appUser;
                                 activeAppUserArr[appUserId] = null;
                                 var activeAppUserKeys = Object.keys(activeAppUserArr);
