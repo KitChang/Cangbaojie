@@ -37,6 +37,9 @@ module.exports = {
         var description = req.param('description');
         var category = req.param('category');
         var expiredDate = req.param('expiredDate');
+        if(expiredDate==null){
+            return;
+        }
         expiredDate = expiredDate.replace(/\//g, "");
         expiredDate = moment(expiredDate, "MMDDYYYY").startOf('day').toDate();
         var effectiveDate = req.param('effectiveDate');
@@ -133,7 +136,6 @@ module.exports = {
             var fourthPrize = req.param('fourthPrize');
             var fifthPrize = req.param('fifthPrize');
             var firstPrizeQuantity = req.param('firstPrizeQuantity');
-            console.log("first prize quant"+firstPrizeQuantity);
             var secondPrizeQuantity = req.param('secondPrizeQuantity');
             var thirdPrizeQuantity = req.param('thirdPrizeQuantity');
             var fourthPrizeQuantity = req.param('fourthPrizeQuantity');
@@ -192,9 +194,6 @@ module.exports = {
                 option.thirdPrizeQuantityRemain = thirdPrizeQuantity;
                 option.fourthPrizeQuantityRemain = fourthPrizeQuantity;
                 option.fifthPrizeQuantityRemain = fifthPrizeQuantity;
-                option.shareTitle = shareTitle;
-                option.shareContent = shareContent;
-                option.shareLink = shareLink;
             }
             advertisement.update({id: id}, option
             ).exec(function(err, result){
@@ -208,12 +207,7 @@ module.exports = {
         });
         
     },
-    destroy: function(req, res){
-        var id = req.param("id");
-        advertisement.destroy({id: id}).exec(function(err, result){
-            res.redirect('advertisement');
-        })
-    },
+    
     updateQuiz: function(req, res){
         var id = req.param('id');
         var question = req.param('question');
@@ -233,26 +227,22 @@ module.exports = {
     quiz: function(req, res){
         var id = req.param('id');
         advertisement.findOne({id: id}).exec(function(err, result){
+            if(err){
+                res.serverError(err);
+                return;
+            }
             res.view('quiz', {quiz: result.quiz});
+            
         });
     },
-    updateQuestionaire: function(req, res){
-        var id = req.param('id');
-        var question = req.param('question');
-        var questionArr = [];
-        for(var i=0; i<question.length; i++){
-            var questionObj = {};
-            questionObj.question = question[i];
-            questionObj.questionOption = req.param('questionOption_'+i);
-            questionArr.push(questionObj);
-        }
-        advertisement.update({id: id}, {questionaire: questionArr}).exec(function(){
-            res.redirect('/advertisement/'+id+'/questionaire');
-        }); 
-    },
+    
     prize: function(req, res){
         var id = req.param("id");
         advertisement.findOne({id: id}).populate("client").exec(function(err, result){
+            if(err){
+                res.serverError(err);
+                return;
+            }
             var redeemAddress = result.client.address;
             var companyIntroduction = result.client.companyIntroduction;
             res.view('prize', {result: result, moment: moment, redeemAddress: redeemAddress, companyIntroduction: companyIntroduction});
@@ -274,10 +264,8 @@ module.exports = {
         }else{
             return res.serverError();
         }
-        console.log("254");
         var redeemLocation = req.param("redeemLocation");
         var companyIntroduction = req.param("companyIntroduction");
-        console.log(companyIntroduction);
         advertisement.update({id: id}, 
         {
             prizeCouponExpiredType: prizeCouponExpiredType,
@@ -288,18 +276,24 @@ module.exports = {
             highCode: highCode,
             lowCode: lowCode
         }).exec(function(err){
-            console.log("err"+err);
+            if(err){
+                res.serverError(err);
+                return;
+            }
             res.redirect('/advertisement/'+id+'/prize');
         }); 
     },
     deploy: function(req, res){
         var id = req.param('id');
         advertisement.findOne({id: id}).exec(function(err, result){
+            if(err){
+                res.serverError(err);
+                return;
+            }
             var deviceArr = result.device;
             option = {};
             var deviceId_concat = "";
             if(deviceArr!=null && deviceArr instanceof Array){
-                console.log("length"+deviceArr.length);
                 if(deviceArr.length==0)
                     deviceArr = "-1";
             }else{
@@ -307,6 +301,10 @@ module.exports = {
             }
 
             Device.search({id: deviceArr}, function(err, devices){
+                if(err){
+                    res.serverError(err);
+                    return;
+                }
                 res.view('advertisement-deploy', {devices: devices, result: result});
             });
         });
@@ -355,6 +353,10 @@ module.exports = {
         var id = req.param('id');
         var deviceIds = req.param('device');
         advertisement.findOne({id: id}).exec(function(err, ad){
+            if(err){
+                res.serverError(err);
+                return;
+            }
             var deviceArr = ad.device;
             if(!deviceArr||deviceArr==undefined)
                 deviceArr = [];
@@ -370,8 +372,12 @@ module.exports = {
                 }
             }
             advertisement.update({id: id}, {device: deviceArr}).exec(function(err){
+                if(err){
+                    res.serverError(err);
+                    return;
+                }
                 res.redirect('/advertisement/'+id+"/deploy");
-                res.end();
+                
             })
         });
     },
@@ -379,6 +385,10 @@ module.exports = {
         var id = req.param('id');
         var deviceIds = req.param('device');
         advertisement.findOne({id: id}).exec(function(err, ad){
+            if(err){
+                res.serverError(err);
+                return;
+            }
             var deviceArr = ad.device;
             if(!deviceArr||deviceArr==undefined)
                 deviceArr = [];
@@ -387,6 +397,10 @@ module.exports = {
                     deviceArr = _.without(deviceArr, deviceIds.pop());
                 }
             advertisement.update({id: id}, {device: deviceArr}).exec(function(err){
+                if(err){
+                    res.serverError(err);
+                    return;
+                }
                 res.redirect('/advertisement/'+id+"/deploy");
                 res.end();
             })
@@ -415,7 +429,15 @@ module.exports = {
             var ext = path.extname(image_path).split(".")[1];
             var uploadPath = "/uploads/"+imageUUID+"."+ext;
             var filename = path.join(process.cwd(), uploadPath);
+            if(err){
+                res.serverError(err);
+                return;
+            }
             fs.writeFile(filename, data, function (err) {
+                if(err){
+                    res.serverError(err);
+                    return;
+                }
                 imagePublicId = imageUUID;
                 imageFormat = ext;
                 AdvertisementImage.update({advertisement: advertisementId}, {replaced: true}).exec(function(err){
@@ -435,6 +457,10 @@ module.exports = {
     publish: function(req, res){
         var id = req.param("id");
         advertisement.findOne({id: id}).populate("probabilityDraw").exec(function(err, ad){
+            if(err){
+                res.serverError(err);
+                return;
+            }
             var numberOfPrize = ad.numberOfPrize;
             var option = {};
             var checkFail = false;
@@ -448,6 +474,10 @@ module.exports = {
                 message.push("几率抽奖未设");
             }
             OrderDraw.find({advertisement: id}).exec(function(err, orderArr){
+                if(err){
+                    res.serverError(err);
+                    return;
+                }
                 if(drawType=="order"&&!orderArr.length){
                     checkFail = true;
                     message.push("排序抽奖未设");
@@ -560,7 +590,6 @@ module.exports = {
                 }
                 if(checkFail){
                     var messageStr = message.join(',')+"";
-                    console.log(messageStr);
                     res.redirect('/advertisement/'+id+"?message="+encodeURIComponent(messageStr));
                     return;
                 }
@@ -590,6 +619,10 @@ module.exports = {
                 option.status = "publish";
 
                 advertisement.update({id: id}, option).exec(function(err){
+                    if(err){
+                        res.serverError(err);
+                        return;
+                    }
                     res.redirect('/advertisement/'+id);
                 })                    
             });
@@ -605,6 +638,10 @@ module.exports = {
     },
     expiredDateReminder: function(req, res){
         advertisement.find({limit: 5, sort: 'expiredDate DESC'}).populate('client').exec(function(err, advertisements){
+            if(err){
+                res.serverError(err);
+                return;
+            }
             res.view('expired-date-reminder', {advertisements: advertisements, moment: moment});
         });
     },
@@ -615,8 +652,11 @@ module.exports = {
             option.client = clientId;
         option.deleted = false;
         advertisement.find(option).exec(function(err, ads){
+            if(err){
+                res.serverError(err);
+                return;
+            }
             res.json(ads);
-
         })
     },
     shareImage: function(req, res){
@@ -629,11 +669,19 @@ module.exports = {
         var imagePublicId = null;
         var imageFormat = null;
         fs.readFile(image_path, function (err, data) {
+            if(err){
+                res.serverError(err);
+                return;
+            }
             var imageUUID = uuid.v1();
             var ext = path.extname(image_path).split(".")[1];
             var uploadPath = "/uploads/"+imageUUID+"."+ext;
             var filename = path.join(process.cwd(), uploadPath);
             fs.writeFile(filename, data, function (err) {
+                if(err){
+                    res.serverError(err);
+                    return;
+                }
                 imagePublicId = imageUUID;
                 imageFormat = ext;
                 ShareImage.update({advertisement: advertisementId}, {replaced: true}).exec(function(err){

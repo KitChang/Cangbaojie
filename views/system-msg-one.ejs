@@ -8,30 +8,31 @@
                   <li class="active">创建</li>
                 </ol>
                 <div class="panel-body">
-                    <form class="form-horizontal" id="form" name="form" action="/SystemMsg/" method="post">                
+                    <form class="form-horizontal" id="form" name="form" action="/SystemMsg/<%=result.id%>" method="post">                
                     <div class="form-group">
                     <label class="control-label col-sm-2">题目 <span class="mandatory">*</span></label>
                     <div class="col-sm-10">
-                        <input type="text" name="title" id="title" class="form-control full-width">
+                        <input type="text" name="title" id="title" class="form-control full-width" value="<%=result.title%>">
                     </div>
                     </div>
                     <div class="form-group">
                     <label class="control-label col-sm-2">内容<span class="mandatory">*</span></label>
                     <div class="col-sm-10">
                         <textarea style="height: 100px;" name="content" id="content" class="form-control full-width">
+                            <%=result.content%>
                         </textarea>
                     </div>
                     </div>
                     <div class="form-group">
                     <label class="control-label col-sm-2">有效日期<span class="mandatory">*</span></label>
                     <div class="col-sm-10">
-                        <input type="text" name="effectiveAt" id="effectiveAt" class="form-control full-width">
+                        <input type="text" name="effectiveAt" id="effectiveAt" class="form-control full-width" value="<%=moment(result.effectiveAt).format("MM/DD/YYYY")%>">
                     </div>
                     </div>
                     <div class="form-group">
                     <label class="control-label col-sm-2">失效日期<span class="mandatory">*</span></label>
                     <div class="col-sm-10">
-                        <input type="text" name="expiredAt" id="expiredAt" class="form-control full-width">
+                        <input type="text" name="expiredAt" id="expiredAt" class="form-control full-width" value="<%=moment(result.expiredAt).format("MM/DD/YYYY")%>">
                     </div>
                     </div>
                     </form>

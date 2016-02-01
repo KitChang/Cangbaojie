@@ -15,8 +15,8 @@
                 <form name="form" action="/" method="post">
                 <table class="table table-striped" id="table">
                     <thead>
-                    <tr><th>题目</th><th>内容</th>
-                    <th></th></tr>
+                    <tr><th>题目</th><th>内容</th><th></th>
+                    </tr>
 
                     </thead>
                     <tbody>
@@ -27,10 +27,13 @@
                 %>
                     <tr>
                         <td>
-                        <%=row.title%>
+                            <a href="/SystemMsg/<%=row.id%>">
+                            <%=row.title%>
+                            </a>
                         </td>
                             
                         <td><%=row.content%></td>
+                        <td><a class="btn btn-danger" onClick="javascript: destroy('<%=row.id%>');">删除</a></td>
                         
                     </tr>
                 <%
