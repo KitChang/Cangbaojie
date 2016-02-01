@@ -19,7 +19,6 @@ module.exports = {
 	get: function(req, res){
         var uri = req.param('uri');
         var filename = process.cwd()+"/uploads/"+uri;
-        console.log(filename);
         fs.exists(filename, function(exists) {
             if(!exists) {
                 res.writeHead(404, {"Content-Type": "text/plain"});

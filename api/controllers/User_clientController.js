@@ -34,14 +34,20 @@ module.exports = {
         var client = req.param("client");
         
         user_client.findOne({username: username}).exec(function(err, doc){
-            
+            if(err){
+                res.serverError(err);
+                return;
+            }
             if(doc!=null){
                 
                 return res.serverError("用户名已经存在");
             }
             
             user_client.create({username: username, password: hashedPassword, email: email, client}).exec(function(err, doc){
-                
+                if(err){
+                    res.serverError(err);
+                    return;
+                }
                 res.redirect('/user_client/'+doc.id);
             });
         });
@@ -57,7 +63,6 @@ module.exports = {
         option.email = email;
         if(changePassword=='change'){
             option.password = hashedPassword;
-            console.log("password change");
         }
         user_client.update({id: id}, option
         ).exec(function(err, result){
@@ -74,7 +79,10 @@ module.exports = {
         var id = req.param("id");
         
         user_client.update({id: id}, {deleted: true}).exec(function(err, result){
-            
+            if(err){
+                res.serverError(err);
+                return;
+            }
             res.redirect('user_client');
         })
     },

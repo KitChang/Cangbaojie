@@ -11,6 +11,10 @@ module.exports = {
         var deviceId = req.param('device');
         var redirect = req.param('redirect');
         DeviceMonitor.update({device: deviceId}, {accessDate: new Date()}).exec(function(err){
+            if(err){
+                res.serverError(err);
+                return;
+            }
             if(redirect=="device")
                 res.redirect('/device/'+deviceId);
             else if(redirect=="dashboard")
@@ -22,16 +26,21 @@ module.exports = {
     faultDeviceReminder: function(req, res){
         var past30DaysDate = moment().subtract(30, "days").startOf('day').toDate();
         DeviceMonitor.find({accessDate: {'<': past30DaysDate}, verifiedDate: {'<': past30DaysDate}}).exec(function(err, faultDevices){
+            if(err){
+                res.serverError(err);
+                return;
+            }
             res.view('fault-device-reminder', {faultDevices: faultDevices, moment: moment});
         });
     },
     verifiedOK: function(req, res){
         var deviceMonitor = req.param('deviceMonitor');
-        console.log(deviceMonitor);
         var today = moment().startOf('day').toDate();
-        console.log(today);
         DeviceMonitor.update({id: deviceMonitor}, {verifiedDate: today}).exec(function(err){
-            console.log(err);
+            if(err){
+                res.serverError(err);
+                return;
+            }
             res.redirect('/DeviceMonitor/fault-device-reminder');
         });
     }

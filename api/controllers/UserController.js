@@ -19,7 +19,10 @@ module.exports = {
         var id = req.param('id');
         
         user.findOne({id: id}).exec(function(err, result){
-            
+            if(err){
+                res.serverError(err);
+                return;
+            }
             res.view('user-one', {result: result})
         });
     },
@@ -33,12 +36,19 @@ module.exports = {
         var hashedPassword = passwordHash.generate(password);
         
         user.findOne({username: username}).exec(function(err, doc){
-            
+            if(err){
+                res.serverError(err);
+                return;
+            }
             if(doc!=null){
                 return res.serverError(err);
             }
             
             user.create({username: username, password: hashedPassword, role: role}).exec(function(err, doc){
+                if(err){
+                    res.serverError(err);
+                    return;
+                }
                 res.redirect('/user/'+doc.id);
             });
         });
@@ -56,7 +66,10 @@ module.exports = {
             option.password = hashedPassword;
         
         user.update({id: id}, option).exec(function(err, doc){
-            
+            if(err){
+                res.serverError(err);
+                return;
+            }
             res.redirect('/user/'+id);  
         });
     },
@@ -64,20 +77,14 @@ module.exports = {
         
         res.view('user-new');
     },
-    destroy: function(req, res){
-        
-        var id = req.param("id");
-        
-        user.destroy({id: id}).exec(function(err, result){
-            
-            res.redirect('user');
-        })
-    },
     login: function(req, res){
-        
         var username = req.param('username');
         var password = req.param('password');
         user.findOne({username: username}).exec(function(err, doc) {
+            if(err){
+                res.serverError(err);
+                return;
+            }
             if(doc==null||!passwordHash.verify(password, doc.password)){
                 var message = "用户名或密码错误";
                 res.redirect('/login?omitNavigation=omitNavigation&message='+encodeURIComponent(message));
@@ -101,7 +108,11 @@ module.exports = {
     destroy: function(req, res){
         var id = req.param('id');
         user_client.update({id: id},{deleted: true}).exec(function(err){
-            
+            if(err){
+                res.serverError(err);
+                return;
+            }
+            res.redirect('/user');
         });
     }
     

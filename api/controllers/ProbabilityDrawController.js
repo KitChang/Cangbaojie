@@ -9,6 +9,10 @@ module.exports = {
 	find: function(req, res){
         var advertisementId = req.param("advertisement");
         advertisement.findOne({id: advertisementId}).exec(function(err, ad){
+            if(err){
+                res.serverError(err);
+                return;
+            }
             ProbabilityDraw.find({advertisement: advertisementId}).exec(function(err, resultArr){
                 if(err){
                     res.serverError(err);
@@ -35,9 +39,13 @@ module.exports = {
                 return;
             }
             advertisement.update({id: advertisementId }, {probabilityDraw: probDraw.id }).exec(function(err, ad){
+                if(err){
+                    res.serverError(err);
+                    return;
+                }
                 res.redirect('/ProbabilityDraw/edit?advertisement='+advertisementId+"&probabilityDraw="+probDraw.id);
             });
-            console.log("38");
+            
         });
     },
     update: function(req, res){
@@ -62,10 +70,14 @@ module.exports = {
         var advertisementId = req.param('advertisement');
         var probabilityDrawId = req.param('probabilityDraw');
         advertisement.findOne({id: advertisementId}).exec(function(err, ad){
+            if(err){
+                res.serverError(err);
+                return;
+            }
             var numberOfPrize = ad.numberOfPrize;
             if(probabilityDrawId==null)
             res.view('probability-draw-new', {advertisement: ad, numberOfPrize});
-        else{
+            else{
             ProbabilityDraw.findOne({id: probabilityDrawId}).exec(function(err, result){
                 if(err){
                     res.serverError(err);
@@ -75,18 +87,8 @@ module.exports = {
             });
         }
         });
-    },
-    destroy: function(req, res){
-//        var id = req.param("id");
-//        var advertisementId = req.param("advertisement");
-//        ProbabilityDraw.destroy({id: id}).exec(function(err, result){
-//            if(err){
-//                res.serverError(err);
-//                return;
-//            }      
-//            res.redirect('/ProbabilityDraw?advertisement='+advertisementId);
-//        })
     }
+    
     
 };
 

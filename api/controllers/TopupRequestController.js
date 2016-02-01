@@ -8,6 +8,10 @@ var moment = require("moment");
 module.exports = {
     findFromDashboard: function(req, res){
         TopupRequest.find({status: ['open', 'process'], sort: 'createdAt ASC'}).populate('client').populate('user').exec(function(err, requests){
+            if(err){
+                res.serverError(err);
+                return;
+            }
             res.view('topup-request-find-from-dashboard', {requests: requests, moment: moment});
         });
     },

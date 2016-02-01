@@ -9,11 +9,19 @@ module.exports = {
 	read: function(req, res){
         var requestId = req.param('request');   
         request.update({id: requestId}, {read: true}).exec(function(err){
+            if(err){
+                res.serverError(err);
+                return;
+            }
             res.redirect('/');
         })
     },
     findFromDashboard: function(req, res){
         request.find({status: ['open', 'process']}).populate('client').exec(function(err, requests){
+            if(err){
+                res.serverError(err);
+                return;
+            }
             res.view('request-dashboard', {requests: requests});
         });
     },
@@ -27,7 +35,6 @@ module.exports = {
                 return;
             }
             res.redirect("/request/findFromDashboard");
-            
             
         })
     }

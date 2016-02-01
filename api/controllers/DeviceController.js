@@ -24,22 +24,39 @@ module.exports = {
     findOne: function(req, res){
         var id = req.param("id");
         Device.findOne(id, function(err, result){
-            if(!result){
-                
+            if(err){
+                    res.serverError(err);
+                    return;
             }
             devicePushMsg.findOne({device: id}).exec(function (err, pushmsg) {
                 if (err) { return;};
                 if (pushmsg) {
                     advertisement.find({device: id}).populate('advertisementImage').exec(function(err, ads){
+                        if(err){
+                            res.serverError(err);
+                            return;
+                        }
                         var accessDateBefore = moment().subtract(30, 'days').toDate();
                         DeviceMonitor.findOne({device: id, accessDate: {'<': accessDateBefore} }).exec(function(err, faultDeviceFound){
+                            if(err){
+                                res.serverError(err);
+                                return;
+                            }
                             res.view('device-one', {result: result, ads: ads, faultDeviceFound: faultDeviceFound, pushmsg: pushmsg.message});
                         });
                     });
                 } else {
                     advertisement.find({device: id}).populate('advertisementImage').exec(function(err, ads){
+                        if(err){
+                            res.serverError(err);
+                            return;
+                        }
                         var accessDateBefore = moment().subtract(30, 'days').toDate();
                         DeviceMonitor.findOne({device: id, accessDate: {'<': accessDateBefore} }).exec(function(err, faultDeviceFound){
+                            if(err){
+                                res.serverError(err);
+                                return;
+                            }
                             res.view('device-one', {result: result, ads: ads, faultDeviceFound: faultDeviceFound});
                         });
                     });
@@ -79,15 +96,6 @@ module.exports = {
             res.redirect('/device/'+id);
         });
     },
-    destroy: function(req, res){
-        var id = req.param("id");
-        device.destroy({id: id}).exec(function(err, result){
-            res.redirect('device');
-        })
-    },
-    add: function(req, res){
-        
-    },
     import: function(req, res){
         Device.search({}, function(err, deviceArr_max){
             if(err){
@@ -113,7 +121,6 @@ module.exports = {
             }
         })
     },
-
     search: function(req, res){
         var locationType = req.param('locationType');
         var state = req.param('state');
@@ -142,9 +149,7 @@ module.exports = {
             }else{
                 res.view('device', {resultArr: resultArr});
             }
-            
         });
-        
     },
     pushmsg: function (req, res) {
         var id = req.param("id");
@@ -153,13 +158,26 @@ module.exports = {
            if (err) {return;};
            if (!pushMsg) {
                 devicePushMsg.create({device: id, message: message}).exec(function (err, devicePushMsg) {
+                    if(err){
+                        res.serverError(err);
+                        return;
+                    }
                     Device.findOne(id, function(err, result){
-                        if(!result){
-
+                        if(err){
+                            res.serverError(err);
+                            return;
                         }
                         advertisement.find({device: id}).populate('advertisementImage').exec(function(err, ads){
+                            if(err){
+                                res.serverError(err);
+                                return;
+                            }
                             var accessDateBefore = moment().subtract(30, 'days').toDate();
                             DeviceMonitor.findOne({device: id, accessDate: {'<': accessDateBefore} }).exec(function(err, faultDeviceFound){
+                                if(err){
+                                    res.serverError(err);
+                                    return;
+                                }
                                 res.view('device-one', {result: result, ads: ads, faultDeviceFound: faultDeviceFound, pushmsg: message});
                             });
                         });
@@ -167,13 +185,26 @@ module.exports = {
                 });
             } else {
                 devicePushMsg.update({device: id} ,{message: message}).exec(function (err, devicePushMsg) {
+                    if(err){
+                        res.serverError(err);
+                        return;
+                    }
                     Device.findOne(id, function(err, result){
-                        if(!result){
-
+                        if(err){
+                            res.serverError(err);
+                            return;
                         }
                         advertisement.find({device: id}).populate('advertisementImage').exec(function(err, ads){
+                            if(err){
+                                res.serverError(err);
+                                return;
+                            }
                             var accessDateBefore = moment().subtract(30, 'days').toDate();
                             DeviceMonitor.findOne({device: id, accessDate: {'<': accessDateBefore} }).exec(function(err, faultDeviceFound){
+                                if(err){
+                                    res.serverError(err);
+                                    return;
+                                }
                                 res.view('device-one', {result: result, ads: ads, faultDeviceFound: faultDeviceFound, pushmsg: message});
                             });
                         });

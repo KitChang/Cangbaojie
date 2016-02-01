@@ -8,6 +8,10 @@ var moment = require('moment');
 module.exports = {
 	findFromDashboard: function(req, res){
         message.find({status: ['open', 'process'], sort: 'createdAt ASC'}).populate('client').populate('user').exec(function(err, messages){
+            if(err){
+                    res.serverError(err);
+                    return;
+            }
             res.view('message-find-from-dashboard', {messages: messages, moment: moment});
         });
     },
