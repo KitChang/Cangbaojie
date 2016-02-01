@@ -68,9 +68,10 @@
                         <input style="width: 100%;" type="text" name="address" id="address" class="form-control" value="<%=result.address%>">
                     </div>
                     </div>
-                    <button type="button" class="btn btn-default right" onClick="javascript:window.history.back()" value=""/> 取消 </button>
-                    <button type="submit" class="btn btn-primary right">提交</button>
+                    
                     </form>
+                    <button type="button" class="btn btn-default right" onClick="javascript:window.history.back()" value=""/> 取消 </button>
+                    <button type="submit" id="submit" class="btn btn-primary right">提交</button>
                 </div>
                 <%
                 if(result.clientImage){
@@ -121,11 +122,16 @@
             if(!/\d{11}/.test(phone)){
                 errMsg.push("手机为11位数字");
             }
+            
+            if($("#name").val().trim()=="" || $("#companyIntroduction").val().trim()=="" || $("#contactPerson").val().trim()=="" || $("#address").val().trim()==""||phone.trim()==""||email.trim()==""){
+                errMsg.push("必添栏位不为空");
+            }
             if(errMsg.length > 0){
                 alert(errMsg.join('\n'));
                 return;
             }
             $("#form").submit();
+            
         })
         $("#fileupload").change(function(){
             $("#file-info").append($(this).val());
