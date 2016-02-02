@@ -60,6 +60,10 @@ module.exports = {
     new: function(req, res){
         var advertisementId = req.param('advertisement');
         advertisement.findOne({id: advertisementId}).exec(function(err, ad){
+            if(err){
+                res.serverError(err);
+                return;
+            }
             res.view('order-draw-new', {advertisement: ad});
         });
         

@@ -34,7 +34,6 @@ module.exports = {
         
         ProbabilityDraw.create({advertisement: advertisementId, firstPrizeProbability: firstPrizeProbability, secondPrizeProbability: secondPrizeProbability, thirdPrizeProbability: thirdPrizeProbability, fourthPrizeProbability: fourthPrizeProbability, fifthPrizeProbability: fifthPrizeProbability }).exec(function(err, probDraw){
             if(err){
-                console.log(err);
                 res.serverError(err);
                 return;
             }
@@ -59,7 +58,6 @@ module.exports = {
         var fifthPrizeProbability = req.param('fifthPrizeProbability');
         ProbabilityDraw.update({id: probabilityDrawId}, { firstPrizeProbability: firstPrizeProbability, secondPrizeProbability: secondPrizeProbability, thirdPrizeProbability: thirdPrizeProbability, fourthPrizeProbability: fourthPrizeProbability, fifthPrizeProbability: fifthPrizeProbability }).exec(function(err, probDraw){
             if(err){
-                console.log(err);
                 res.serverError(err);
                 return;
             }

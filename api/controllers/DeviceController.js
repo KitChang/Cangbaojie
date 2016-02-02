@@ -113,7 +113,6 @@ module.exports = {
                     var filteredDeviceArr = _.reject(deviceArr_max, function(dev){
                         return _.contains(deviceId_cbj, dev.id);
                     });
-                    console.log(filteredDeviceArr.length);
                     device.create(filteredDeviceArr).exec(function(err){
                         res.redirect('/device');
                     });

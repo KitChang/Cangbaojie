@@ -62,7 +62,6 @@ module.exports = {
                             return;
                         }
                         accessObj = _.groupBy(accessArr, function(access){
-                            console.log(access.createdAt.getDate());
                             return access.createdAt.getDate();
                         });
                         var accessCountMonth = {};
@@ -253,7 +252,6 @@ module.exports = {
                 access.find(option).exec(function(err, resultArr){
                     if(err)
                             return res.serverError(err);
-                    console.log(resultArr);
                     res.view('data-access-category', {resultArr: resultArr, clientArr: clientArr});
                     });
             }
@@ -365,7 +363,6 @@ module.exports = {
                     return res.serverError(err);
             var accessCount = 0;
             for (var i=0; i<deviceArr.length; i++){
-                console.log(accessDevice[deviceArr[i].id]);
                 if(accessDevice[deviceArr[i].id]==undefined)
                     accessCount = 0;
                 else

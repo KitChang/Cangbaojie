@@ -165,10 +165,6 @@ module.exports.routes = {
       controller: 'AdvertisementController',
       action: 'shareImage'
   },
-  'get /PrizeCoupon/advertisement': {
-      controller: 'PrizeCouponController',
-      action: 'advertisement'
-  },
   'post /generateYesterdayData': {
       controller: "DashboardController",
       action: 'generateYesterdayData'

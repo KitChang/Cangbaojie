@@ -95,7 +95,6 @@ moment = require('moment');
                 }
                 if(appuser==null)
                 {
-                    console.log("App user not found");
                     res.status(400);
                     res.end();
                     return;
