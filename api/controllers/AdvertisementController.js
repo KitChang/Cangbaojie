@@ -12,10 +12,12 @@ var path = require('path');
 var uuid = require('node-uuid');
 module.exports = {
 	find: function(req, res){
+            console.log("15");
             advertisement.find({deleted: false}).populate('client').populate('advertisementImage').exec (function(err, resultArr){
             if(err){
                 return res.serverError(err);
             }
+            console.log("20");
             res.view('advertisement', {resultArr: resultArr});
             });
     },

@@ -23,7 +23,17 @@
                 while (resultArr.length) {
                   row = resultArr.pop();
                 %>
-                    <tr><td><a href="/user/<%=row.id%>"><%=row.username%></a></td><td><a class="btn  btn-danger" onClick="javascript: destroy('<%=row.id%>');">删除</a></td></tr>
+                    <tr><td><a href="/user/<%=row.id%>"><%=row.username%></a></td><td>
+                    <% 
+                    var role = req.session.user.role;
+                    if(role=="admin"){
+                    %>
+                    <a class="btn  btn-danger" onClick="javascript: destroy('<%=row.id%>');">删除</a>
+                    <%
+                        }
+                    %>
+                        
+                    </td></tr>
                 <%
                 }
                 %>

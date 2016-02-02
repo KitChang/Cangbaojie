@@ -44,7 +44,16 @@
                             clientName = row.client.name;
                         }
                     %>
-                    <%=clientName%></td><td style="vertical-align: middle;"><a style="display: none;" class="btn btn-danger" onClick="javascript: destroy('<%=row.id%>');">删除</a>
+                    <%=clientName%></td><td style="vertical-align: middle;">
+                    <% 
+                    var role = req.session.user.role;
+                    if(role=="admin"){
+                    %>
+                    <a class="btn btn-danger" onClick="javascript: destroy('<%=row.id%>');">删除</a>
+                    <%
+                    }
+                    %>
+                    
                 <a href="/advertisement/<%=row.id%>/deploy" class="btn btn-info">设备发送</a>
                 </td></tr>
             <%
