@@ -49,7 +49,16 @@
                         %>
                         <td><%=phone%></td>
                         <td><%=row.email%></td>
-                        <td><a style="display: none;" class="btn btn-danger" onClick="javascript: destroy('<%=row.id%>');">删除</a></td>
+                        <td>
+                            <% 
+                            var role = req.session.user.role;
+                            if(role=="admin"){
+                            %>
+                            <a style="" class="btn btn-danger" onClick="javascript: destroy('<%=row.id%>');">删除</a>
+                            <%
+                            }
+                            %>
+                        </td>
                     </tr>
                 <%
                 }
