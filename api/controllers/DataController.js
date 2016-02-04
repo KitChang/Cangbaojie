@@ -519,6 +519,11 @@ module.exports = {
                     res.serverError(err);
                     return;
                 }
+                AppUser.find({sex: "2"}).exec(function(err, femaleAppUserArr){
+                if(err){
+                    res.serverError(err);
+                    return;
+                }
                 var monthAgo = moment().subtract(30, 'days').toDate();
                 var threeMonthsAgo = moment().subtract(90, 'days').toDate();
                 var todayStart = moment().startOf('day').toDate();
@@ -556,7 +561,7 @@ module.exports = {
                             }
                             var totalUsers = appUserArr.length;
                             var maleUsers = maleAppUserArr.length;
-                            var femaleUsers = totalUsers - maleUsers;
+                            var femaleUsers = femaleAppUserArr.length;
                             var newUsers = newAppUserArr.length;
                             var oldUsers = totalUsers - newUsers;
                             var normalUsers = normalAppUserKeys.length;
@@ -567,6 +572,9 @@ module.exports = {
                     });
                     
                 })
+                });
+                
+
                 
             })
         });

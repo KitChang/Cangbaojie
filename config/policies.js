@@ -60,9 +60,6 @@ module.exports.policies = {
     GeoController: {
         '*': 'sessionAuth'
     },
-    StaffController: {
-        '*': 'sessionAuth'
-    },
     UserController: {
         '*': [], //['sessionAuth', 'adminRoleAuth'],
         login: [],
@@ -97,7 +94,8 @@ module.exports.policies = {
     },
     SystemMsgController: {
         '*': 'sessionAuth'
+    },
+    DeviceMonitorController: {
+        '*': 'sessionAuth'
     }
-    
-    
 };
