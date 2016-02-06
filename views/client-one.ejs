@@ -84,7 +84,7 @@
                 }
                 %>
                 <div class="panel-body">
-                    <form id="form" name="form" action="/client/<%=req.param('id')%>/image" method="post" enctype="multipart/form-data">
+                    <form id="form" name="form" action="/client/<%=req.param('id')%>/image" method="post" enctype="multipart/form-data" onSubmit="return clientImageOnSubmit()">
                         <div class="form-group">
                             <div>
                             <span class="btn btn-success fileinput-button">
@@ -110,6 +110,14 @@
 <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
 <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
 <script>
+    function clientImageOnSubmit(){
+            var fileUpload = $("#fileupload").val().trim();
+            if(fileUpload==""){
+                alert("图片未选");
+                return false;
+            }
+            return true;
+    }
     $(document).ready(function(){
         $("#submit").click(function(){
             var email = $("#email").val();
@@ -136,6 +144,8 @@
         $("#fileupload").change(function(){
             $("#file-info").append($(this).val());
         })
+        
+        
     })
 
 </script>

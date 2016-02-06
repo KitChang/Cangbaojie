@@ -152,7 +152,7 @@ module.exports = {
             return;
         }
         var clientId = req.param("id");
-        if(!files[0]){
+        if(files.length==0){
             return res.serverError(err);
         }
         image_path = files[0].fd;            

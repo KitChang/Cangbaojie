@@ -227,62 +227,11 @@
                     </div>
                 </div>
             </div>
-            <div class="panel panel-dashboard full-width">
-                <div class="panel-heading panel-heading-cbj">分享设定</div>
-                <div class="col-md-8 panel-body">    
-                    <div class="form-group">
-                        <label>分享标题 <span class="mandatory">*</span></label>
-                        <input type="text" name="shareTitle" id="shareTitle" class="form-control full-width" value="<%=result.shareTitle%>">
-                    </div>
-                    <div class="form-group">
-                        <label>分享內容 <span class="mandatory">*</span></label>
-                        <textarea style="text-align:left; height: 150px;" name="shareContent" id="shareContent" class="form-control full-width"><%=result.shareContent%></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>分享连结 <span class="mandatory">*</span></label>
-                        <input type="text" name="shareLink" id="shareLink" class="form-control full-width" value="<%=result.shareLink%>">
-                    </div>
-                </div>
-                <div class="col-md-4 panel-body" style="padding: 0px;">
-                    <label>分享图片 <span class="mandatory">*</span></label>
-                    <div class="panel full-width" style="margin: 0px;">
 
-                        <%
-                        if(result.shareImage){
-                            var image = result.shareImage;
-                        %>
-                        <div class="panel-body full-width" style="padding: 0px;">                  
-                            <img class="img-thumbnail" height="100px" width="150px" src="http://<%=req.host%>:<%=req.port%>/upload/<%=image.imagePublicId%>.<%=image.imageFormat%>">
-                        </div>
-                        <%
-                        }
-                        %>
-                        
-                        <div class="panel-body">
-                            <form id="form" name="form" action="/advertisement/<%=req.param('id')%>/shareImage" method="post" enctype="multipart/form-data">
-                                <div class="form-group">
-                                    <div>
-                                    <span class="btn btn-success fileinput-button">
-                                        <i class="glyphicon glyphicon-plus"></i>
-                                        <span>上载图片</span>
-                                        <input type="file" id="fileupload" name="shareImage" >
-                                    </span>
-                                    <p>
-                                        <br>
-                                    <button type="submit" class="btn btn-primary right">提交</button>
-                                    </p>
-                                    </div>
-                                    <div>
-                                        <span id="file-info"></span>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
         </div>
-        <div class="col-md-4 no-l-padding" style="display: none;">
+        
+        <div class="col-md-4 no-l-padding" >
         <div class="panel panel-dashboard full-width">
             <div class="panel-heading panel-heading-cbj">分享设定</div>
             <div class="panel-body"> 
@@ -295,11 +244,11 @@
                 <input type="text" name="shareTitle" id="shareTitle" class="form-control" value="<%=result.shareTitle%>">
                 </div>
                 <div class="form-group">
-                <label>分享内容 <span class="mandatory">*</span></label>
+                <label>分享内容<span class="mandatory">*</span></label>
                 <textarea style="text-align:left; width: 100%; height: 150px;" name="shareContent" id="shareContent" class="form-control"><%=result.shareContent%></textarea>
                 </div>
                 <div class="form-group">
-                <label>分享链接 <span class="mandatory">*</span></label>
+                <label>分享链接<span class="mandatory">*</span></label>
                 <input type="text" name="shareLink" id="shareLink" class="form-control" value="<%=result.shareLink%>">
                 </div>
                 </td><td>
@@ -317,7 +266,7 @@
                         %>
                         
                         <div class="panel-body">
-                            <form id="form" name="form" action="/advertisement/<%=req.param('id')%>/shareImage" method="post" enctype="multipart/form-data">
+                            <form id="form2" name="form2" action="/advertisement/<%=req.param('id')%>/shareImage" onSubmit="return shareImageOnSubmit()" method="post"  enctype="multipart/form-data">
                                 <div class="form-group">
                                     <div>
                                     <span class="btn btn-success fileinput-button">
@@ -327,14 +276,16 @@
                                     </span>
                                     <p>
                                         <br>
-                                    <button type="submit" class="btn btn-primary right">提交</button>
+                                    
                                     </p>
                                     </div>
                                     <div>
                                         <span id="file-info"></span>
                                     </div>
                                 </div>
+                                <button type="submit" id="shareImageButton" class="btn btn-primary right">提交</button>
                             </form>
+                            
                         </div>
                     </div>
                     
@@ -366,18 +317,18 @@
                 }
                 %>
                 <div class="panel-body">
-                    <form id="form" name="form" action="/advertisement/<%=req.param('id')%>/image" method="post" enctype="multipart/form-data">
+                    <form id="form3" name="form3" action="/advertisement/<%=req.param('id')%>/image" onSubmit="return adImageOnSubmit()" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <div>
                             <span class="btn btn-success fileinput-button">
                                 <i class="glyphicon glyphicon-plus"></i>
                                 <span>上载广告图</span>
-                                <input type="file" id="fileupload" name="advertisementImage" >
+                                <input type="file" id="fileupload2" name="advertisementImage" >
                             </span>
                             <button type="submit" class="btn btn-primary right">提交</button>
                             </div>
                             <div>
-                                <span id="file-info"></span>
+                                <span id="file-info2"></span>
                             </div>
                         </div>
                     </form>
@@ -405,13 +356,35 @@
     <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js">         </script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
     <script>
-    $("#fileupload").change(function(){
-       $("#file-info").append($(this).val());
-    })
+    
     </script>
 
     <script>
+        $("#fileupload").change(function(){
+        $("#file-info").append($(this).val());
+        })
+        $("#fileupload2").change(function(){
+        $("#file-info2").append($(this).val());
+        })
+        function adImageOnSubmit(){
+            var fileUpload = $("#fileupload2").val().trim();
+            if(fileUpload==""){
+                alert("图片未选");
+                return false;
+            }
+            return true;
+        }
+        function shareImageOnSubmit(){
+            var fileUpload = $("#fileupload").val().trim();
+
+            if(fileUpload==""){
+                alert("图片未选");
+                return false;
+            }
+            return true;
+        }
         $(document).ready(function(){
+            
             $("#publish").click(function(err){
                 var form = document.forms['form'];
                 form.method = "post";
