@@ -122,8 +122,7 @@
       });
 
     $('#check-all').change(function () {
-        var rows = table.rows({ 'search': 'applied' }).nodes();
-        $('input[type="checkbox"]', rows).prop('checked', this.checked);
+        $('input[type="checkbox"]:visible').prop('checked', this.checked);
     });
     $(document).ready(function(){
 
