@@ -74,9 +74,12 @@
 <script type="text/javascript" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
 <script>
     function destroy(rowId){
-        document.form.action = "/advertisement/destroy/"+rowId;
-        document.form.method = "post";
-        document.form.submit();
+        if (confirm('确定要删除?')){
+            document.form.action = "/advertisement/destroy/"+rowId;
+            document.form.method = "post";
+            document.form.submit();
+        }
+        
     }
     function deploy(rowId){
 

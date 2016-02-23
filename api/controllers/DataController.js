@@ -16,7 +16,7 @@ module.exports = {
         var city = req.param('city');
         var region = req.param('region');
         var street = req.param('street');
-        advertisement.find().populate("client").exec(function(err, adArr){
+        advertisement.find({deleted: false}).populate("client").exec(function(err, adArr){
             if(err){
                 res.serverError(err);
                 return;
@@ -109,7 +109,7 @@ module.exports = {
         
     },
     advertisement: function(req, res){
-        advertisement.find().populate('client').populate('advertisementImage').exec(function(err, resultArr){
+        advertisement.find({deleted: false}).populate('client').populate('advertisementImage').exec(function(err, resultArr){
             if(err)
                     return res.serverError(err);
             res.view('data-access-advertisement', {resultArr: resultArr});
@@ -124,7 +124,7 @@ module.exports = {
         var client = req.param('client');
         dateFrom = moment(dateFromStr, "MM/DD/YYYY").startOf('day').toDate();
         dateTo = moment(dateToStr, "MM/DD/YYYY").endOf('day').toDate();
-        advertisement.find().populate("client").exec(function(err, adArr){
+        advertisement.find({deleted: false}).populate("client").exec(function(err, adArr){
             if(err){
                 res.serverError(err);
                 return;
@@ -171,7 +171,7 @@ module.exports = {
         var category = req.param('category');
         dateFrom = moment(dateFromStr, "MM/DD/YYYY").startOf('day').toDate();
         dateTo = moment(dateToStr, "MM/DD/YYYY").endOf('day').toDate();
-        advertisement.find().populate("client").exec(function(err, adArr){
+        advertisement.find({deleted: false}).populate("client").exec(function(err, adArr){
             if(err){
                 res.serverError(err);
                 return;
@@ -228,7 +228,7 @@ module.exports = {
         var client = req.param('client');
         dateFrom = moment(dateFromStr, "MM/DD/YYYY").startOf('day').toDate();
         dateTo = moment(dateToStr, "MM/DD/YYYY").endOf('day').toDate();
-        advertisement.find().populate("client").exec(function(err, adArr){
+        advertisement.find({deleted: false}).populate("client").exec(function(err, adArr){
             if(err){
                 res.serverError(err);
                 return;
@@ -378,7 +378,7 @@ module.exports = {
     
     prizeStock: function(req, res){
         var advertisementId = req.param('advertisement');
-        advertisement.find().populate("client").exec(function(err, adArr){
+        advertisement.find({deleted: false}).populate("client").exec(function(err, adArr){
             if(err){
                 res.serverError(err);
                 return;
@@ -433,7 +433,7 @@ module.exports = {
                 duration = 0;
             var dateFrom = moment().subtract(duration, "days").toDate();
         }
-        advertisement.find().populate("client").exec(function(err, adArr){
+        advertisement.find({deleted: false}).populate("client").exec(function(err, adArr){
             if(err){
                 res.serverError(err);
                 return;
@@ -474,7 +474,7 @@ module.exports = {
     },
     prizeWinnerSearch: function(req, res){//to be removed
         
-        advertisement.find().exec(function(err, advertisements){
+        advertisement.find({deleted: false}).exec(function(err, advertisements){
             if(err){
                 res.serverError(err);
                 return;

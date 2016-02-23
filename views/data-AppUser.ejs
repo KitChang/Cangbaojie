@@ -22,17 +22,25 @@
                             <option value="">所有性別</option>
                             <option value="1" selected>男</option>
                             <option value="2">女</option>
+                            <option value="0">微信未设置</option>
                             <%
                             }else if(req.param('sex')=="2") {
                             %>
                             <option value="">所有性別</option>
                             <option value="1">男</option>
                             <option value="2" selected>女</option>
-                            <option value="0" selected>微信未设置</option>
+                            <option value="0">微信未设置</option>
+                            <%
+                            } else if(req.param('sex')=="") {
+                            %>
+                            <option value="" selected>所有性別</option>
+                            <option value="1">男</option>
+                            <option value="2">女</option>
+                            <option value="0">微信未设置</option>
                             <%
                             } else {
                             %>
-                            <option value="selected">所有性別</option>
+                            <option value="">所有性別</option>
                             <option value="1">男</option>
                             <option value="2">女</option>
                             <option value="0" selected>微信未设置</option>
