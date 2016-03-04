@@ -203,11 +203,11 @@
               options = document.getElementById('client').options;
 
               for(var i=0; i< options.length; i++){
-                if(options[i].text.toLowerCase().indexOf(searchClient)!=-1){
+                var position = options[i].text.toLowerCase().indexOf(searchClient);
+                if(position==0){
                   options[i].selected = true;
                   break;
                 }
-
               }
             });
 
