@@ -1,11 +1,11 @@
 
-        
+
         <div class="container content">
             <div class="row">
                 <div class="col-md-12">
-                    
 
-                    
+
+
                         <div class="panel panel-dashboard full-width">
                             <ol class="breadcrumb panel-heading panel-heading-cbj">
                               <li><a href="/advertisement">广告管理</a></li>
@@ -13,10 +13,10 @@
                               <li class="active">奖劵</li>
                             </ol>
                             <div class="panel-body">
-                                <form class="form-horizontal" id="form" name="form" action="/advertisement/<%=result.id%>/prize" method="post" onSubmit="return onSubmit();">   
+                                <form class="form-horizontal" id="form" name="form" action="/advertisement/<%=result.id%>/prize" method="post" onSubmit="return onSubmit();">
                                 <div class="form-group" id="radio">
                                 <label class="control-label col-sm-2">奖劵有效类型 <span class="mandatory">*</span></label>
-                                <div class="col-sm-10 form-inline"> 
+                                <div class="col-sm-10 form-inline">
                                 <label>奖劵有效天数</label>
                                 <input type="radio" id="prizeCouponExpiredDuration_radio" value="duration" name="prizeCouponExpiredType" class="form-control">
                                 <br>
@@ -26,65 +26,56 @@
                                 </div>
                                 <div class="form-group" id="prizeCouponExpiredDuration_div">
                                 <label class="control-label col-sm-2">奖劵有效天数 <span class="mandatory">*</span></label>
-                                <div  class="col-sm-10"> 
+                                <div  class="col-sm-10">
                                     <input type="text" id="prizeCouponExpiredDuration" name="prizeCouponExpiredDuration" class="form-control full-width">
                                 </div>
                                 </div>
                                 <div class="form-group" id="prizeCouponExpiredDate_div">
                                 <label class="control-label col-sm-2">奖劵有效日期 <span class="mandatory">*</span></label>
-                                <div  class="col-sm-10"> 
+                                <div  class="col-sm-10">
                                     <input type="text" id="prizeCouponExpiredDate" name="prizeCouponExpiredDate" class="form-control full-width">
                                 </div>
                                 </div>
                                 <div class="form-group">
                                 <label class="control-label col-sm-2">领奖地点 <span class="mandatory">*</span></label>
-                                <div  class="col-sm-10"> 
+                                <div  class="col-sm-10">
                                     <input type="text" name="redeemLocation" id="redeemLocation" class="form-control full-width">
                                 </div>
                                 </div>
                                 <div class="form-group">
                                 <label class="control-label col-sm-2">商家介绍 <span class="mandatory">*</span></label>
-                                <div  class="col-sm-10"> 
-                                    <textarea style="height: 150px; " name="companyIntroduction" id="companyIntroduction" class="form-control full-width">
-                                <%
-                                    if(!result.companyIntroduction){
+                                <% if(!companyIntroduction){
+                                    companyIntroduction = "";
+                                }
                                 %>
-                                    <%=companyIntroduction%>
-                                <%
-                                    }else{
-                                %>
-                                    <%=result.companyIntroduction%>
-                                <%
-                                    }
-                                %>
-                
-                                    </textarea>
+                                <div  class="col-sm-10">
+                                    <textarea style="text-align:left;height: 150px; " name="companyIntroduction" id="companyIntroduction" class="form-control full-width"><%=companyIntroduction%></textarea>
                                 </div>
                                 </div>
                                 <div class="form-group">
                                 <label class="control-label col-sm-2">高级领奖码 <span class="mandatory">*</span></label>
-                                <div  class="col-sm-10"> 
+                                <div  class="col-sm-10">
                                     <input type="text" name="highCode" class="form-control full-width" id="highCode">
                                 </div>
                                 </div>
                                 <div class="form-group">
                                 <label class="control-label col-sm-2">一般领奖码 <span class="mandatory">*</span></label>
-                                <div  class="col-sm-10"> 
+                                <div  class="col-sm-10">
                                     <input type="text" name="lowCode" id="lowCode" class="form-control full-width">
                                 </div>
                                 </div>
-                                    
+
                                     <button type="button" class="btn btn-default right" onClick="javascript: window.history.back();">取消</button>
                                     <button type="submit" class="btn btn-primary right">提交</button>
                                 </form>
                             </div>
-                        </div>              
+                        </div>
                 </div>
             </div>
-            
+
     </div>
 
-    
+
     <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
 
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha3840mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
@@ -105,7 +96,7 @@
         $("#prizeCouponExpiredDate_div").css("display", "none");
         $("#prizeCouponExpiredDuration_div").css("display", "block");
         $("#prizeCouponExpiredDuration_radio").trigger("click");
-        
+
         <%
         if(result.prizeCouponExpiredType=="duration"){
         %>
@@ -113,7 +104,7 @@
             $("#prizeCouponExpiredDate_div").css("display", "none");
             $("#prizeCouponExpiredDuration_div").css("display", "block");
             $("#prizeCouponExpiredDuration_radio").trigger("click");
-        
+
         <%
         }
         %>
@@ -129,37 +120,37 @@
         %>
         <%
         if(result.prizeCouponExpiredDuration){
-            
+
         %>
         $("input[name='prizeCouponExpiredDuration']").val("<%=result.prizeCouponExpiredDuration%>");
         <%
         }
         %>
-        
+
         <%
         if(result.prizeCouponExpiredDate){
-            
+
         %>
         $("input[name='prizeCouponExpiredDate']").val("<%=moment(result.prizeCouponExpiredDate).format("MM/DD/YYYY")%>");
         <%
         }
         %>
-        <%                                         
+        <%
         if(!result.redeemLocation){
                 result.redeemLocation = redeemAddress;
-        %>                                            
+        %>
         $("input[name='redeemLocation']").val("<%=result.redeemLocation%>");
         <%
         }else{
         %>
-        $("input[name='redeemLocation']").val("<%=result.redeemLocation%>");                                    
+        $("input[name='redeemLocation']").val("<%=result.redeemLocation%>");
         <%
         }
         %>
-        
+
         <%
         if(result.highCode!=null){
-            
+
         %>
         $("input[name='highCode']").val("<%=result.highCode%>");
         <%
@@ -167,7 +158,7 @@
         %>
         <%
         if(result.lowCode!=null){
-            
+
         %>
         $("input[name='lowCode']").val("<%=result.lowCode%>");
         <%
@@ -208,12 +199,9 @@
                 alert(message.join('\n'));
                 return false;
             }
-                
+
             return true;
         }
-        
-        
+
+
     </script>
-   
-    
-    

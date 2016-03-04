@@ -16,7 +16,7 @@
                 </div>
                 <table class="table table-striped" id="table">
                     <thead>
-                    <tr><th>已发送的设备</th><th>省</th><th>城市</th><th>地区</th><th>街道</th><th>位置</th><th>位置类</th><th></th></tr>
+                    <tr><th>已发送的设备</th><th>省</th><th>城市</th><th>地区</th><th>街道</th><th>位置</th><th>位置类</th><th> 全选 <input id="check-all" type="checkbox"/></th></tr>
                     </thead>
                     <tbody>
                 <%
@@ -40,7 +40,7 @@
                 %>
                     </tbody>
                 </table>
-                
+
                 </form>
                 </div>
             </div>
@@ -53,4 +53,7 @@
     $("#table").DataTable({"language": {
             "url": "//cdn.datatables.net/plug-ins/1.10.10/i18n/Chinese.json"
         }});
+        $('#check-all').change(function () {
+            $('input[type="checkbox"]:visible').prop('checked', this.checked);
+        });
     </script>

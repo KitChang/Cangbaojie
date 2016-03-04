@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="/jQuery-File-Upload-9.11.2/css/jquery.fileupload.css"/>
 <div class="container-fluid content">
             <div class="row">
-                
+
                         <div class="panel panel-default-cbj" style="min-width:45%">
                             <ol class="breadcrumb panel-heading panel-heading-cbj">
                               <li><a href="/advertisement">广告</a></li>
@@ -28,6 +28,7 @@
                                     <option value="电商">电商</option>
                                     <option value="娱乐">娱乐</option>
                                     <option value="保险">保险</option>
+                                    <option value="医药">医药</option>
                                     <option value="电器">电器</option>
                                     <option value="快消品">快消品</option>
                                     <option value="电子产品">电子产品</option>
@@ -46,7 +47,7 @@
                                     <option value="广告传媒">广告传媒</option>
                                     <option value="软件应用">软件应用</option>
                                     <option value="其他">其他</option>
-                                    
+
                                 </select>
                                 </div>
                                 <div class="form-inline">
@@ -90,7 +91,7 @@
 
                                 </select>
                                     <label><span class="mandatory">*選定後不能更換</span></label>
-                                
+
                                 </div>
                                 <div class="form-group">
                                 <label>奖项数量 <span class="mandatory">*</span></label>
@@ -162,22 +163,22 @@
                             </div>
                             <div class="panel panel-default">
                             <div class="panel-body">
-                                <button type="button" id="submit" class="btn btn-primary">创建</button>                   
+                                <button type="button" id="submit" class="btn btn-primary">创建</button>
                             </div>
                             </div>
                         </div>
-                        
-                
+
+
             </div>
-       
+
     </div>
     <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
     <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js">      </script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-      
+
     <script>
-        
+
         $(document).ready(function(){
             $("#expiredDate").daterangepicker({singleDatePicker: true});
             $("#effectiveDate").daterangepicker({singleDatePicker: true});
@@ -222,7 +223,7 @@
                 if(isNaN(drawCouponExpiredTime_second)||parseInt(drawCouponExpiredTime_second)<0 || parseInt(drawCouponExpiredTime_second)>=60 ){
                     errMsg.push("手机保存秒数为数字且0至59");
                 }
-                
+
                 var drawPerformInterval_day;
                 drawPerformInterval_day = $("#drawPerformInterval_day").val();
                 if(isNaN(drawPerformInterval_day)||parseInt(drawPerformInterval_day)<0){
@@ -244,7 +245,7 @@
                     errMsg.push("抽奖有效秒数为数字且0至59");
                 }
                 var inputNames = ['firstPrizeQuantity', 'secondPrizeQuantity', 'thirdPrizeQuantity', 'fourthPrizeQuantity', 'fifthPrizeQuantity'];
-                
+
                 var err = false;
                 $.each(inputNames, function(i, inputName){
                     var quant;
@@ -254,7 +255,7 @@
                             err = true;
                         else{
                             $("#"+inputName).val(parseInt(quant));
-                        }   
+                        }
                     }
                 });
                 if(err)
@@ -264,7 +265,7 @@
                     alert(errMsg.join("\n"));
                     return;
                 }
-                
+
                 if(drawCouponExpiredTime_day.trim()=="")
                     drawCouponExpiredTime_day = 0;
                 if(drawCouponExpiredTime_hour.trim()=="")
@@ -282,7 +283,7 @@
                 if(drawPerformInterval_second.trim()=="")
                     drawPerformInterval_second = 0;
                 var totalAdKeptTimeoutSeconds = parseInt(drawCouponExpiredTime_day)*24*60*60 +parseInt(drawCouponExpiredTime_hour)*60*60+ parseInt(drawCouponExpiredTime_minute)*60+parseInt(drawCouponExpiredTime_second);
-                var totalPerformTimeoutSeconds = parseInt(drawPerformInterval_day)*24*60*60 +parseInt(drawPerformInterval_hour)*60*60+parseInt(drawPerformInterval_minute)*60+parseInt(drawPerformInterval_second);             
+                var totalPerformTimeoutSeconds = parseInt(drawPerformInterval_day)*24*60*60 +parseInt(drawPerformInterval_hour)*60*60+parseInt(drawPerformInterval_minute)*60+parseInt(drawPerformInterval_second);
                 $("#drawCouponExpiredTime").val(totalAdKeptTimeoutSeconds);
                 $("#drawPerformInterval").val(totalPerformTimeoutSeconds);
                 var form = document.forms['form'];
@@ -302,7 +303,6 @@
                 form.submit();
             });
         });
-        
-        
+
+
     </script>
-   

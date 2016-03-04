@@ -14,17 +14,45 @@
                     <label class="control-label col-sm-2">余额 <span class="mandatory">*</span></label>
                     <div class="col-sm-10">
                         <label>
-                            人民币 <%=result.account.toFixed(2)%> 元 
+                            人民币 <%=result.account.toFixed(2)%> 元
                         </label>
                         <button type="button" class="btn btn-primary" onClick="javascript:document.location.href='/client/<%=result.id%>/balance';" value=""/> 充值 </button>
 
                     </div>
-                    </div>                    
+                    </div>
                     <div class="form-group">
                     <label class="control-label col-sm-2" for="name">广告商名 <span class="mandatory">*</span></label>
                     <div class="col-sm-10">
                         <input style="width: 100%;" type="text" name="name" id="name" class="form-control" value="<%=result.name%>">
                     </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-sm-2" for="name">商标图 <span class="mandatory">*</span></label>
+                      <div class="col-sm-10">
+                        <%
+                        if(result.clientImage){
+                            var image = result.clientImage;
+                        %>
+                        <div class="panel-body full-width">
+                            <img class="img-thumbnail" height="80px" width="80px" src="http://<%=req.host%>:<%=req.port%>/upload/<%=image.imagePublicId%>.<%=image.imageFormat%>">
+                        </div>
+                        <%
+                        }
+                        %>
+                        <div>
+                        <span class="btn btn-success fileinput-button">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>选择商标图</span>
+                            <input type="file" id="fileupload" name="clientImage" >
+                        </span>
+                        <button type="submit" class="btn btn-primary right">上传图片</button>
+                        </div>
+                        <div>
+                            <span id="file-info"></span>
+                        </div>
+
+                      </div>
+
                     </div>
                     <div class="form-group">
                     <label class="control-label col-sm-2" for="companyIntroduction">公司叙述<span class="mandatory">*</span></label>
@@ -68,39 +96,13 @@
                         <input style="width: 100%;" type="text" name="address" id="address" class="form-control" value="<%=result.address%>">
                     </div>
                     </div>
-                    
+
                     </form>
                     <button type="button" class="btn btn-default right" onClick="javascript:window.history.back()" value=""/> 取消 </button>
                     <button type="submit" id="submit" class="btn btn-primary right">提交</button>
                 </div>
-                <%
-                if(result.clientImage){
-                    var image = result.clientImage;
-                %>
-                <div class="panel-body full-width">                  
-                    <img class="img-thumbnail" height="80px" width="80px" src="http://<%=req.host%>:<%=req.port%>/upload/<%=image.imagePublicId%>.<%=image.imageFormat%>">
-                </div>
-                <%
-                }
-                %>
-                <div class="panel-body">
-                    <form id="form" name="form" action="/client/<%=req.param('id')%>/image" method="post" enctype="multipart/form-data" onSubmit="return clientImageOnSubmit()">
-                        <div class="form-group">
-                            <div>
-                            <span class="btn btn-success fileinput-button">
-                                <i class="glyphicon glyphicon-plus"></i>
-                                <span>上载商标图</span>
-                                <input type="file" id="fileupload" name="clientImage" >
-                            </span>
-                            <button type="submit" class="btn btn-primary right">提交</button>
-                            </div>
-                            <div>
-                                <span id="file-info"></span>
-                            </div>
-                        </div>
-                        
-                    </form>
-                </div>
+
+
             </div>
 
         </div>
@@ -130,7 +132,7 @@
             if(!/\d{11}/.test(phone)){
                 errMsg.push("手机为11位数字");
             }
-            
+
             if($("#name").val().trim()=="" || $("#companyIntroduction").val().trim()=="" || $("#contactPerson").val().trim()=="" || $("#address").val().trim()==""||phone.trim()==""||email.trim()==""){
                 errMsg.push("必添栏位不为空");
             }
@@ -139,13 +141,13 @@
                 return;
             }
             $("#form").submit();
-            
+
         })
         $("#fileupload").change(function(){
             $("#file-info").append($(this).val());
         })
-        
-        
+
+
     })
 
 </script>

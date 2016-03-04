@@ -154,7 +154,7 @@ module.exports = {
             var shareTitle = req.param('shareTitle');
             var shareContent = req.param('shareContent');
             var shareLink = req.param('shareLink');
-            option = 
+            option =
             {
                 title: title,
                 category: category,
@@ -205,9 +205,9 @@ module.exports = {
             });
 
         });
-        
+
     },
-    
+
     updateQuiz: function(req, res){
         var id = req.param('id');
         var question = req.param('question');
@@ -222,7 +222,7 @@ module.exports = {
         }
         advertisement.update({id: id}, {quiz: questionArr}).exec(function(){
             res.redirect('/advertisement/'+id+'/quiz');
-        }); 
+        });
     },
     quiz: function(req, res){
         var id = req.param('id');
@@ -232,10 +232,10 @@ module.exports = {
                 return;
             }
             res.view('quiz', {quiz: result.quiz});
-            
+
         });
     },
-    
+
     prize: function(req, res){
         var id = req.param("id");
         advertisement.findOne({id: id}).populate("client").exec(function(err, result){
@@ -245,6 +245,7 @@ module.exports = {
             }
             var redeemAddress = result.client.address;
             var companyIntroduction = result.client.companyIntroduction;
+						companyIntroduction = companyIntroduction.trim();
             res.view('prize', {result: result, moment: moment, redeemAddress: redeemAddress, companyIntroduction: companyIntroduction});
         })
     },
@@ -266,7 +267,7 @@ module.exports = {
         }
         var redeemLocation = req.param("redeemLocation");
         var companyIntroduction = req.param("companyIntroduction");
-        advertisement.update({id: id}, 
+        advertisement.update({id: id},
         {
             prizeCouponExpiredType: prizeCouponExpiredType,
             prizeCouponExpiredDuration: prizeCouponExpiredDuration,
@@ -281,7 +282,7 @@ module.exports = {
                 return;
             }
             res.redirect('/advertisement/'+id+'/prize');
-        }); 
+        });
     },
     deploy: function(req, res){
         var id = req.param('id');
@@ -309,7 +310,7 @@ module.exports = {
             });
         });
     },
-    
+
     device: function(req, res){
         Device.search({}, function(err, resultArr){
             if(err){
@@ -347,7 +348,7 @@ module.exports = {
                 res.view('advertisement-device', {resultArr: resultArr});
             }
         })
-        
+
     },
     addDevice: function(req, res){
         var id = req.param('id');
@@ -377,7 +378,7 @@ module.exports = {
                     return;
                 }
                 res.redirect('/advertisement/'+id+"/deploy");
-                
+
             })
         });
     },
@@ -418,11 +419,11 @@ module.exports = {
     advertisementImage: function(req, res){
         req.file('advertisementImage').upload(function (err, files) {
         var advertisementId = req.param("id");
-            
+
         if(files.length==0){
             return res.serverError(err);
         }
-        image_path = files[0].fd;            
+        image_path = files[0].fd;
         var imagePublicId = null;
         var imageFormat = null;
         fs.readFile(image_path, function (err, data) {
@@ -503,7 +504,7 @@ module.exports = {
                         }
                         if(checkFail==true){
                             break;
-                        }   
+                        }
                     }
                 }
                 if(ad.probabilityDraw)
@@ -583,7 +584,7 @@ module.exports = {
                     if(lowCode == ""){
                         checkFail = true;
                         message.push("一般领奖码未设");
-                    }   
+                    }
                 }
                 if(highCode==""){
                     checkFail = true
@@ -625,10 +626,10 @@ module.exports = {
                         return;
                     }
                     res.redirect('/advertisement/'+id);
-                })                    
+                })
             });
-            
-            
+
+
         });
     },
     destroy: function(req, res){
@@ -666,7 +667,7 @@ module.exports = {
         if(files.length==0){
             return res.serverError(err);
         }
-        image_path = files[0].fd;            
+        image_path = files[0].fd;
         var imagePublicId = null;
         var imageFormat = null;
         fs.readFile(image_path, function (err, data) {
@@ -700,4 +701,3 @@ module.exports = {
         });
     },
 }
-

@@ -1,16 +1,16 @@
 
-    
+
       <div class="container content">
         <div class="row">
             <ul class="nav nav-tabs">
               <li class="active"><a style="background-color: #FFE301;" href="/data/AppUser">用户列表</a></li>
               <li><a style="color: #555;" href="/data/AppUser-statistics">用户统计</a></li>
             </ul>
-            
+
 
             <div class="panel panel-dashboard full-width">
-                
-                
+
+
                 <div class="panel-body">
                     <form class="form-inline" action="/data/AppUser" method="get">
                         <div class="form-group">
@@ -22,47 +22,47 @@
                             <option value="">所有性別</option>
                             <option value="1" selected>男</option>
                             <option value="2">女</option>
-                            <option value="0">微信未设置</option>
+                            <option value="0">未知</option>
                             <%
                             }else if(req.param('sex')=="2") {
                             %>
                             <option value="">所有性別</option>
                             <option value="1">男</option>
                             <option value="2" selected>女</option>
-                            <option value="0">微信未设置</option>
+                            <option value="0">未知</option>
                             <%
                             } else if(req.param('sex')=="") {
                             %>
                             <option value="" selected>所有性別</option>
                             <option value="1">男</option>
                             <option value="2">女</option>
-                            <option value="0">微信未设置</option>
+                            <option value="0">未知</option>
                             <%
                             } else {
                             %>
                             <option value="">所有性別</option>
                             <option value="1">男</option>
                             <option value="2">女</option>
-                            <option value="0" selected>微信未设置</option>
+                            <option value="0" selected>未知</option>
                             <%
                             }
                             %>
                         </select>
                         </div>
-                        
+
                         <button type="submit" class="btn btn-primary">搜索</button>
-                    </form>                
-                    
-                    
+                    </form>
+
+
                 </div>
                 <div class="panel-body">
                 <form name="form" action="/dfd/" method="post">
-                
+
                 <table class="table table-striped" id="table">
                     <thead>
                     <tr><th>注册日期</th><th>用户名</th><th>性别</th>
                         <th>电话</th>
-                        
+
                     </tr>
                     </thead>
                     <tbody>
@@ -76,14 +76,16 @@
                     <tr>
                         <td><%=date2%></td>
                         <td><%=row.username%></td>
-                        
+
                         <td>
                             <%
                             var sex;
                             if(row.sex=="1")
                                 sex = "男";
-                            else
+                            else if(row.sex=='2')
                                 sex = "女";
+                            else
+                                sex = "未知";
                             %><%=sex%>
                         </td>
                         <td>
@@ -100,7 +102,7 @@
                 %>
                     </tbody>
                 </table>
-               
+
                 </form>
                 <br>
                 <button type="button" class="btn btn-default right" onClick="javascript:window.history.back()" value=""/> 取消 </button>
@@ -110,7 +112,7 @@
         </div>
 </div>
 
-    
+
 
 
     <script>
@@ -120,7 +122,7 @@
             document.form.submit();
         }
     </script>
-      
+
     <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
     <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
@@ -131,4 +133,3 @@
                 "url": "//cdn.datatables.net/plug-ins/1.10.10/i18n/Chinese.json"
             }});
     </script>
-

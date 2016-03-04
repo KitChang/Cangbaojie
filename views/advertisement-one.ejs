@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="/jQuery-File-Upload-9.11.2/css/jquery.fileupload.css"/>
-        
+
 <div class="container-fluid content">
     <div class="row">
             <div class="col-md-5" style="float: left">
@@ -10,7 +10,7 @@
                     </ol>
                     <div class="panel-body">
 
-                        <form id="form" name="form" action="../advertisement/<%=result.id%>" method="post">                
+                        <form id="form" name="form" action="../advertisement/<%=result.id%>" method="post">
                             <div class="form-group">
                                 <label>广告标题 <span class="mandatory">*</span></label>
                                 <input type="text" name="title" id="title" class="form-control" value="<%=result.title%>" style="width: 100%;">
@@ -31,6 +31,7 @@
                                      "电商",
                                      "娱乐",
                                      "保险",
+                                     "医药",
                                      "电器",
                                      "快消品",
                                      "电子产品",
@@ -50,8 +51,8 @@
                                      "软件应用",
                                      "其他"
                                     ];
-                                    while(categories.length){
-                                        var cat = categories.pop();
+                                  for(var i=0; i<categories.length; i++){
+                                        var cat = categories[i];
                                         if(cat==result.category){
                                 %>
                                     <option value="<%=cat%>" selected><%=cat%></option>
@@ -67,7 +68,7 @@
 
                                 </select>
                             </div>
-                        
+
                             <div class="form-inline">
                                 <div class="col-md-6 form-group no-l-padding">
                                     <label>广告有效日期 <span class="mandatory">*</span></label><br>
@@ -77,13 +78,13 @@
                                     <label>广告失效日期 <span class="mandatory">*</span></label><br>
                                     <input type="text" name="expiredDate" id="expiredDate" class="form-control" style="margin-bottom: 15px;" value="<%=moment(result.expiredDate).format("MM/DD/YYYY")%>">
                                 </div>
-                            </div>    
-                    
+                            </div>
+
                             <div class="form-inline">
                                 <label>抽奖劵保存时间 <span class="mandatory">*</span></label></br>
                                 <input type="number" name="drawCouponExpiredTime_day" id="drawCouponExpiredTime_day" class="form-control" value="<%=result.drawCouponExpiredTime_day%>"> <label> 天</label>
                                 <input type="number" name="drawCouponExpiredTime_hour" id="drawCouponExpiredTime_hour" class="form-control" value="<%=result.drawCouponExpiredTime_hour%>"> <label> 小时</label>
-                                <input type="number" name="drawCouponExpiredTime_minute" id="drawCouponExpiredTime_minute" class="form-control" value="<%=result.drawCouponExpiredTime_minute%>" > <label> 分钟</label>                   
+                                <input type="number" name="drawCouponExpiredTime_minute" id="drawCouponExpiredTime_minute" class="form-control" value="<%=result.drawCouponExpiredTime_minute%>" > <label> 分钟</label>
                                 <input type="number" name="drawCouponExpiredTime_second" id="drawCouponExpiredTime_second" class="form-control" value="<%=result.drawCouponExpiredTime_second%>"> <label> 秒</label>
                             </div>
 
@@ -94,10 +95,10 @@
 
                                 <input type="number" name="drawPerformInterval_hour" id="drawPerformInterval_hour" class="form-control" value="<%=result.drawPerformInterval_hour%>"> <label> 小时</label>
 
-                                <input type="number" name="drawPerformInterval_minute" id="drawPerformInterval_minute" class="form-control" value="<%=result.drawPerformInterval_minute%>" > <label> 分钟</label>                       
+                                <input type="number" name="drawPerformInterval_minute" id="drawPerformInterval_minute" class="form-control" value="<%=result.drawPerformInterval_minute%>" > <label> 分钟</label>
                                 <input type="number" name="drawPerformInterval_second" id="drawPerformInterval_second" class="form-control" value="<%=result.drawPerformInterval_second%>"> <label> 秒</label>
                             </div>
-                        
+
 
                             <input type="hidden" name="drawCouponExpiredTime" id="drawCouponExpiredTime" class="form-control" value="<%=result.drawCouponExpiredTime%>">
                             <input type="hidden" name="drawPerformInterval" id="drawPerformInterval" class="form-control" value="<%=result.drawPerformInterval%>">
@@ -113,7 +114,7 @@
                                     <input type="text" name="drawType" id="drawType" class="form-control" value="<%=result.numberOfPrize%>" readonly>
                                 </div>
                             </div>
-                            
+
                             <div class="form-inline">
                                 <div class="col-md-6 form-group no-l-padding">
                                     <label>状态</label>
@@ -124,7 +125,7 @@
                                 </div>
                                 <div class="col-md-6 form-group no-l-padding">
                                     <label>抽奖类型 <span class="mandatory">*</span></label><br>
-                                    <% 
+                                    <%
                                         var drawType;
                                         if(result.drawType=="probability")
                                             drawType = "概率抽奖";
@@ -146,7 +147,7 @@
         <div class="col-md-4 no-l-padding"  >
             <div class="panel panel-dashboard full-width">
                 <div class="panel-heading panel-heading-cbj">奖品设定</div>
-                <div class="panel-body">    
+                <div class="panel-body">
                     <div class="form-inline panel-elem">
                         <div class="form-group">
                         <label>一等奖 <span class="mandatory">*</span></label>
@@ -206,7 +207,7 @@
                     </div>
                     <hr>
                     <div class="form-inline panel-elem">
-                        <% 
+                        <%
                             if(result.drawType=="probability"){
                                 var prob_draw = "";
                                 if(result.probabilityDraw)
@@ -226,15 +227,15 @@
                 </div>
             </div>
 
-            
+
         </div>
-        
+
         <div class="col-md-4 no-l-padding" >
         <div class="panel panel-dashboard full-width">
             <div class="panel-heading panel-heading-cbj">分享设定</div>
-            <div class="panel-body"> 
-                
-                
+            <div class="panel-body">
+
+
                 <table>
                 <tr><td style="width:50%">
                 <div class="form-group">
@@ -256,43 +257,43 @@
                         if(result.shareImage){
                             var image = result.shareImage;
                         %>
-                        <div class="panel-body full-width">                  
+                        <div class="panel-body full-width">
                             <img class="img-thumbnail" height="100px" width="150px" src="http://<%=req.host%>:<%=req.port%>/upload/<%=image.imagePublicId%>.<%=image.imageFormat%>">
                         </div>
                         <%
                         }
                         %>
-                        
+
                         <div class="panel-body">
                             <form id="form2" name="form2" action="/advertisement/<%=req.param('id')%>/shareImage" onSubmit="return shareImageOnSubmit()" method="post"  enctype="multipart/form-data">
                                 <div class="form-group">
                                     <div>
                                     <span class="btn btn-success fileinput-button">
                                         <i class="glyphicon glyphicon-plus"></i>
-                                        <span>上载分享图片</span>
+                                        <span>选择分享图片</span>
                                         <input type="file" id="fileupload" name="shareImage" >
                                     </span>
                                     <p>
                                         <br>
-                                    
+
                                     </p>
                                     </div>
                                     <div>
                                         <span id="file-info"></span>
                                     </div>
                                 </div>
-                                <button type="submit" id="shareImageButton" class="btn btn-primary right">提交</button>
+                                <button type="submit" id="shareImageButton" class="btn btn-primary right">上传图片</button>
                             </form>
-                            
+
                         </div>
                     </div>
-                    
-                    
-                    
+
+
+
                 </td></tr>
-                
-                    
-                
+
+
+
                 </table>
                 </div>
 
@@ -307,7 +308,7 @@
                 if(result.advertisementImage){
                     var image = result.advertisementImage;
                 %>
-                <div class="panel-body full-width" style="margin: auto;" >                  
+                <div class="panel-body full-width" style="margin: auto;" >
                     <img class="img-thumbnail" height="140px" width="295px" src="http://<%=req.host%>:<%=req.port%>/upload/<%=image.imagePublicId%>.<%=image.imageFormat%>">
                 </div>
                 <%
@@ -319,10 +320,10 @@
                             <div>
                             <span class="btn btn-success fileinput-button">
                                 <i class="glyphicon glyphicon-plus"></i>
-                                <span>上载广告图</span>
+                                <span>选择广告图</span>
                                 <input type="file" id="fileupload2" name="advertisementImage" >
                             </span>
-                            <button type="submit" class="btn btn-primary right">提交</button>
+                            <button type="submit" class="btn btn-primary right">上传图片</button>
                             </div>
                             <div>
                                 <span id="file-info2"></span>
@@ -331,29 +332,29 @@
                     </form>
                 </div>
                 <hr>
-                <div class="panel-body">          
+                <div class="panel-body">
                         <button type="button" id="publish" class="col-md-4 btn btn-success right" style="margin: 0px;">推出</button>
                         <button type="button" id="submit" class="col-md-4 btn btn-primary right" style="margin: 0px;">更新</button>
                         <button type="button" style="margin: 0px;"class="col-md-4 btn btn-default right" onClick="javascript: window.history.back();">取消</button>
                </div>
             </div>
-            
-        </div>
-        
-           
 
-    
+        </div>
+
+
+
+
     </div>
 
 </div>
-    
+
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
-    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script> 
+    <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js">         </script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
     <script>
-    
+
     </script>
 
     <script>
@@ -381,7 +382,7 @@
             return true;
         }
         $(document).ready(function(){
-            
+
             $("#publish").click(function(err){
                 var form = document.forms['form'];
                 form.method = "post";
@@ -403,7 +404,7 @@
             <%
                 if(result.numberOfPrize==3){
             %>
-                
+
                 $("#fourthPrizeQuantity").prop("disabled", true);
                 $("#fourthPrize").prop("disabled", true);
                 $("#fifthPrizeQuantity").prop("disabled", true);
@@ -435,7 +436,7 @@
                     errMsg.push("有效日期不为空");
                 if($("#expiredDate").val().trim()=="")
                     errMsg.push("失效日期不为空");
-                
+
                 if(isNaN($("#pricePerClick").val())||$("#pricePerClick").val().trim()=="")
                     errMsg.push("点击价格为数字");
                 if($("#drawType").val().trim()=="")
@@ -463,7 +464,7 @@
                 if(isNaN(drawCouponExpiredTime_second)||parseInt(drawCouponExpiredTime_second)<0 || parseInt(drawCouponExpiredTime_second)>=60 ){
                     errMsg.push("手机保存秒数为数字且0至59");
                 }
-                
+
                 var drawPerformInterval_day;
                 drawPerformInterval_day = $("#drawPerformInterval_day").val();
                 if(isNaN(drawPerformInterval_day)||parseInt(drawPerformInterval_day)<0){
@@ -497,8 +498,8 @@
                 <%
                 }
                 %>
-                
-                
+
+
                 var inputNames = ['firstPrizeQuantity', 'secondPrizeQuantity', 'thirdPrizeQuantity', 'fourthPrizeQuantity', 'fifthPrizeQuantity'];
                 var err = false;
                 $.each(inputNames, function(i, inputName){
@@ -509,7 +510,7 @@
                             err = true;
                         else{
                             $("#"+inputName).val(parseInt(quant));
-                        }   
+                        }
                     }
                 });
                 if(err)
@@ -536,10 +537,10 @@
                 if(drawPerformInterval_second.trim()=="")
                     drawPerformInterval_second = 0;
                 var totalAdKeptTimeoutSeconds = parseInt(drawCouponExpiredTime_day)*24*60*60 +parseInt(drawCouponExpiredTime_hour)*60*60+ parseInt(drawCouponExpiredTime_minute)*60+parseInt(drawCouponExpiredTime_second);
-                var totalPerformTimeoutSeconds = parseInt(drawPerformInterval_day)*24*60*60 +parseInt(drawPerformInterval_hour)*60*60+parseInt(drawPerformInterval_minute)*60+parseInt(drawPerformInterval_second);             
+                var totalPerformTimeoutSeconds = parseInt(drawPerformInterval_day)*24*60*60 +parseInt(drawPerformInterval_hour)*60*60+parseInt(drawPerformInterval_minute)*60+parseInt(drawPerformInterval_second);
                 $("#drawCouponExpiredTime").val(totalAdKeptTimeoutSeconds);
                 $("#drawPerformInterval").val(totalPerformTimeoutSeconds);
-                
+
                 var form = document.forms['form'];
                 var inputNames = ['firstPrize', 'secondPrize', 'thirdPrize', 'fourthPrize', 'fifthPrize'];
                 $.each(inputNames, function(i, inputName){
@@ -584,9 +585,7 @@
             <%
             }
             %>
-            
+
         });
-        
+
     </script>
-    
-      

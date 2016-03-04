@@ -13,6 +13,7 @@
                     <form class="form-inline" action="/data/prize-stock" method="get">
                         <div class="form-group">
                             <label>商家客户</label>
+
                             <select class="form-control" id="client" name="client">
                                 <option value="">所有客户</option>
                             <%
@@ -34,11 +35,14 @@
                                 }
                             %>
                             </select>
+                            <input type="text" name="searchClient" id="searchClient" placeHolder="搜商家"/>
+
+
                         </div>
                         <div class="form-group">
                                 <label>广告</label>
                                 <select class="form-control" id="advertisement" name="advertisement">
-                                    
+
                                 <%
                                     var ad;
                                     if(adArr){
@@ -61,10 +65,10 @@
                         </div>
                         <button type="submit" class="btn btn-primary">搜索</button>
                     </form>
-                    
+
                 </div>
-                
-            
+
+
                 <div class="panel-body">
                 <table class="table table-striped" id="prize-stock-table">
                     <thead>
@@ -113,7 +117,7 @@
                             drawnPrizeQuantity = selectedAd.thirdPrizeQuantity - selectedAd.thirdPrizeQuantityRemain;
                         %>
                         <%=drawnPrizeQuantity%>
-                        
+
                         </td>
                         <td><%=selectedAd.thirdPrizeQuantityRemain%></td>
                         <td><%=selectedAd.redeem3PrizeQuantity%></td>
@@ -155,16 +159,16 @@
                         %>
                             <%=notRedeemPrizeQuantity%>
                         </td></tr>
-                    
+
                     <%
-                            
+
                         }
                     %>
-                    
+
                     </tbody>
                 </table>
                 </div>
-                
+
 
             </div>
         </div>
@@ -172,7 +176,7 @@
 
       </div>
     </div>
-    
+
 
     <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
     <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
@@ -194,8 +198,19 @@
                       $("#advertisement").append(adOption);
                 });
             });
-        });
-        
-    </script>
-      
+            $("#searchClient").keyup(function(){
+              var searchClient = $("#searchClient").val();
+              options = document.getElementById('client').options;
 
+              for(var i=0; i< options.length; i++){
+                if(options[i].text.toLowerCase().indexOf(searchClient)!=-1){
+                  options[i].selected = true;
+                  break;
+                }
+
+              }
+            });
+
+        });
+
+    </script>

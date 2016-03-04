@@ -1,5 +1,5 @@
 
-    
+
       <div class="container content">
         <div class="row">
             <ul class="nav nav-tabs">
@@ -7,10 +7,10 @@
               <li><a style="color: #555;" href="/data/access-category">行业点击</a></li>
               <li><a style="color: #555;" href="/data/category-compare">行业比較</a></li>
             </ul>
-            <div class="panel panel-dashboard col-md-12 full-width">            
-                    
+            <div class="panel panel-dashboard col-md-12 full-width">
+
                 <div class="panel-body">
-                    
+
                     <form class="form-inline" method="get" action="/data/access-region">
                         <div class="form-group" style="display: none;">
                             <label>商家客户</label>
@@ -47,7 +47,7 @@
                                 <%
                                 }
                                 %>
-                                
+
                                 <option value="广东省">广东省</option>
                             </select>
                         </div>
@@ -60,7 +60,7 @@
                                 <%
                                 }
                                 %>
-                                
+
                             </select>
                         </div>
                     <div class="pull-right">
@@ -78,7 +78,7 @@
                         <%
                             }
                         %>
-                        
+
                         </div>
                         <div class="form-group" id="dateToDiv">
                         <label>至</label>
@@ -95,12 +95,12 @@
                             }
                         %>
                         </div>
-                    
+
                     <button class="btn btn-primary">统计</button>
                     </div>
                     </form>
-                    
-                    
+
+
                 </div>
                 <center>
                 <div id="message"></div>
@@ -108,10 +108,10 @@
                 <canvas id="myChart" width="900" height="400"></canvas>
                 <div id="legend">
                 </div>
-                
+
             </div>
         </div>
-        
+
       </div>
     <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
     <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
@@ -123,10 +123,10 @@
 
     <script>
 
-        
+
     function populateCity(){
         var selectedState = $("#state option:selected").text();
-            
+
         $.ajax({
         url: "/geo/city?state="+selectedState
         }).done(function(data){
@@ -144,8 +144,8 @@
           $("#city").append("<option value=''>所有城市</option>");
           });
     }
-    
-    
+
+
     $(document).ready(function(){
         populateCity();
         var dateFromStr = moment().subtract(7, "day").format("MM/DD/YYYY");
@@ -153,7 +153,7 @@
         $("#dateFrom").val(dateFromStr);
         $("#dateTo").daterangepicker({singleDatePicker: true});
         s = new Series().y(function(d){return d.sum});
-        <% 
+        <%
             if(!resultArr.length){
         %>
             $("#message").append("没有可显示的数据");
@@ -171,18 +171,20 @@
         <%
         }
         %>
-        
+
         var aggreData = Series.y(function(d){ return d.sum; })
                 .aggregation(Series.sum)
-                .key(function(d){ 
+                .key(function(d){
                   var key = d.key;
                   return key })(s);
         color = ["#46BFBD", "#FDB45C", "#212121", "#64af9c", "#6b1f3c", "#127690", "#a2798f", "#008b8b", "#99ccff", "#cc99ff", "#9feaae", "#40d65d", "#65ada2", "#5ee4bb", "#9ffff7", "#2412b4", "#34d491", "#da6665", "#f3d681", "#b9b9b9", "#b9b9b9", "#ffae1a", "#2137ff", "#d8941a", "#d8941a", "#ff2a1a", "#e6b3e6", "#e6b3e6", "#a8e4f0", "#6ef79c", "#5cf53d", "#d6d65c", "#adb87a", "#d6995c", "#f76e6e", "#f08a75", "#eb9947", "#ffdd33", "#cccc00", "#99eb47", "#75f075", "#85e0b3", "#33ffdd","#998cd9",];
-        
+
         var total = 0;
         aggreData.forEach(function(d){
             total = total + parseInt(d.y);
         })
+        //alert(total);
+        $("#message").append("<a class='btn btn-primary'>点击量： <span class='badge' disabled>"+total+"</span></a>");
         var i = 0;
         aggreData.forEach(function(d){
             d.value = d.y;
@@ -202,10 +204,8 @@
             legendHtml += legendHtml_;
         });
         legendHtml = "<dl class='dl-horizontal'>"+legendHtml+"</dl>";
-        
+
         $("#legend").append(legendHtml);
     });
-      
-    </script>
-    
 
+    </script>
