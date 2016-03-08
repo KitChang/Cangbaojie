@@ -1,16 +1,16 @@
 
-    
+
       <div class="container content">
         <div class="row">
              <ul class="nav nav-tabs">
               <li><a style="color: #555;" href="/data/AppUser">用戶列表</a></li>
               <li class="active"><a style="background-color: #FFE301;" href="/data/AppUser-statistics">用户统计</a></li>
             </ul>
-            
+
              <div id="panel" class="panel panel-dashboard full-width">
                 <div style="margin-top: 15px;" class="col-md-12">
                  <table style="border-color: #FFE301;"  class="table table-bordered text-center">
-                 
+
                 <thead>
                     <tr class="warning">
                     <th style="border-color: #FFE301;" class="text-center">全部用户</th>
@@ -19,12 +19,9 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <%
-                            var allUsers = maleUsers + femaleUsers;
-                        %>
-                        <td style="border-color: #FFE301;"><%=allUsers%> (男:<%=(maleUsers/allUsers*100).toFixed(0)%>%)</td>
-                        <td style="border-color: #FFE301;"><%=newUsers%> (<%=(newUsers/allUsers*100).toFixed(0)%>%)</td>
-                        <td style="border-color: #FFE301;"><%=activeUsers%> (<%=(activeUsers/allUsers*100).toFixed(0)%>%)</td>
+                        <td style="border-color: #FFE301;"><%=totalUsers%> (男:<%=(maleUsers/totalUsers*100).toFixed(0)%>%)</td>
+                        <td style="border-color: #FFE301;"><%=newUsers%> (<%=(newUsers/totalUsers*100).toFixed(0)%>%)</td>
+                        <td style="border-color: #FFE301;"><%=activeUsers%> (<%=(activeUsers/totalUsers*100).toFixed(0)%>%)</td>
 
                     </tr>
 
@@ -41,58 +38,59 @@
                     <table class="table">
                             <tr><td><span style='background-color:#46BFBD'>&nbsp;&nbsp;&nbsp;&nbsp;</span> 男</td><td><%=maleUsers%></td></tr>
                             <tr><td><span style='background-color:#FDB45C'>&nbsp;&nbsp;&nbsp;&nbsp;</span> 女</td><td><%=femaleUsers%></td></tr>
+                            <tr><td><span style='background-color:#e6b3e6'>&nbsp;&nbsp;&nbsp;&nbsp;</span> 未知</td><td><%=sexUndeterminedUsers%></td></tr>
                     </table>
-                    
-                   
-                    
+
+
+
                 </div>
                 </div>
-            
+
             </div>
             <div class="col-md-4">
                 <div style="margin: 0px;" class="panel panel-default full-width">
                 <div id="newOldUserPanel" class="panel-body">
                     <div>
                     <canvas id="newOldUserChart" width="314" height="314"></canvas>
-                   
-                        
-                       
+
+
+
                     </div>
                     <table class="table">
                             <tr><td><span style='background-color:#40d65d'>&nbsp;&nbsp;&nbsp;&nbsp;</span> 新用户</td><td><%=newUsers%></td></tr>
                             <tr><td><span style='background-color:#2137ff'>&nbsp;&nbsp;&nbsp;&nbsp;</span> 历史用户</td><td><%=oldUsers%></td></tr>
                     </table>
-                    
-                    
-                   
-                    
+
+
+
+
                 </div>
                 </div>
-            
+
             </div>
             <div style="padding-bottom: 15px;" class="col-md-4">
                 <div style="margin: 0px;" class="panel panel-default full-width">
                 <div id="activeInactiveUserPanel" class="panel-body">
                     <div>
                     <canvas id="activeInactiveUserChart" width="314" height="314"></canvas>
-                    
+
                     </div>
                     <table class="table">
                             <tr><td><span style='background-color:#f08a75'>&nbsp;&nbsp;&nbsp;&nbsp;</span> 活跃用户</td><td><%=activeUsers%></td></tr>
                             <tr><td><span style='background-color:#2137ff'>&nbsp;&nbsp;&nbsp;&nbsp;</span> 一般用户</td><td><%=normalUsers%></td></tr>
                             <tr><td><span style='background-color:#e6b3e6'>&nbsp;&nbsp;&nbsp;&nbsp;</span> 僵尸用户</td><td><%=inactiveUsers%></td></tr>
                     </table>
-                    
-                   
-                    
+
+
+
                 </div>
                 </div>
-            
+
             </div>
-        
+
           </div>
         </div>
-        
+
       </div>
     <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
     <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
@@ -108,7 +106,7 @@
             $("#activeInactiveUserChart").width($("#activeInactiveUserPanel").width());
             $("#activeInactiveUserChart").height($("#activeInactiveUserPanel").width());
             color = ["#46BFBD", "#FDB45C", "#212121", "#64af9c", "#6b1f3c", "#127690", "#a2798f", "#008b8b", "#99ccff", "#cc99ff", "#9feaae", "#40d65d", "#65ada2", "#5ee4bb", "#9ffff7", "#2412b4", "#34d491", "#da6665", "#f3d681", "#b9b9b9", "#b9b9b9", "#ffae1a", "#2137ff", "#d8941a", "#d8941a", "#ff2a1a", "#e6b3e6", "#e6b3e6", "#a8e4f0", "#6ef79c", "#5cf53d", "#d6d65c", "#adb87a", "#d6995c", "#f76e6e", "#f08a75", "#eb9947", "#ffdd33", "#cccc00", "#99eb47", "#75f075", "#85e0b3", "#33ffdd","#998cd9",];
-            genderData = [{value: "<%=maleUsers%>", color: "#46BFBD", label: "男性用户", highlight: "red"}, {value: "<%=femaleUsers%>", color: "#FDB45C", label: "女性用户", highlight: "red"}];
+            genderData = [{value: "<%=maleUsers%>", color: "#46BFBD", label: "男性用户", highlight: "red"}, {value: "<%=femaleUsers%>", color: "#FDB45C", label: "女性用户", highlight: "red"}, {value: "<%=sexUndeterminedUsers%>", color: "#e6b3e6", label: "性别未知", highlight: "red"}];
             newOldUserData =[{value: "<%=newUsers%>", color: "#40d65d", label: "新用户", highlight: "red"}, {value: "<%=oldUsers%>", color: "#2137ff", label: "旧用户",highlight: "red"}];
             activeInactiveUserData =[{value: "<%=activeUsers%>", color: "#f08a75", label: "活跃用户",highlight: "red"}, {value: "<%=inactiveUsers%>", label: "僵尸用户", color: "#e6b3e6", highlight: "red"},{value: "<%=normalUsers%>", color: "#2137ff", label: "一般用户",highlight: "red"}];
         var ctx = document.getElementById("genderChart").getContext("2d");
@@ -127,9 +125,7 @@
             $("#newOldUserChart").height($("#newOldUserPanel").width());
             $("#activeInactiveUserChart").width($("#activeInactiveUserPanel").width());
             $("#activeInactiveUserChart").height($("#activeInactiveUserPanel").width());
-            });
-
-            
+        });
         });
 
 

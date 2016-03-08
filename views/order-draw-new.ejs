@@ -123,26 +123,27 @@
                 if (maxRange < minRange) {
                     errMsg.push("奖品总量超出访问数范围");
                 };
+                var remain;
                 if(parseInt($("#firstPrizeRange").val())+<%=firstPrizeRangeSum%> > <%=firstPrizeQuantity%>){
-                    errMsg.push("奖品数量超出范围");
+                    remain = <%=firstPrizeQuantity%> - <%=firstPrizeRangeSum%>;
+                    errMsg.push("一等奖品余量不足, 余量为"+remain);
                 }
                 if(parseInt($("#secondPrizeRange").val())+<%=secondPrizeRangeSum%> > <%=secondPrizeQuantity%>){
-                    errMsg.push("奖品数量超出范围");
+                    remain = <%=secondPrizeQuantity%> - <%=secondPrizeRangeSum%>;
+                    errMsg.push("二等奖品余量不足, 余量为"+remain);
                 }
-                if(parseInt($("#thirdPrizeQuantityPrizeRange").val())+<%=thirdPrizeRangeSum%> > <%=thirdPrizeQuantity%>){
-                    errMsg.push("奖品数量超出范围");
+                if(parseInt($("#thirdPrizeRange").val())+<%=thirdPrizeRangeSum%> > <%=thirdPrizeQuantity%>){
+                    remain = <%=thirdPrizeQuantity%> - <%=thirdPrizeRangeSum%>;
+                    errMsg.push("三等奖品余量不足, 余量为"+remain);
                 }
                 if(parseInt($("#fourthPrizeRange").val())+<%=fourthPrizeRangeSum%> > <%=fourthPrizeQuantity%>){
-                    errMsg.push("奖品数量超出范围");
+                    remain = <%=fourthPrizeQuantity%> - <%=fourthPrizeRangeSum%>;
+                    errMsg.push("四等奖品余量不足, 余量为"+remain);
                 }
                 if(parseInt($("#fifthPrizeRange").val())+<%=fifthPrizeRangeSum%> > <%=fifthPrizeQuantity%>){
-                    errMsg.push("奖品数量超出范围");
+                    remain = <%=fifthPrizeQuantity%> - <%=fifthPrizeRangeSum%>;
+                    errMsg.push("五等奖品余量不足, 余量为"+remain);
                 }
-                /*
-                if(parseInt($("#firstPrizeRange").val())><%=advertisement.firstQuantityRemain%>||parseInt($("#secondPrizeRange").val())>maxRange||parseInt($("#thirdPrizeRange").val())>maxRange||parseInt($("#fourthPrizeRange").val())>maxRange||parseInt($("#fifthPrizeRange").val())>maxRange){
-                  errMsg.push("奖品数量超出范围");
-                }
-                */
                 if(errMsg.length > 0){
                     alert(errMsg.join('\n'));
                     return;

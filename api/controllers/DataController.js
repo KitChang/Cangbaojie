@@ -70,10 +70,10 @@ module.exports = {
                             var sum =0;
                             for(var i=0; i<accessObj[property].length; i++){
                                 sum = sum + accessObj[property][i].advertisement.pricePerClick;
-                                
+
                             }
                             accessCountMonth["price-"+property] = sum;
-                            
+
                         }
                         res.view('data-access', {adArr: adArr, clientArr: clientArr, accessCountMonth: accessCountMonth, accessCountDate: null, selectedClient: null, selectedAd: null});
                     });
@@ -102,11 +102,11 @@ module.exports = {
                         res.view('data-access', {adArr: adArr, clientArr: clientArr, accessCountMonth: null, accessCountDate: accessCountDate, selectedClient: null, selectedAd: null});
                     });
                 }
-                
-                
+
+
             }
         });
-        
+
     },
     advertisement: function(req, res){
         advertisement.find({deleted: false}).populate('client').populate('advertisementImage').exec(function(err, resultArr){
@@ -138,7 +138,7 @@ module.exports = {
             values.push(clientObj[property]);
             }
             clientArr = values;
-            
+
             if(!city){
                 res.view('data-access-region', {resultArr: [], clientArr: clientArr});
                 return;
@@ -153,13 +153,13 @@ module.exports = {
                     res.view('data-access-region', {resultArr: resultArr, clientArr: clientArr});
                 });
             }
-            
-            
-            
-            
-            
+
+
+
+
+
         });
-        
+
     },
     categoryCompare: function(req, res){
         var state = req.param('state');
@@ -185,7 +185,7 @@ module.exports = {
             values.push(clientObj[property]);
             }
             clientArr = values;
-            
+
             if(city==null){
             res.view('data-category-compare', {resultArr: [], clientArr: clientArr});
             return;
@@ -215,9 +215,9 @@ module.exports = {
                     res.view('data-category-compare', {resultArr: accessClientArr, clientArr: clientArr});
                 });
             }
-            
+
         });
-        
+
     },
     accessCategory: function(req, res){
         var state = req.param('state');
@@ -242,7 +242,7 @@ module.exports = {
             values.push(clientObj[property]);
             }
             clientArr = values;
-            
+
             if(!city){
             var option = {state: state, createdAt: {"<": dateTo, ">": dateFrom}};
                 if(client){
@@ -264,7 +264,7 @@ module.exports = {
                 access.find(option).exec(function(err, resultArr){
                     if(err)
                             return res.serverError(err);
-                    
+
                     res.view('data-access-category', {resultArr: resultArr, clientArr: clientArr});
             });
             }
@@ -299,7 +299,7 @@ module.exports = {
             });
         }
     },
-    
+
     accessDevice: function(req, res){
         var locationType = req.param('locationType');
         var state = req.param('state');
@@ -349,7 +349,7 @@ module.exports = {
         }
         if(dateTo&&dateFrom)
             accessOption.createdAt = {"<": dateTo, ">": dateFrom};
-        
+
         access.find(accessOption).exec(function(err, accessArr){
             if(err){
                 res.serverError(err);
@@ -368,17 +368,23 @@ module.exports = {
                 else
                     accessCount = accessDevice[deviceArr[i].id].length;
                 deviceArr[i].accessCount = accessCount
-            }   
+            }
             res.view('data-access-device', {resultArr: deviceArr});
             });
         });
-        
-        
+
+
     },
-    
+
     prizeStock: function(req, res){
         var advertisementId = req.param('advertisement');
-        advertisement.find({deleted: false}).populate("client").exec(function(err, adArr){
+        var clientId = req.param('client');
+        option = {deleted: false};
+        if(clientId){
+          option.client = clientId;
+        }
+
+        advertisement.find(option).populate("client").exec(function(err, adArr){
             if(err){
                 res.serverError(err);
                 return;
@@ -393,7 +399,7 @@ module.exports = {
             }
             clientArr = values;
             if(advertisementId&&advertisementId!=""){
-                
+
                 advertisement.findOne({id: advertisementId}).exec(function(err, ad){
                     if(err){
                         res.serverError(err);
@@ -409,7 +415,7 @@ module.exports = {
             }
         });
     },
-    
+
     prizeWinner: function(req, res){
         var advertisementId = req.param('advertisement');
         var prize = req.param('prize');
@@ -433,7 +439,12 @@ module.exports = {
                 duration = 0;
             var dateFrom = moment().subtract(duration, "days").toDate();
         }
-        advertisement.find({deleted: false}).populate("client").exec(function(err, adArr){
+        var option = {deleted: false};
+        var clientId = req.param('client');
+        if(clientId){
+          option.client = clientId;
+        }
+        advertisement.find(option).populate("client").exec(function(err, adArr){
             if(err){
                 res.serverError(err);
                 return;
@@ -468,20 +479,20 @@ module.exports = {
                         return res.serverError(err);
             res.view('data-prize-winner', {resultArr: resultArr, moment: moment, adArr: adArr, clientArr: clientArr});
         });
-            
+
         });
-        
+
     },
     prizeWinnerSearch: function(req, res){//to be removed
-        
-        advertisement.find({deleted: false}).exec(function(err, advertisements){
+        var clientId = req.param('client');
+        advertisement.find({deleted: false, client: clientId}).exec(function(err, advertisements){
             if(err){
                 res.serverError(err);
                 return;
             }
             var advertisementId = req.param('advertisement');
             var prize = req.param('prize');
-            
+
             var find = {};
             find.advertisement = advertisementId;
             if(prize!="")
@@ -491,7 +502,7 @@ module.exports = {
                     return res.serverError(err);
                 res.view('data-prize-winner', {resultArr: resultArr, ads: advertisements, moment: moment});
             });
-            
+
         });
     },
     appUser: function (req, res){
@@ -507,7 +518,7 @@ module.exports = {
             }
             res.view('data-AppUser', {appUserArr: appUserArr, moment: moment});
         });
-    }, 
+    },
     appUserStatistics: function (req, res){
         AppUser.find().exec(function(err, appUserArr){
             if(err){
@@ -562,24 +573,24 @@ module.exports = {
                             var totalUsers = appUserArr.length;
                             var maleUsers = maleAppUserArr.length;
                             var femaleUsers = femaleAppUserArr.length;
+                            var sexUndeterminedUsers = totalUsers - maleUsers - femaleUsers;
                             var newUsers = newAppUserArr.length;
                             var oldUsers = totalUsers - newUsers;
                             var normalUsers = normalAppUserKeys.length;
                             var activeUsers = activeAppUserKeys.length;
                             var inactiveUsers = totalUsers - normalUsers - activeUsers;
-                            res.view('data-AppUser-statistics', {totalUsers: totalUsers, maleUsers: maleUsers, femaleUsers: femaleUsers, newUsers: newUsers, oldUsers: oldUsers, activeUsers: activeUsers, inactiveUsers: inactiveUsers, normalUsers: normalUsers});
+                            res.view('data-AppUser-statistics', {totalUsers: totalUsers, maleUsers: maleUsers, femaleUsers: femaleUsers, sexUndeterminedUsers: sexUndeterminedUsers, newUsers: newUsers, oldUsers: oldUsers, activeUsers: activeUsers, inactiveUsers: inactiveUsers, normalUsers: normalUsers});
                         })
                     });
-                    
+
                 })
                 });
-                
 
-                
+
+
             })
         });
     }
-    
-    
-};
 
+
+};
