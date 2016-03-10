@@ -5,8 +5,8 @@
           <li><a href="/data/access-category">行业点击</a></li>
           <li class="active"><a style="background-color: #FFE301;" href="/data/category-compare">行业比較</a></li>
         </ul>
-        <div class="panel panel-dashboard col-md-12">            
-                    
+        <div class="panel panel-dashboard col-md-12">
+
             <div class="panel-body">
                     <form class="form-inline" method="get" action="/data/category-compare" onSubmit="return onSubmit();">
                         <div class="form-group">
@@ -52,10 +52,10 @@
                                 <%
                                     }
                                     }
-                                %>  
+                                %>
                                 </select>
                         </div>
-                                
+
                         <div class="form-group">
                              <label>位置</label>
                             <select class="form-control" id="state" name="state">
@@ -67,13 +67,13 @@
                                 <%
                                 }
                                 %>
-                                
+
                                 <option value="广东省">广东省</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <select class="form-control" id="city" name="city">
-                                
+
                                 <%
                                 if(req.param("city")&&req.param("city")!=""){
                                 %>
@@ -81,7 +81,7 @@
                                 <%
                                 }
                                 %>
-                                
+
                             </select>
                         </div>
                     <div class="form-group" id="dateFromDiv">
@@ -98,7 +98,7 @@
                         <%
                             }
                         %>
-                        
+
                         </div>
                         <div class="form-group" id="dateToDiv">
                         <label>至</label>
@@ -120,11 +120,11 @@
                         if(req.param('client'))
                             client = req.param('client');
                     %>
-                    
+
                     <input type="submit" class="btn btn-primary" value="统计">
                     </form>
-                    
-                    
+
+
             </div>
             <center>
                 <div id="message"></div>
@@ -132,11 +132,11 @@
             <canvas id="myChart" width="900" height="400"></canvas>
             <div id="legend">
             </div>
-                
+
         </div>
     </div>
-        
-</div>      
+
+</div>
 
 
 
@@ -156,7 +156,7 @@
 
     <script>
 
-        
+
     function populateCity(){
         var selectedState = $("#state option:selected").text();
         $.ajax({
@@ -175,8 +175,8 @@
           $("#city").append("<option value=''>所有城市</option>");
           });
     }
-    
-    
+
+
     $(document).ready(function(){
         populateCity();
         var dateFromStr = moment().subtract(6, 'day').format("MM/DD/YYYY");
@@ -190,7 +190,7 @@
         %>
         $("#dateTo").daterangepicker({singleDatePicker: true});
         yData = [];
-        <% 
+        <%
             if(!resultArr.length){
         %>
             $("#message").append("没有可显示的数据");
@@ -203,19 +203,21 @@
             item = {};
             item.client = result.client;
             item.accessCount = result.accessCount;
-            
+
         %>
             yData.push({client: "<%=item.client%>", accessCount: <%=item.accessCount%>});
         <%
         }
         %>
-        
+
         color = ["#6b1f3c", "#127690", "#a2798f", "#008b8b", "#99ccff", "#cc99ff", "#9feaae", "#40d65d", "#65ada2", "#5ee4bb", "#9ffff7", "#2412b4", "#34d491", "#da6665", "#f3d681", "#b9b9b9", "#b9b9b9", "#ffae1a", "#2137ff", "#d8941a", "#d8941a", "#ff2a1a", "#e6b3e6", "#e6b3e6", "#a8e4f0", "#6ef79c", "#5cf53d", "#d6d65c", "#adb87a", "#d6995c", "#f76e6e", "#f08a75", "#eb9947", "#ffdd33", "#cccc00", "#99eb47", "#75f075", "#85e0b3", "#33ffdd","#998cd9"];
-        
+
         var total = 0;
         yData.forEach(function(d){
             total = total + d.accessCount;
         })
+        $("#message").append("<a class='btn btn-primary'>总点击量： <span class='badge' disabled>"+total+"</span></a>");
+
         var i = 0;
         yData.forEach(function(d){
             d.value = d.accessCount;
@@ -243,5 +245,3 @@
         return true;
     }
     </script>
-    
-
