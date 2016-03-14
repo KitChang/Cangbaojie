@@ -9,18 +9,18 @@ var Device = require('../lib/device');
 var moment = require('moment');
 var _ = require('underscore');
 module.exports = {
-    
+
     find: function(req, res){
         Device.search({}, function(err, resultArr){
             if(err){
                 return res.serverError(err);
             }else{
-                res.view('device', {resultArr: resultArr});    
+                res.view('device', {resultArr: resultArr});
             }
         })
-        
+
     },
-    
+
     findOne: function(req, res){
         var id = req.param("id");
         Device.findOne(id, function(err, result){
@@ -31,7 +31,7 @@ module.exports = {
             devicePushMsg.findOne({device: id}).exec(function (err, pushmsg) {
                 if (err) { return;};
                 if (pushmsg) {
-                    advertisement.find({device: id}).populate('advertisementImage').exec(function(err, ads){
+                    advertisement.find({device: id, deleted: false}).populate('advertisementImage').exec(function(err, ads){
                         if(err){
                             res.serverError(err);
                             return;
@@ -46,7 +46,7 @@ module.exports = {
                         });
                     });
                 } else {
-                    advertisement.find({device: id}).populate('advertisementImage').exec(function(err, ads){
+                    advertisement.find({device: id, deleted: false}).populate('advertisementImage').exec(function(err, ads){
                         if(err){
                             res.serverError(err);
                             return;
@@ -104,7 +104,7 @@ module.exports = {
                 device.find().exec(function(err, deviceArr_cbj){
                     var deviceId_max = [];
                     var deviceId_cbj = [];
-                    var deviceId; 
+                    var deviceId;
                     var deviceObj;
                     while(deviceArr_cbj.length){
                         deviceObj = deviceArr_cbj.pop();
@@ -213,4 +213,3 @@ module.exports = {
         });
     }
 };
-
