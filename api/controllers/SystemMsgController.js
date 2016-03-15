@@ -18,6 +18,10 @@ moment = require('moment');
         SystemMsg.findOne({id: id}).exec(function(err, result){
             if(err)
                 return res.serverError(err);
+            if(!result){
+              res.end();
+              return;
+            }
             res.view('system-msg-one', {result: result});
             });
     },
@@ -33,7 +37,7 @@ moment = require('moment');
         var effectiveAt = req.param('effectiveAt');
         effectiveAt = effectiveAt.replace(/\//g, "");
         effectiveAt = moment(effectiveAt, "MMDDYYYY").startOf('day').toDate();
-        
+
         SystemMsg.create({
             title: title,
             content: content,
@@ -46,7 +50,7 @@ moment = require('moment');
             }
             res.redirect("/SystemMsg");
         });
-        
+
     },
      update: function(req, res){
         var id = req.param("id");
@@ -58,8 +62,8 @@ moment = require('moment');
         var effectiveAt = req.param('effectiveAt');
         effectiveAt = effectiveAt.replace(/\//g, "");
         effectiveAt = moment(effectiveAt, "MMDDYYYY").startOf('day').toDate();
-       
-        SystemMsg.update({id: id}, 
+
+        SystemMsg.update({id: id},
         {
             title: title,
             content: content,
@@ -73,7 +77,7 @@ moment = require('moment');
         });
     },
     destroy: function(req, res){
-        
+
         var id = req.param("id");
         SystemMsg.update({id: id}, {deleted: true}).exec(function(err, result){
             res.redirect('/SystemMsg');

@@ -20,6 +20,10 @@ module.exports = {
         client.findOne({id: id}).populate("clientImage").exec(function(err, result){
             if(err)
                 return res.serverError(err);
+						if(!result){
+							res.end();
+							return;
+						}
             res.view('client-one', {result: result});
             });
     },
@@ -51,7 +55,7 @@ module.exports = {
             }
             res.redirect("/client/"+result.id);
         });
-        
+
     },
     update: function(req, res){
         var id = req.param("id");
@@ -63,7 +67,7 @@ module.exports = {
         var email = req.param('email');
         var address = req.param('address');
         var companyIntroduction = req.param('companyIntroduction');
-        client.update({id: id}, 
+        client.update({id: id},
         {
             name: name,
             contactPerson: contactPerson,
@@ -81,7 +85,7 @@ module.exports = {
         });
     },
     destroy: function(req, res){
-        
+
         var id = req.param("id");
         client.update({id: id}, {deleted: true}).exec(function(err, result){
             if(err){
@@ -92,10 +96,10 @@ module.exports = {
         })
     },
     add: function(req, res){
-        
+
     },
     remove: function(req, res){
-        
+
     },
     balance: function(req, res){
         var clientId = req.param('id');
@@ -104,6 +108,10 @@ module.exports = {
                 res.serverError(err);
                 return;
             }
+						if(!result){
+							res.end();
+							return;
+						}
             res.view('client-balance', {result: result});
         })
     },
@@ -115,6 +123,10 @@ module.exports = {
                 res.serverError(err);
                 return;
             }
+						if(!result){
+							res.end();
+							return;
+						}
             var account = result.account;
             addValue = parseInt(addValue);
             account = account + addValue;
@@ -155,7 +167,7 @@ module.exports = {
         if(files.length==0){
             return res.serverError(err);
         }
-        image_path = files[0].fd;            
+        image_path = files[0].fd;
         var imagePublicId = null;
         var imageFormat = null;
         fs.readFile(image_path, function (err, data) {
@@ -188,6 +200,5 @@ module.exports = {
         });
         });
     }
-    
-};
 
+};

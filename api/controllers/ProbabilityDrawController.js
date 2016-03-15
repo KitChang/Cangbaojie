@@ -13,6 +13,10 @@ module.exports = {
                 res.serverError(err);
                 return;
             }
+						if(!ad){
+							res.end();
+							return;
+						}
             ProbabilityDraw.find({advertisement: advertisementId}).exec(function(err, resultArr){
                 if(err){
                     res.serverError(err);
@@ -20,9 +24,9 @@ module.exports = {
                 }
                 res.view('probability-draw', {resultArr: resultArr, advertisement: ad});
             });
-            
+
         });
-        
+
     },
     create: function(req, res){
         var advertisementId = req.param('advertisement');
@@ -31,7 +35,7 @@ module.exports = {
         var thirdPrizeProbability = req.param('thirdPrizeProbability');
         var fourthPrizeProbability = req.param('fourthPrizeProbability');
         var fifthPrizeProbability = req.param('fifthPrizeProbability');
-        
+
         ProbabilityDraw.create({advertisement: advertisementId, firstPrizeProbability: firstPrizeProbability, secondPrizeProbability: secondPrizeProbability, thirdPrizeProbability: thirdPrizeProbability, fourthPrizeProbability: fourthPrizeProbability, fifthPrizeProbability: fifthPrizeProbability }).exec(function(err, probDraw){
             if(err){
                 res.serverError(err);
@@ -44,11 +48,11 @@ module.exports = {
                 }
                 res.redirect('/ProbabilityDraw/edit?advertisement='+advertisementId+"&probabilityDraw="+probDraw.id);
             });
-            
+
         });
     },
     update: function(req, res){
-        
+
         var advertisementId = req.param('advertisement');
         var probabilityDrawId = req.param('id');
         var firstPrizeProbability = req.param('firstPrizeProbability');
@@ -80,13 +84,12 @@ module.exports = {
                 if(err){
                     res.serverError(err);
                     return;
-                }   
+                }
                 res.view('probability-draw-one', {result: result, numberOfPrize: numberOfPrize, advertisement: ad});
             });
         }
         });
     }
-    
-    
-};
 
+
+};

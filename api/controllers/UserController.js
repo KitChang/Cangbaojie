@@ -15,26 +15,30 @@ module.exports = {
         });
     },
     findOne: function(req, res){
-        
+
         var id = req.param('id');
-        
+
         user.findOne({id: id}).exec(function(err, result){
             if(err){
                 res.serverError(err);
                 return;
             }
+						if(!result){
+							res.end();
+							return;
+						}
             res.view('user-one', {result: result})
         });
     },
     create: function(req, res){
-        
+
         var username = req.param('username');
         var password = req.param('password');
-        
+
         var role = req.param('role');
         var client = req.param('client');
         var hashedPassword = passwordHash.generate(password);
-        
+
         user.findOne({username: username}).exec(function(err, doc){
             if(err){
                 res.serverError(err);
@@ -43,7 +47,7 @@ module.exports = {
             if(doc!=null){
                 return res.serverError(err);
             }
-            
+
             user.create({username: username, password: hashedPassword, role: role}).exec(function(err, doc){
                 if(err){
                     res.serverError(err);
@@ -54,7 +58,7 @@ module.exports = {
         });
     },
     update: function(req, res){
-        
+
         var id = req.param('id');
         var role = req.param('role');
         var changePassword = req.param('changePassword');
@@ -64,17 +68,17 @@ module.exports = {
         option.role = role;
         if(changePassword=='change')
             option.password = hashedPassword;
-        
+
         user.update({id: id}, option).exec(function(err, doc){
             if(err){
                 res.serverError(err);
                 return;
             }
-            res.redirect('/user/'+id);  
+            res.redirect('/user/'+id);
         });
     },
     new: function(req, res){
-        
+
         res.view('user-new');
     },
     login: function(req, res){
@@ -90,13 +94,13 @@ module.exports = {
                 res.redirect('/login?omitNavigation=omitNavigation&message='+encodeURIComponent(message));
                 return;
             }
-            
+
             var Session = require("../lib/session");
             var session = new Session(req.session);
             session.login(doc);
             res.redirect("/");
         });
-        
+
     },
     logout: function(req, res){
         var Session = require('../lib/session');
@@ -104,7 +108,7 @@ module.exports = {
         session.logout();
         res.redirect("/login");
     },
-    
+
     destroy: function(req, res){
         var id = req.param('id');
         user_client.update({id: id},{deleted: true}).exec(function(err){
@@ -115,8 +119,7 @@ module.exports = {
             res.redirect('/user');
         });
     }
-    
-    
-    
-};
 
+
+
+};

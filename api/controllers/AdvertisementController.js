@@ -25,6 +25,10 @@ module.exports = {
             if(err){
                 return res.serverError(err);
             }
+						if(!result){
+							res.end();
+							return;
+						}
             res.view('advertisement-one', {result: result, moment: moment});
         });
     },
@@ -118,6 +122,10 @@ module.exports = {
     update: function(req, res){
         var id = req.param("id");
         advertisement.findOne({id: id}).exec(function(err, ad){
+						if(err||!ad){
+							res.end();
+							return;
+						}
             var drawType = ad.drawType;
             var title = req.param('title');
             var category = req.param('category');
@@ -231,8 +239,11 @@ module.exports = {
                 res.serverError(err);
                 return;
             }
+						if(!result){
+							res.end();
+							return;
+						}
             res.view('quiz', {quiz: result.quiz});
-
         });
     },
 
@@ -243,6 +254,10 @@ module.exports = {
                 res.serverError(err);
                 return;
             }
+						if(!result){
+							res.end();
+							return;
+						}
             var redeemAddress = result.client.address;
             var companyIntroduction = result.client.companyIntroduction;
 						companyIntroduction = companyIntroduction.trim();
@@ -291,6 +306,10 @@ module.exports = {
                 res.serverError(err);
                 return;
             }
+						if(!result){
+							res.end();
+							return;
+						}
             var deviceArr = result.device;
             option = {};
             var deviceId_concat = "";
@@ -300,7 +319,6 @@ module.exports = {
             }else{
                 deviceArr = "-1";
             }
-
             Device.search({id: deviceArr}, function(err, devices){
                 if(err){
                     res.serverError(err);
@@ -358,6 +376,10 @@ module.exports = {
                 res.serverError(err);
                 return;
             }
+						if(!ad){
+							res.end();
+							return;
+						}
             var deviceArr = ad.device;
             if(!deviceArr||deviceArr==undefined)
                 deviceArr = [];
@@ -390,6 +412,10 @@ module.exports = {
                 res.serverError(err);
                 return;
             }
+						if(!ad){
+							res.end();
+							return;
+						}
             var deviceArr = ad.device;
             if(!deviceArr||deviceArr==undefined)
                 deviceArr = [];
@@ -442,6 +468,7 @@ module.exports = {
                 }
                 imagePublicId = imageUUID;
                 imageFormat = ext;
+								//need to check for existence of ad
                 AdvertisementImage.update({advertisement: advertisementId}, {replaced: true}).exec(function(err){
                     AdvertisementImage.create({imagePublicId: imagePublicId, imageFormat: imageFormat, advertisement: advertisementId}).exec(function(err, doc){
                         advertisement.update({id: advertisementId}, {advertisementImage: doc.id}).exec(function(err){
@@ -463,6 +490,10 @@ module.exports = {
                 res.serverError(err);
                 return;
             }
+						if(!ad){
+							res.end();
+							return;
+						}
             var numberOfPrize = ad.numberOfPrize;
             var option = {};
             var checkFail = false;
@@ -686,6 +717,7 @@ module.exports = {
                 }
                 imagePublicId = imageUUID;
                 imageFormat = ext;
+								//need check existence of ad
                 ShareImage.update({advertisement: advertisementId}, {replaced: true}).exec(function(err){
                     ShareImage.create({imagePublicId: imagePublicId, imageFormat: imageFormat, advertisement: advertisementId}).exec(function(err, doc){
                         advertisement.update({id: advertisementId}, {shareImage: doc.id}).exec(function(err){
