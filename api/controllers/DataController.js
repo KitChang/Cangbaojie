@@ -17,9 +17,6 @@ module.exports = {
         var region = req.param('region');
         var street = req.param('street');
         var adOption = {deleted: false};
-        if(clientId){
-          adOption.client = clientId;
-        }
         advertisement.find(adOption).populate("client").exec(function(err, adArr){
             if(err){
                 res.serverError(err);
