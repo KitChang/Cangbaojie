@@ -23,7 +23,7 @@
                     <%
                             }
                         }
-                        
+
                         }
                     %>
                     </select>
@@ -49,7 +49,7 @@
                         }
                         }
                     %>
-                    
+
                     </select>
                 </div>
                 <div class="pull-right">
@@ -121,9 +121,9 @@
                         </select>
                     </div>
                 </div>
-    
+
                 </div>
-                    
+
                 <div class="panel-elem">
                 <div class="form-group">
                     <label>年份</label>
@@ -163,10 +163,10 @@
                         <option value="12">12</option>
                     </select>
                 </div>
-                
+
                 <input type="hidden" name="buttonAction" id="buttonAction" class="btn btn-default" value=""/>
                 <input type="button" id="accessMonth" class="btn btn-default" value="月统计"/>
-                
+
                 <div class="pull-right">
                 <div class="form-group">
                     <label>日期</label>
@@ -181,40 +181,40 @@
                     <%
                     }
                     %>
-                    
-                     
-                </div> 
+
+
+                </div>
                     <input type="button" class="btn btn-default" id="accessDate" value="日统计">
                 </div>
                 </div>
-                
+
                 <div class="panel-elem">
                 <%
                 if(accessCountMonth){
                 %>
-                
+
                 <mark><%=req.param('year')%>年<%=req.param('month')%>月统计点击量</mark>
-                
+
                 <%
                 } else if(accessCountDate){
                 %>
-                
+
                 <mark><%=req.param('date')%>    日统计点击量</mark>
-                
+
                 <%
                 }
                 %>
                 </div>
-                
+
                 </form>
 
                 <canvas id="access-ctx"></canvas>
                  <%
                 if(accessCountMonth||accessCountDate){
                 %>
-                
-                
-                
+
+
+
                 <table class="table" style="width: 400px">
                             <tr><td><span style='background-color:#ff2a1a'>&nbsp;&nbsp;&nbsp;&nbsp;</span>点击</td>
                             <td id="totalData"></td>
@@ -249,8 +249,8 @@ $(document).ready(function(){
     $("#date").daterangepicker({singleDatePicker: true});
     var yData = []; var yLabel = [];
     var yPrice =[];
-    
-    <% 
+
+    <%
         if(accessCountMonth!=null){
             var yVal = 0;
             var yPrice = 0;
@@ -260,7 +260,7 @@ $(document).ready(function(){
                 if(accessCountMonth[i+""]!=undefined){
                     yVal = accessCountMonth[i+""];
                     yPrice = accessCountMonth["price-"+i];
-                }   
+                }
                 else {
                     yVal = 0;
                     yPrice = 0;
@@ -272,7 +272,7 @@ $(document).ready(function(){
                 yPrice.push(<%=yPrice%>);
                 yLabel.push("<%=i%>");
 
-    <%       
+    <%
             }
     %>
             $("#totalData").empty();
@@ -280,9 +280,9 @@ $(document).ready(function(){
             $("#totalPrice").empty();
             $("#totalPrice").append("<td><%=totalPrice%></td>");
     <%
-        }    
+        }
     %>
-    
+
     <% if(accessCountDate!=null){
             var yVal = 0; var yPrice = 0;
             var totalData = 0;
@@ -292,7 +292,7 @@ $(document).ready(function(){
                     yVal = accessCountDate[i+""];
                     yPrice = accessCountDate["price-"+i];
 
-                }   
+                }
                 else {
                     yVal = 0;
                     yPrice = 0;
@@ -303,7 +303,7 @@ $(document).ready(function(){
         yData.push(<%=yVal%>);
         yPrice.push(<%=yPrice%>);
         yLabel.push("<%=i%>");
-    <%              
+    <%
         }
         %>
             $("#totalData").empty();
@@ -311,7 +311,7 @@ $(document).ready(function(){
             $("#totalPrice").empty();
             $("#totalPrice").append("<td><%=totalPrice%></td>");
     <%
-    }      
+    }
     %>
 
     var today = new Date();
@@ -339,6 +339,10 @@ $(document).ready(function(){
               $("#advertisement").append(adOption);
         });
     });
+    //var clientVal = $("#client").val();
+    /*if(clientVal!=""){
+      $("#client").trigger('change');
+    }*/
     <%
     if(req.param('client')==null){
     %>
@@ -346,8 +350,8 @@ $(document).ready(function(){
     <%
     }
     %>
-    
-    
+
+
     data = {
         labels: yLabel,
         datasets: [
@@ -475,8 +479,7 @@ $(document).ready(function(){
             });
 });
 
-        
 
-  
+
+
 </script>
-

@@ -16,7 +16,11 @@ module.exports = {
         var city = req.param('city');
         var region = req.param('region');
         var street = req.param('street');
-        advertisement.find({deleted: false}).populate("client").exec(function(err, adArr){
+        var adOption = {deleted: false};
+        if(clientId){
+          adOption.client = clientId;
+        }
+        advertisement.find(adOption).populate("client").exec(function(err, adArr){
             if(err){
                 res.serverError(err);
                 return;
@@ -404,6 +408,10 @@ module.exports = {
                     if(err){
                         res.serverError(err);
                         return;
+                    }
+                    if(!ad){
+                      res.end();
+                      return;
                     }
                     res.view('data-prize-stock', {adArr: adArr, selectedAd: ad, clientArr: clientArr});
                     return;
