@@ -41,11 +41,11 @@ module.exports.routes = {
       action: 'get'
   },
   'get /advertisement/:id/prize': {
-    view: 'prize'  
+    view: 'prize'
   },
   'get /advertisement/:id/quiz': {
     controller: 'AdvertisementController',
-    action: 'quiz'  
+    action: 'quiz'
   },
   'get /advertisement/json': {
       controller: 'AdvertisementController',
@@ -59,7 +59,7 @@ module.exports.routes = {
       controller: "AdvertisementController",
       action: 'updatePrize'
   },
-  
+
   'get /advertisement/:id/prize': {
       controller: "AdvertisementController",
       action: 'prize'
@@ -83,6 +83,10 @@ module.exports.routes = {
   'post /advertisement/:id/device': {
       controller: 'AdvertisementController',
       action: 'addDevice'
+  },
+  'get /advertisement/removeDeviceMonitor': {
+      controller: 'AdvertisementController',
+      action: 'removeOldDeviceMonitor'
   },
   'post /device/:id/pushmsg': {
       controller: 'DeviceController',
@@ -146,6 +150,7 @@ module.exports.routes = {
       controller: 'DataController',
       action: 'prizeWinner'
   },
+
   'get /login': {
       view: 'login'
   },
@@ -180,7 +185,7 @@ module.exports.routes = {
   'post /client/:id/addToBalance': {
       controller: 'ClientController',
       action: 'addToBalance'
-  }, 
+  },
   'post /ProbabilityDraw': {
       controller: 'ProbabilityDrawController',
       action: 'create'
@@ -205,7 +210,7 @@ module.exports.routes = {
       controller: 'DeviceMonitorController',
       action: 'verifiedOK'
   },
-  
+
   'get /dashboard/message': {
       controller: 'DashboardController',
       action: 'message'
@@ -238,6 +243,6 @@ module.exports.routes = {
       controller: 'DataController',
       action: 'appUserStatistics'
   }
-  
+
 
 };

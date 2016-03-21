@@ -102,14 +102,17 @@
 
 
                 </div>
-                <center>
+
                 <div id="message"></div>
-                </center>
+
                 <div class="row">
-                  <div class="col-xs-6">
-                    <canvas id="myChart" width="900" height="400"></canvas>
+                  <div class="col-xs-2" id="access-count">
+
                   </div>
-                  <div class="col-xs-6">
+                  <div class="col-xs-3">
+                    <canvas id="myChart" width="400" height="300"></canvas>
+                  </div>
+                  <div class="col-xs-7">
                   <div id="legend">
                   </div>
                   </div>
@@ -154,10 +157,25 @@
 
     $(document).ready(function(){
         populateCity();
-        var dateFromStr = moment().subtract(7, "day").format("MM/DD/YYYY");
+        var dateFromStr = moment().subtract(7, 'day').format("MM/DD/YYYY");
         $("#dateFrom").daterangepicker({singleDatePicker: true});
+        <%
+        if(!req.param('dateFrom')){
+        %>
         $("#dateFrom").val(dateFromStr);
+        <%
+        }
+        %>
+        var dateToStr = moment().format("MM/DD/YYYY");
         $("#dateTo").daterangepicker({singleDatePicker: true});
+        <%
+        if(!req.param('dateTo')){
+        %>
+        $("#dateTo").val(dateToStr);
+        <%
+        }
+        %>
+
         s = new Series().y(function(d){return d.sum});
         <%
             if(!resultArr.length){
@@ -190,7 +208,7 @@
             total = total + parseInt(d.y);
         })
         //alert(total);
-        $("#message").append("<a class='btn btn-primary'>总点击量： <span class='badge' disabled>"+total+"</span></a>");
+        $("#access-count").append("<a class='btn btn-primary'>总点击量： <span class='badge' disabled>"+total+"</span></a>");
         var i = 0;
         aggreData.forEach(function(d){
             d.value = d.y;

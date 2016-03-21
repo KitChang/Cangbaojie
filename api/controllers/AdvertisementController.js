@@ -732,4 +732,34 @@ module.exports = {
         });
         });
     },
+		removeOldDeviceMonitor: function(req, res){
+			DeviceMonitor.find().exec(function(err, dms){
+				var dm;
+				var deviceIds = [];
+				while(dms.length){
+					dm = dms.pop();
+					deviceIds.push(dm.device);
+				}
+				Device.search({}, function(err, resultArr){
+            if(err){
+                return res.serverError(err);
+            }
+						var newDeviceIds = [];
+						while(resultArr.length){
+							var res = resultArr.pop();
+							newDeviceIds.push(res.id);
+						}
+						var device;
+						var deviceArrToRemove;
+						while(newDeviceIds.length){
+							deviceArrToRemove = _.without(deviceIds, newDeviceIds.pop());
+						}
+						DeviceMonitor.destroy({device: deviceArrToRemove}).exec(function(err){
+							res.end();
+						})
+
+        })
+
+			})
+		}
 }
