@@ -5,7 +5,7 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 var _ = require('underscore');
-var state = 
+var state =
 [
 {
    name:"广东省",
@@ -56,7 +56,7 @@ var state =
                    name:"常平镇"
                 },
                 {
-                   name:"𪧛步镇"
+                   name:"高埗镇"
                 },
                 {
                    name:"樟木头镇"
@@ -5264,7 +5264,7 @@ var state =
          ]
       }
    ]
-    
+
 },
 {
     name:"广西省"
@@ -5304,7 +5304,7 @@ module.exports = {
       res.json(retRegionArr);
       res.end();
     },
-    street: function(req, res, err){
+    street2: function(req, res, err){
         var stateParam = req.param("state");
         var cityParam = req.param("city");
         var regionParam = req.param('region');
@@ -5320,8 +5320,181 @@ module.exports = {
         });
         res.json(retStreetArr);
         res.end();
+    },
+    importStreet: function(req, res){
+      var stateParam = "广东省";
+      var cityArr =  _.where(state, {name: stateParam})[0].city;
+      //console.log("city.l"+cityArr.length);
+      var city, region, street2;
+      var addressArr = [];
+      var address = {};
+      var regionArr, streetArr;
+      var streetArr2;
+      while(cityArr.length){
+
+
+        city = cityArr.pop();
+        //console.log(city.name);
+        regionArr = city.region;
+        //console.log("region.l:"+regionArr.length);
+        while(regionArr.length){
+          address = {};
+          region = regionArr.pop();
+          streetArr = region.street;
+          address.state = "广东省";
+          address.city = city.name;
+          address.region = region.name;
+          streetArr2 = [];
+          while(streetArr.length){
+            street2 = streetArr.pop();
+            streetArr2.push(street2.name);
+          }
+          address.street = streetArr2;
+          addressArr.push(address);
+        }
+
+      }
+      street.create(addressArr).exec(function(err){
+        if(err){
+          console.log("err");
+          res.end();
+          return;
+        }
+      });
+      console.log(JSON.stringify(addressArr));
+      res.end();
+      return;
+      /*
+      street.create(addressArr).exec(function(err){
+        if(err){
+          res.end();
+          return;
+        }
+        console.log("created");
+        res.end();
+        return;
+      })*/
+
+    },
+    street: function(req, res){
+      var state = req.param('state');
+      var city = req.param('city');
+      var region = req.param('region');
+      console.log(state+city+region);
+      street.findOne({state: state, city: city, region: region}).exec(function(err, streetOne){
+        if(err){
+          res.end();
+          return;;
+        }
+        console.log("5388");
+        if(streetOne){
+          console.log(streetOne.street[0]);
+          console.log("5391");
+          res.json(streetOne.street);
+          return;
+        }else{
+          res.json([]);
+          return;
+        }
+      })
+    },
+    importStreet2: function(req, res){
+      var state = "上海市";
+      var city = "上海市";
+      var regionArr =
+      [
+{name:"黄浦区", sub:
+["南京东路街道","外滩街道","半淞园路街道","小东门街道","豫园街道","老西门街道","五里桥街道","打浦桥街道","淮海中路街道","瑞金二路街道"]
+},
+{
+name:"徐汇区", sub:
+["天平路街道","湖南路街道","斜土路街道","枫林路街道","长桥街道","田林街道","虹梅路街道","康健新村街道","徐家汇街道","凌云路街道","龙华街道","漕河泾街道","华泾镇","漕河泾新兴技术开发区"]
+},
+{
+name:"长宁区", sub:
+["华阳路街道","江苏路街道","新华路街道","周家桥街道","天山路街道","仙霞新村街道","虹桥街道","程家桥街道","北新泾街道","新泾镇"]
+},
+{
+name:"静安区", sub:
+["江宁路街道","石门二路街道","南京西路街道","静安寺街道","曹家渡街道"]
+},
+{
+name:"普陀区", sub:
+["曹杨新村街道","长风新村街道","长寿路街道","甘泉路街道","石泉路街道","宜川路街道","万里街道","真如镇街道","长征镇","桃浦镇"]
+},
+{
+name:"闸北区", sub:
+["天目西路街道","北站街道","宝山路街道","共和新路街道","大宁路街道","彭浦新村街道","临汾路街道","芷江西路街道","彭浦镇"]
+},
+{
+name:"虹口区", sub:
+["欧阳路街道","曲阳路街道","广中路街道","嘉兴路街道","凉城新村街道","四川北路街道","提篮桥街道","江湾镇街道"]
+},
+{
+name:"杨浦区", sub:
+["定海路街道","平凉路街道","江浦路街道","四平路街道","控江路街道","长白新村街道","延吉新村街道","殷行街道","大桥街道","五角场街道","新江湾城街道","五角场镇"]
+},
+{
+name:"闵行区", sub:
+["江川路街道","古美街道","新虹街道","莘庄镇","七宝镇","颛桥镇","华漕镇","虹桥镇","梅陇镇","吴泾镇","马桥镇","浦江镇","莘庄工业区"]
+},
+{
+name:"宝山区", sub:
+["友谊路街道","吴淞街道","张庙街道","罗店镇","大场镇","杨行镇","月浦镇","罗泾镇","顾村镇","高境镇","庙行镇","淞南镇","宝山城市工业园区"]
+},
+{
+name:"嘉定区", sub:
+["新成路街道","真新街道","菊园新区管委会","嘉定镇街道","南翔镇","安亭镇","马陆镇","徐行镇","华亭镇","外冈镇","江桥镇","嘉定工业区"]
+},
+{
+name:"浦东新区", sub:
+["潍坊新村街道","陆家嘴街道","周家渡街道","塘桥街道","上钢新村街道","南码头路街道","沪东新村街道","金杨新村街道","洋泾街道","浦兴路街道","东明路街道","花木街道","川沙新镇","高桥镇","北蔡镇","合庆镇","唐镇","曹路镇","金桥镇","高行镇","高东镇","张江镇","三林镇","惠南镇","周浦镇","新场镇","大团镇","康桥镇","航头镇","祝桥镇","泥城镇","宣桥镇","书院镇","万祥镇","老港镇","南汇新城镇","芦潮港农场","东海农场","朝阳农场","外高桥保税区","金桥经济技术开发区"]
+},
+{
+name:"金山区", sub:
+["石化街道","朱泾镇","枫泾镇","张堰镇","亭林镇","吕巷镇","廊下镇","金山卫镇","漕泾镇","山阳镇","金山工业区"]
+},
+{
+name:"松江区", sub:
+["岳阳街道","永丰街道","方松街道","中山街道","泗泾镇","佘山镇","车墩镇","新桥镇","洞泾镇","九亭镇","泖港镇","石湖荡镇","新浜镇","叶榭镇","小昆山镇","松江工业区","佘山度假区","上海松江出口加工区"]
+},
+{
+name:"青浦区", sub:
+["夏阳街道","盈浦街道","香花桥街道","朱家角镇","练塘镇","金泽镇","赵巷镇","徐泾镇","华新镇","重固镇","白鹤镇"]
+},
+{
+name:"奉贤区", sub:
+["南桥镇","奉城镇","庄行镇","金汇镇","四团镇","青村镇","柘林镇","海湾镇","奉浦社区","上海市奉贤区海湾旅游区","金海社区","上海海港综合经济开发区"]
+},
+{
+name:"崇明县", sub:
+["城桥镇","堡镇","新河镇","庙镇","竖新镇","向化镇","三星镇","港沿镇","中兴镇","陈家镇","绿华镇","港西镇","建设镇","新海镇","东平镇","长兴镇","新村乡","横沙乡","前卫农场","东平林场","上实现代农业园区"]
+}
+];
+
+
+    var addressArr = [];
+    var address;
+    while(regionArr.length){
+      address = {};
+      var region = regionArr.pop();
+      var street2 = region.sub;
+      address.state = state;
+      address.city = city;
+      address.region = region.name;
+      address.street = street2;
+      console.log("region: "+address.region);
+      addressArr.push(address);
+    }
+    street.create(addressArr).exec(function(err){
+      if(err){
+        res.end();
+        return;
+      }
+      res.end();
+      return;
+    })
+
+
     }
 };
-
-
-

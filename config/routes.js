@@ -242,6 +242,14 @@ module.exports.routes = {
   'get /data/AppUser-statistics': {
       controller: 'DataController',
       action: 'appUserStatistics'
+  },
+  'get /street/import': {
+    controller: 'StreetController',
+    action: 'import'
+  },
+  'post /street/import': {
+    controller: 'StreetController',
+    action: 'importAction'
   }
 
 

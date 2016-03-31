@@ -59,30 +59,15 @@
 
                         <div class="form-group">
                              <label>位置</label>
-                            <select class="form-control" id="state" name="state">
-                                <%
-                                if(req.param("state")&&req.param("state")!=""){
-                                %>
-                                <option value="<%=req.param('state')%>" selected><%=req.param('state')%></option>
-
-                                <%
-                                }
-                                %>
-
-                                <option value="广东省">广东省</option>
+                            <select class="form-control" id="s1" name="state">
                             </select>
                         </div>
                         <div class="form-group">
-                            <select class="form-control" id="city" name="city">
-
-                                <%
-                                if(req.param("city")&&req.param("city")!=""){
-                                %>
-                                <option value="<%=req.param('city')%>" selected><%=req.param('city')%></option>
-                                <%
-                                }
-                                %>
-
+                            <select class="form-control" id="s2" name="city">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control hidden" id="s3" name="street">
                             </select>
                         </div>
                     <div class="form-group" id="dateFromDiv">
@@ -253,4 +238,21 @@
             return false;
         return true;
     }
+    </script>
+    <script src="/js/geo.js"></script>
+    <script>
+    setup(["s1", "s2", "s3"], ["省份", "所有地级市", "所有市、县级市、县"]);
+    <% if(req.param("state")!=null){
+    %>
+    $("#s1 option[value='<%=req.param("state")%>']").attr("selected", "selected");
+    <%
+    }
+    %>
+    change(1)
+    <% if(req.param("city")){
+    %>
+    $("#s2").append("<option value='<%=req.param("city")%>' selected><%=req.param("city")%></option>");
+    <%
+    }
+    %>
     </script>

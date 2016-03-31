@@ -28,7 +28,7 @@ module.exports.models = {
   *                                                                          *
   ***************************************************************************/
   // migrate: 'alter'
-  connection: 'mongo',
+  connection: 'mongo_dev',
   migrate: 'safe'
 
 };

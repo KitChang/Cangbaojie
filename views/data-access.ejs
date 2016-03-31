@@ -71,53 +71,19 @@
                             </select>
                     </div>
                     <div class="form-group">
-                        <select class="form-control" id="state" name="state">
-                            <%
-                            if(req.param("state")&&req.param("state")!=""){
-                            %>
-                            <option value="<%=req.param('state')%>" selected><%=req.param('state')%></option>
-
-                            <%
-                            }
-                            %>
-                            <option value="">所有省</option>
-                            <option value="广东省">广东省</option>
+                        <select class="form-control" id="s1" name="state">
                         </select>
                     </div>
                     <div class="form-group">
-                        <select class="form-control" id="city" name="city">
-                            <%
-                            if(req.param("city")&&req.param("city")!=""){
-                            %>
-                            <option value="<%=req.param('city')%>" selected><%=req.param('city')%></option>
-                            <%
-                            }
-                            %>
-
+                        <select class="form-control" id="s2" name="city">
                         </select>
                     </div>
                     <div class="form-group">
-                        <select class="form-control" id="region" name="region">
-                            <%
-                            if(req.param("region")&&req.param("region")!=""){
-                            %>
-                            <option value="<%=req.param('region')%>" selected><%=req.param('region')%></option>
-                            <%
-                            }
-                            %>
-
+                        <select class="form-control" id="s3" name="region">
                         </select>
                     </div>
                     <div class="form-group">
                         <select class="form-control" id="street" name="street">
-                             <%
-                            if(req.param("street")&&req.param("street")!=""){
-                            %>
-                            <option value="<%=req.param('street')%>" selected><%=req.param('street')%></option>
-                            <%
-                            }
-                            %>
-
                         </select>
                     </div>
                 </div>
@@ -181,10 +147,8 @@
                     <%
                     }
                     %>
-
-
                 </div>
-                    <input type="button" class="btn btn-default" id="accessDate" value="日统计">
+                <input type="button" class="btn btn-default" id="accessDate" value="日统计">
                 </div>
                 </div>
 
@@ -192,9 +156,7 @@
                 <%
                 if(accessCountMonth){
                 %>
-
                 <mark><%=req.param('year')%>年<%=req.param('month')%>月统计点击量</mark>
-
                 <%
                 } else if(accessCountDate){
                 %>
@@ -230,11 +192,8 @@
     </div>
 
 </div>
-
-
 <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
 <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
-
 <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
@@ -242,9 +201,9 @@
 
 <script>
 $(document).ready(function(){
-    populateCity();
-    populateRegion();
-    populateStreet();
+    //populateCity();
+    //populateRegion();
+    //populateStreet();
     $("#access-ctx").css({"width":$("#panel").width()*0.95, "height":"400px"});
     $("#date").daterangepicker({singleDatePicker: true});
     var yData = []; var yLabel = [];
@@ -382,104 +341,76 @@ $(document).ready(function(){
         myLineChart = new Chart(ctx).Line(data, {
         bezierCurve: false
         });
-    function populateCity(){
-            var selectedState = $("#state option:selected").text();
-            if(selectedState=="所有省"||selectedState==""){
-                $("#city").append("<option value=''>所有城市</option>");
-                return;
-            }
-            $.ajax({
-            url: "/geo/city?state="+selectedState
-            }).done(function(data){
-                console.log("city");
-              $("#city").append("<option value=''>所有城市</option>");
-              html = "";
-              while (data.length) {
-                var city = data.pop();
-                option = "<option value='"+city+"'>"+city+"</option>";
-                html = html + option;
-                //code
-              }
-              $("#city").append(html);
-              }).error(function(err){
-                console.log("all city");
-              $("#city").append("<option value=''>所有城市</option>");
-              });
-            }
-            function populateRegion(){
-            var selectedState = $("#state option:selected").text();
-            var selectedCity = $("#city option:selected").text();
-            if(selectedCity=="所有城市"||selectedCity==""){
-                $("#region").append("<option value=''>所有地区</option>");
-                return;
-            }
-            $.ajax({
-            url: "/geo/region?state="+selectedState+"&city="+selectedCity,
-            }).done(function(data){
-              //alert(data);
-              $("#region").append("<option value=''>所有地区</option>");
-              html = "";
-              while (data.length) {
-                var region = data.pop();
-                option = "<option value='"+region+"'>"+region+"</option>";
-                html = html + option;
-                //code
-              }
-              $("#region").append(html);
-              });
-            }
 
-            function populateStreet(){
-                var selectedState = $("#state option:selected").text();
-                var selectedCity = $("#city option:selected").text();
-                var selectedRegion = $("#region option:selected").text();
-                if(selectedRegion=="所有地区"||selectedRegion=="") {
-                    $("#street").append("<option value=''>所有街道</option>");
-                    return;
-                }
-
-                $.ajax({
-                url: "/geo/street?state="+selectedState+"&city="+selectedCity+"&region="+selectedRegion,
-                }).done(function(data){
-                  //alert(data);
-                  $("#street").append("<option value=''>所有街道</option>");
-                  html = "";
-                  while (data.length) {
-                    var street = data.pop();
-                    option = "<option value='"+street+"'>"+street+"</option>";
-                    html = html + option;
-                    //code
-                  }
-                  $("#street").append(html);
-                });
-            }
-
-
-            $("#state").change(function(){
-                $("#city").empty();
-                $("#region").empty();
-                $("#region").append("<option value=''>所有地区</option>");
-                $("#street").empty();
-                $("#street").append("<option value=''>所有街道</option>");
-                populateCity();
-            });
-            $("#city").change(function(){
-                $("#region").empty();
-                $("#street").empty();
-                $("#street").append("<option value=''>所有街道</option>");
-                populateRegion();
-            });
-            $("#region").change(function(){
-                $("#street").empty();
-                populateStreet();
-            });
-
-            $( window ).resize(function() {
-              $("#access-ctx").css({"width":$("#panel").width()*0.95, "height":"400px"});
-            });
+    $( window ).resize(function() {
+      $("#access-ctx").css({"width":$("#panel").width()*0.95, "height":"400px"});
+    });
 });
 
 
 
 
+</script>
+<script src="/js/geo.js"></script>
+<script>
+setup(["s1", "s2", "s3"], ["省份", "所有市", "所有市、县"]);
+<% if(req.param("state")!=null){
+%>
+$("#s1 option[value='<%=req.param("state")%>']").attr("selected", "selected");
+<%
+}
+%>
+change(1);
+<% if(req.param("city")){
+%>
+$("#s2 option[value='<%=req.param("city")%>']").attr("selected", "selected");
+
+<%
+}
+%>
+change(2);
+<% if(req.param("region")){
+%>
+$("#s3 option[value='<%=req.param("region")%>']").attr("selected", "selected");
+<%
+}
+%>
+
+$("#s1, #s2, #s3").change(function(){
+  $("#street").empty();
+  populateStreet();
+});
+  function populateStreet(){
+  var selectedState = $("#s1 option:selected").text();
+  var selectedCity = $("#s2 option:selected").text();
+  var selectedRegion = $("#s3 option:selected").text();
+  $.ajax({
+  url: "/geo/street?state="+selectedState+"&city="+selectedCity+"&region="+selectedRegion,
+  }).done(function(data){
+    //alert(data);
+    $("#street").append("<option value=''>所有街道</option>");
+    html = "";
+    while (data.length) {
+      var street = data.pop();
+      <% if(req.param("street")){
+      %>
+        if(street=="<%=req.param("street")%>")
+        option = "<option value='"+street+"' selected>"+street+"</option>";
+        else {
+          option = "<option value='"+street+"'>"+street+"</option>";
+        }
+      <%
+      }else{
+      %>
+      option = "<option value='"+street+"'>"+street+"</option>";
+      <%
+      }
+      %>
+      html = html + option;
+      //code
+    }
+    $("#street").append(html);
+  });
+  }
+  populateStreet();
 </script>

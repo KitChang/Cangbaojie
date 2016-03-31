@@ -57,9 +57,9 @@ module.exports.policies = {
     DeviceController: {
         '*': 'sessionAuth'
     },
-    GeoController: {
+    /*GeoController: {
         '*': 'sessionAuth'
-    },
+    },*/
     UserController: {
         '*': [], //['sessionAuth', 'adminRoleAuth'],
         login: [],

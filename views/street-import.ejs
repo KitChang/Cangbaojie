@@ -1,0 +1,56 @@
+
+
+    <div class="container content">
+        <div class="row">
+                    <div class="panel panel-dashboard full-width" >
+                        <ol class="breadcrumb panel-heading panel-heading-cbj">
+                          <li><a href='/user'>街道输入</a></li>
+                        </ol>
+                        <div class="panel-body">
+                            <form class="form-horizontal" id="form" name="form" action="/street/import" method="post" onSubmit="return onSubmit();">
+                              <div class="form-group">
+                                  <select class="form-control" id="s1" name="state">
+                                      <option value="广东省">广东省</option>
+                                  </select>
+                              </div>
+                              <div class="form-group">
+                                  <select class="form-control" id="s2" name="city">
+                                  </select>
+                              </div>
+                              <div class="form-group">
+                                  <select class="form-control" id="s3" name="street">
+                                  </select>
+                              </div>
+                                <input type="button" class="btn btn-default right" onClick="javascript:window.history.back()" value="取消"/>
+                                <input type="submit" class="btn btn-primary right" value="创建"/>
+                            </form>
+                        </div>
+                    </div>
+            </div>
+</div>
+<script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
+<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+<script>
+    function onSubmit(){
+        var message = [];
+        return true;
+    }
+</script>
+<script src="/js/geo.js"></script>
+<script>
+setup(["s1", "s2", "s3"], ["省份", "所有地级市", "所有市、县级市、县"]);
+<% if(req.param("state")){
+%>
+$("#s1 option[value='<%=req.param("state")%>']").attr("selected", "selected");
+<%
+}
+%>
+change(1);
+<% if(req.param("city")){
+%>
+$("#s2").append("<option value='<%=req.param("city")%>' selected><%=req.param("city")%></option>");
+<%
+}
+%>
+change(2);
+</script>

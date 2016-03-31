@@ -38,29 +38,16 @@
                         </div>
                         <div class="form-group">
                              <label>地区</label>
-                            <select class="form-control" id="state" name="state">
-                                <%
-                                if(req.param("state")&&req.param("state")!=""){
-                                %>
-                                <option value="<%=req.param('state')%>" selected><%=req.param('state')%></option>
-
-                                <%
-                                }
-                                %>
-
+                            <select class="form-control" id="s1" name="state">
                                 <option value="广东省">广东省</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <select class="form-control" id="city" name="city">
-                                <%
-                                if(req.param("city")&&req.param("city")!=""){
-                                %>
-                                <option value="<%=req.param('city')%>" selected><%=req.param('city')%></option>
-                                <%
-                                }
-                                %>
-
+                            <select class="form-control" id="s2" name="city">
+                            </select>
+                        </div>
+                        <div class="form-group hidden">
+                            <select class="form-control" id="s3" name="street">
                             </select>
                         </div>
                     <div class="pull-right">
@@ -176,7 +163,7 @@
         }
         %>
 
-        s = new Series().y(function(d){return d.sum});
+        sr = new Series().y(function(d){return d.sum});
         <%
             if(!resultArr.length){
         %>
@@ -191,7 +178,7 @@
             item.key = result.region;
             item.sum = 1;
         %>
-            s.put({key: "<%=item.key%>", sum: <%=item.sum%>});
+            sr.put({key: "<%=item.key%>", sum: <%=item.sum%>});
         <%
         }
         %>
@@ -200,7 +187,7 @@
                 .aggregation(Series.sum)
                 .key(function(d){
                   var key = d.key;
-                  return key })(s);
+                  return key })(sr);
         color = ["#46BFBD", "#FDB45C", "#212121", "#64af9c", "#6b1f3c", "#127690", "#a2798f", "#008b8b", "#99ccff", "#cc99ff", "#9feaae", "#40d65d", "#65ada2", "#5ee4bb", "#9ffff7", "#2412b4", "#34d491", "#da6665", "#f3d681", "#b9b9b9", "#b9b9b9", "#ffae1a", "#2137ff", "#d8941a", "#d8941a", "#ff2a1a", "#e6b3e6", "#e6b3e6", "#a8e4f0", "#6ef79c", "#5cf53d", "#d6d65c", "#adb87a", "#d6995c", "#f76e6e", "#f08a75", "#eb9947", "#ffdd33", "#cccc00", "#99eb47", "#75f075", "#85e0b3", "#33ffdd","#998cd9",];
 
         var total = 0;
@@ -232,4 +219,21 @@
         $("#legend").append(legendHtml);
     });
 
+    </script>
+    <script src="/js/geo.js"></script>
+    <script>
+    setup(["s1", "s2", "s3"], ["省份", "所有地级市", "所有市、县级市、县"]);
+    <% if(req.param("state")!=null){
+    %>
+    $("#s1 option[value='<%=req.param("state")%>']").attr("selected", "selected");
+    <%
+    }
+    %>
+    change(1)
+    <% if(req.param("city")){
+    %>
+    $("#s2").append("<option value='<%=req.param("city")%>' selected><%=req.param("city")%></option>");
+    <%
+    }
+    %>
     </script>
