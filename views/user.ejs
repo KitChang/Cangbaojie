@@ -1,15 +1,15 @@
 
-    
+
       <div class="container content">
         <div class="row">
             <div class="panel panel-dashboard full-width">
                 <ol class="breadcrumb panel-heading panel-heading-cbj">
                   <li>用户账户</li>
                   <li class="active">员工账户</li>
-                </ol>  
+                </ol>
                 <div class="panel-body">
                     <button onClick="href=window.location.href='/user/new'" class="btn btn-primary right">创建</button>
-                    
+
                 </div>
                 <div class="panel-body">
                 <form name="form">
@@ -24,7 +24,7 @@
                   row = resultArr.pop();
                 %>
                     <tr><td><a href="/user/<%=row.id%>"><%=row.username%></a></td><td>
-                    <% 
+                    <%
                     var role = req.session.user.role;
                     if(role=="admin"){
                     %>
@@ -32,7 +32,7 @@
                     <%
                         }
                     %>
-                        
+
                     </td></tr>
                 <%
                 }
@@ -44,9 +44,9 @@
 
             </div>
         </div>
-        
+
       </div>
-    
+
 
 
     <script>
@@ -56,7 +56,7 @@
             document.form.submit();
         }
     </script>
-      
+
     <script type="text/javascript" src="/js/dependencies/jquery.min.js"></script>
     <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>

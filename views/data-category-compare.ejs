@@ -41,8 +41,8 @@
                                      "软件应用",
                                      "其他"
                                     ];
-                                    while(categories.length){
-                                        var cat = categories.pop();
+                                    for(var i=0; i<categories.length; i++){
+                                        var cat = categories[i];
                                         if(cat==req.param('category')){
                                 %>
                                     <option value="<%=cat%>" selected><%=cat%></option>
