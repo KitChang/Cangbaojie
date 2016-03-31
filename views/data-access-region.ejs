@@ -119,29 +119,6 @@
 
     <script>
 
-
-    function populateCity(){
-        var selectedState = $("#state option:selected").text();
-
-        $.ajax({
-        url: "/geo/city?state="+selectedState
-        }).done(function(data){
-            console.log("city");
-          html = "";
-          while (data.length) {
-            var city = data.pop();
-            option = "<option value='"+city+"'>"+city+"</option>";
-            html = html + option;
-            //code
-          }
-          $("#city").append(html);
-          }).error(function(err){
-            console.log("all city");
-          $("#city").append("<option value=''>所有城市</option>");
-          });
-    }
-
-
     $(document).ready(function(){
         populateCity();
         var dateFromStr = moment().subtract(7, 'day').format("MM/DD/YYYY");

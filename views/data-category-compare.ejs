@@ -140,28 +140,11 @@
     <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js">             </script>
     <script>
-    function populateCity(){
-        var selectedState = $("#state option:selected").text();
-        $.ajax({
-        url: "/geo/city?state="+selectedState
-        }).done(function(data){
-          $("#city").append("<option value=''>所有城市</option>");
-          html = "";
-          while (data.length) {
-            var city = data.pop();
-            option = "<option value='"+city+"'>"+city+"</option>";
-            html = html + option;
-            //code
-          }
-          $("#city").append(html);
-          }).error(function(err){
-          $("#city").append("<option value=''>所有城市</option>");
-          });
-    }
+
 
 
     $(document).ready(function(){
-        populateCity();
+
         var dateFromStr = moment().subtract(6, 'day').format("MM/DD/YYYY");
         $("#dateFrom").daterangepicker({singleDatePicker: true});
         <%

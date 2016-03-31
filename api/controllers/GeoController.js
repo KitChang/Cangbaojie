@@ -5271,39 +5271,7 @@ var state =
 }
 ];
 module.exports = {
-    state: function(req, res, err){
-        var retStateArr = [];
-        _.each(state, function(elem){
-            retStateArr.push(elem.name);
-        });
-        res.json(retStateArr);
-        res.end();
-    },
-    city: function(req, res, err){
-        var stateParam = req.param("state");
-        var stateArr = _.where(state, {name: stateParam});
-        var cityArr = stateArr[0].city;
-        var retCityArr = [];
-        _.each(cityArr, function(elem){
-            retCityArr.push(elem.name);
-        })
-        res.json(retCityArr);
-        res.end();
-    },
-    region: function(req, res, err){
-      var stateParam = req.param("state");
-      var cityParam = req.param("city");
-      var stateArr = _.where(state, {name: stateParam});
-      var cityArr = stateArr[0].city;
-      var city = _.where(cityArr, {name: cityParam});
-      var regionArr = city[0].region;
-      var retRegionArr = [];
-        _.each(regionArr, function(elem){
-            retRegionArr.push(elem.name);
-      })
-      res.json(retRegionArr);
-      res.end();
-    },
+
     street2: function(req, res, err){
         var stateParam = req.param("state");
         var cityParam = req.param("city");
