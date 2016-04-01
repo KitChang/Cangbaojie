@@ -446,8 +446,9 @@ module.exports = {
         req.file('advertisementImage').upload(function (err, files) {
         var advertisementId = req.param("id");
 
-        if(files.length==0){
-            return res.serverError(err);
+        if(!files||files.length==0){
+            res.end();
+						return;
         }
         image_path = files[0].fd;
         var imagePublicId = null;
@@ -695,7 +696,7 @@ module.exports = {
     shareImage: function(req, res){
         req.file('shareImage').upload(function (err, files) {
         var advertisementId = req.param("id");
-        if(files.length==0){
+        if(!files||files.length==0){
             return res.serverError(err);
         }
         image_path = files[0].fd;
