@@ -13,18 +13,16 @@
                   <%
                       var cbjTag = result.cbjTag;
                       var message = "";
-                      if (typeof pushmsg == 'undefined') {
-                        message = "未定义";
-                      } else {
+                      if (typeof pushmsg != 'undefined') {
                         message = pushmsg;
-                      }
+                      } 
                   %>
 
                 <input type="text" placeholder="推送标语" name="message" class="form-control full-width" value="<%=message%>">
               </div>
                   <input type="button" class="btn btn-primary" value="更新" onClick="javascript:document.form.submit();"/>
                   <input type="button" class="btn btn-default" onClick="javascript:window.history.back()" value="取消"/>
-                
+
               </form>
             </div>
             <div class="panel-body">
