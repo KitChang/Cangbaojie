@@ -161,26 +161,9 @@ module.exports = {
                         res.serverError(err);
                         return;
                     }
-                    Device.findOne(id, function(err, result){
-                        if(err){
-                            res.serverError(err);
-                            return;
-                        }
-                        advertisement.find({device: id}).populate('advertisementImage').exec(function(err, ads){
-                            if(err){
-                                res.serverError(err);
-                                return;
-                            }
-                            var accessDateBefore = moment().subtract(30, 'days').toDate();
-                            DeviceMonitor.findOne({device: id, accessDate: {'<': accessDateBefore} }).exec(function(err, faultDeviceFound){
-                                if(err){
-                                    res.serverError(err);
-                                    return;
-                                }
-                                res.view('device-one', {result: result, ads: ads, faultDeviceFound: faultDeviceFound, pushmsg: message});
-                            });
-                        });
-                    });
+                    res.redirect("/device/"+id);
+                    return;
+
                 });
             } else {
                 devicePushMsg.update({device: id} ,{message: message}).exec(function (err, devicePushMsg) {
@@ -188,26 +171,8 @@ module.exports = {
                         res.serverError(err);
                         return;
                     }
-                    Device.findOne(id, function(err, result){
-                        if(err){
-                            res.serverError(err);
-                            return;
-                        }
-                        advertisement.find({device: id}).populate('advertisementImage').exec(function(err, ads){
-                            if(err){
-                                res.serverError(err);
-                                return;
-                            }
-                            var accessDateBefore = moment().subtract(30, 'days').toDate();
-                            DeviceMonitor.findOne({device: id, accessDate: {'<': accessDateBefore} }).exec(function(err, faultDeviceFound){
-                                if(err){
-                                    res.serverError(err);
-                                    return;
-                                }
-                                res.view('device-one', {result: result, ads: ads, faultDeviceFound: faultDeviceFound, pushmsg: message});
-                            });
-                        });
-                    });
+                    res.redirect("/device/"+id);
+                    return;
                 });
             }
         });
