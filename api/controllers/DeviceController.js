@@ -176,5 +176,8 @@ module.exports = {
                 });
             }
         });
+    },
+    syncDeviceMonitor: function(req, res){
+
     }
 };

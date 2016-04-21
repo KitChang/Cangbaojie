@@ -522,14 +522,14 @@ module.exports = {
                         order = orderArr.pop();
                         if(order.drawCountLowerBound<0 || order.drawCountUpperBound<0 || order.drawCountLowerBound > order.drawCountUpperBound){
                             checkFail = true;
-                            message.push("排序数据设定有误");
+                            message.push("排序访问数数据设定有误");
                         }
                         if(order.firstPrizeRange<0 || order.secondPrizeRange < 0 || order.thirdPrizeRange <0 || order.fourthPrizeRange < 0 || order.fifthPrizeRange < 0){
                             checkFail = true;
-                            message.push("排序数据设定有误");
+                            message.push("排序奖品数值范围数据设定有误");
                         }
                         var sum = order.firstPrizeRange + order.secondPrizeRange + order.thirdPrizeRange + order.fourthPrizeRange + order.fifthPrizeRange;
-                        var dif = order.drawCountUpperBound - order.drawCountLowerBound;
+                        var dif = order.drawCountUpperBound - order.drawCountLowerBound + 1;
                         if(sum > dif){
                             checkFail = true;
                             message.push("排序数据设定有误");
